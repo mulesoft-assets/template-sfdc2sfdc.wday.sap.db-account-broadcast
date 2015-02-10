@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wd-hr="http://www.mulesoft.org/schema/mule/wd-hr" xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+	xmlns:context="http://www.springframework.org/schema/context" 
+xmlns="http://www.mulesoft.org/schema/mule/core" 
+xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+xmlns:spring="http://www.springframework.org/schema/beans" 
+xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc"
+version="EE-3.6.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/wd-hr http://www.mulesoft.org/schema/mule/wd-hr/current/mule-wd-hr.xsd
+http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd">
+	
+	<!-- This is the main configuration file, you should place here all the Connectors configuration and declarations -->
+	
+    <context:property-placeholder location="common.properties, mule.${mule.env}.properties"/>
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HttpListenerConfig" port="${http.port}"/>
+    <jms:activemq-connector name="Active_MQ" validateConnections="true" doc:name="Active MQ" specification="1.1"/>
+    <sfdc:config name="SalesforceA" username="${sfdc.a.username}" password="${sfdc.a.password}" securityToken="${sfdc.a.securityToken}" url="${sfdc.a.url}" doc:name="Salesforce" doc:description="One of your SalesForce instances, from this is were changes are going to be synced.">
+        <sfdc:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
+    </sfdc:config>
+
+    <sfdc:config name="SalesforceB" username="${sfdc.b.username}" password="${sfdc.b.password}" securityToken="${sfdc.b.securityToken}" url="${sfdc.b.url}" doc:name="Salesforce" doc:description="One of your SalesForce instances, this is were the objects will be updated/created.">
+        <sfdc:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
+    </sfdc:config>
+    
+    <sap:connector name="SAP" jcoAsHost="${sap.jco.ashost}" jcoUser="${sap.jco.user}" jcoPasswd="${sap.jco.passwd}" jcoSysnr="${sap.jco.sysnr}" jcoClient="${sap.jco.client}" jcoLang="${sap.jco.lang}" validateConnections="true" doc:name="SAP"/>
+    
+	<db:generic-config name="GenericDatabaseConnector"
+		url="${database.url}" driverClassName="com.mysql.jdbc.Driver"
+		doc:name="Generic Database Configuration"
+		doc:description="Include jar for your database and supply correct url pointing to your database eg" />
+
+    <db:template-query name="QueryAccount" doc:name="Template Query">
+        <db:parameterized-query><![CDATA[select AccountNumber, Name, Description, NumberOfEmployees, Phone, Type, SalesforceId from Account where Name = :paramName]]></db:parameterized-query>
+        <db:in-param name="paramId" defaultValue=" "/>
+
+    </db:template-query>
+        <db:template-query name="UpdateAccount" doc:name="Template Query">
+        <db:parameterized-query><![CDATA[UPDATE Account SET 
+accountNumber = :accountNumber, 
+description = :description,
+numberOfEmployees = :numberOfEmployees,
+phone = :phone,
+type = :type,
+salesforceId = :salesforceId
+WHERE name = :name]]></db:parameterized-query>
+        <db:in-param name="accountNumber" defaultValue=" "/>
+        <db:in-param name="description" defaultValue=" "/>
+        <db:in-param name="numberOfEmployees" defaultValue=" "/>
+        <db:in-param name="phone" defaultValue=" "/>
+        <db:in-param name="type" defaultValue=" "/>
+        <db:in-param name="salesforceId" defaultValue=" "/>
+        <db:in-param name="name" defaultValue=" "/>
+
+    </db:template-query>
+    <db:template-query name="InsertAccount" doc:name="Template Query">
+        <db:parameterized-query><![CDATA[INSERT INTO Account (accountNumber, description, numberOfEmployees, phone, typesalesforceId, name)
+VALUES (:accountNumber, :description, :numberOfEmployees, :phone, :type, :salesforceId, :name)]]></db:parameterized-query>
+        <db:in-param name="accountNumber" defaultValue=" "/>
+        <db:in-param name="description" defaultValue=" "/>
+        <db:in-param name="numberOfEmployees" defaultValue=" "/>
+        <db:in-param name="phone" defaultValue=" "/>
+        <db:in-param name="type" defaultValue=" "/>
+        <db:in-param name="salesforceId" defaultValue=" "/>
+        <db:in-param name="name" defaultValue=" "/>
+
+    </db:template-query>
+    <wd-hr:config name="Workday_Human_Resource" hrUser="${wday.user}" hrPassword="${wday.password}" hrEndpoint="${wday.endpoint}" doc:name="Workday Human Resource">
+        <wd-hr:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
+    </wd-hr:config>
+    
+    
+</mule>

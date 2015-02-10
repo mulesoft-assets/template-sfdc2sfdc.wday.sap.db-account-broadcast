@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph __version="3.5.0" author="Marek" created="Wed May 21 15:44:50 CEST 2014" description="XML To Account" guiVersion="3.4.3.P" id="1401105412116" licenseCode="Unlicensed" licenseType="Unknown" modified="Wed May 21 15:44:50 CEST 2014" modifiedBy="Marek" name="XML_To_Account" preview-file="${Project_Home}/src/main/resources/accountExample.xml" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/Account" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _type="Output" id="019e1112-0645-4556-ac3f-056b27081d2a">
+<Record fieldDelimiter="," name="Account" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __implementationClass="java.lang.String" __index="122" __sourcePath="{}/Account/BillingCity" containerType="SINGLE" label="BillingCity" name="BillingCity" type="string"/>
+<Field __implementationClass="java.lang.String" __index="171" __sourcePath="{}/Account/BillingCountry" containerType="SINGLE" label="BillingCountry" name="BillingCountry" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="88" __sourcePath="{}/Account/BillingLatitude" containerType="SINGLE" label="BillingLatitude" name="BillingLatitude" type="number"/>
+<Field __implementationClass="java.lang.Double" __index="170" __sourcePath="{}/Account/BillingLongitude" containerType="SINGLE" label="BillingLongitude" name="BillingLongitude" type="number"/>
+<Field __implementationClass="java.lang.String" __index="139" __sourcePath="{}/Account/BillingPostalCode" containerType="SINGLE" label="BillingPostalCode" name="BillingPostalCode" type="string"/>
+<Field __implementationClass="java.lang.String" __index="32" __sourcePath="{}/Account/BillingState" containerType="SINGLE" label="BillingState" name="BillingState" type="string"/>
+<Field __implementationClass="java.lang.String" __index="15" __sourcePath="{}/Account/BillingStreet" containerType="SINGLE" label="BillingStreet" name="BillingStreet" type="string"/>
+<Field __implementationClass="java.lang.String" __index="46" __sourcePath="{}/Account/Billing_x005fAttention_x005fOf_x005f_x005fc" containerType="SINGLE" label="Billing_Attention_Of__c" name="Billing_Attention_Of__c" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="108" __sourcePath="{}/Account/Checkin_x005fDate_x005f_x005fc" containerType="SINGLE" label="Checkin_Date__c" name="Checkin_Date__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="138" __sourcePath="{}/Account/CloudHubOrganizationId_x005f_x005fc" containerType="SINGLE" label="CloudHubOrganizationId__c" name="CloudHubOrganizationId__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="5" __sourcePath="{}/Account/Company_x005fDescription_x005f_x005fc" containerType="SINGLE" label="Company_Description__c" name="Company_Description__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="182" __sourcePath="{}/Account/Completed_x005fby_x005f_x005fc" containerType="SINGLE" label="Completed_by__c" name="Completed_by__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="106" __sourcePath="{}/Account/Concurforce_x005f_x005fAccruedUnApprovedExpenseTotal_x005f_x005fc" containerType="SINGLE" label="Concurforce__AccruedUnApprovedExpenseTotal__c" name="Concurforce__AccruedUnApprovedExpenseTotal__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="194" __sourcePath="{}/Account/Concurforce_x005f_x005fFinalExpenseTotal_x005f_x005fc" containerType="SINGLE" label="Concurforce__FinalExpenseTotal__c" name="Concurforce__FinalExpenseTotal__c" type="string"/>
+<Field __index="141" __sourcePath="{}/Account/CorporateDesktopHWStandard_x005f_x005fc" containerType="SINGLE" label="CorporateDesktopHWStandard__c" name="CorporateDesktopHWStandard__c" type="string"/>
+<Field __index="144" __sourcePath="{}/Account/CorporateDesktopOSStandard_x005f_x005fc" containerType="SINGLE" label="CorporateDesktopOSStandard__c" name="CorporateDesktopOSStandard__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="22" __sourcePath="{}/Account/CreatedById" containerType="SINGLE" label="CreatedById" name="CreatedById" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="49" __sourcePath="{}/Account/CreatedDate" containerType="SINGLE" label="CreatedDate" name="CreatedDate" type="string"/>
+<Field __index="173" __sourcePath="{}/Account/CurrencyIsoCode" containerType="SINGLE" label="CurrencyIsoCode" name="CurrencyIsoCode" type="string"/>
+<Field __implementationClass="java.lang.String" __index="158" __sourcePath="{}/Account/Current_x005fDeveloper_x005fPortal_x005f_x005fc" containerType="SINGLE" label="Current_Developer_Portal__c" name="Current_Developer_Portal__c" type="string"/>
+<Field __index="184" __sourcePath="{}/Account/Current_x005fSupport_x005fLevel_x005f_x005fc" containerType="SINGLE" label="Current_Support_Level__c" name="Current_Support_Level__c" type="string"/>
+<Field __index="137" __sourcePath="{}/Account/Customer_x005fSatisfaction_x005f_x005fc" containerType="SINGLE" label="Customer_Satisfaction__c" name="Customer_Satisfaction__c" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="215" __sourcePath="{}/Account/Customer_x005fScore_x005f_x005fc" containerType="SINGLE" label="Customer_Score__c" name="Customer_Score__c" type="number"/>
+<Field __implementationClass="java.lang.String" __index="161" __sourcePath="{}/Account/DSCORGPKG_x005f_x005fConflict_x005f_x005fc" containerType="SINGLE" label="DSCORGPKG__Conflict__c" name="DSCORGPKG__Conflict__c" type="string"/>
+<Field __index="0" __sourcePath="{}/Account/DSCORGPKG_x005f_x005fDeletedFromDiscoverOrg_x005f_x005fc" containerType="SINGLE" label="DSCORGPKG__DeletedFromDiscoverOrg__c" name="DSCORGPKG__DeletedFromDiscoverOrg__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="18" __sourcePath="{}/Account/DSCORGPKG_x005f_x005fDiscoverOrg_x005fID_x005f_x005fc" containerType="SINGLE" label="DSCORGPKG__DiscoverOrg_ID__c" name="DSCORGPKG__DiscoverOrg_ID__c" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="157" __sourcePath="{}/Account/DSCORGPKG_x005f_x005fDiscoverOrg_x005fLastUpdate_x005f_x005fc" containerType="SINGLE" label="DSCORGPKG__DiscoverOrg_LastUpdate__c" name="DSCORGPKG__DiscoverOrg_LastUpdate__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="12" __sourcePath="{}/Account/DSCORGPKG_x005f_x005fITOrgChart_x005f_x005fc" containerType="SINGLE" label="DSCORGPKG__ITOrgChart__c" name="DSCORGPKG__ITOrgChart__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="26" __sourcePath="{}/Account/Database_x005fNotes_x005f_x005fc" containerType="SINGLE" label="Database_Notes__c" name="Database_Notes__c" type="string"/>
+<Field __index="74" __sourcePath="{}/Account/Database_x005f_x005fc" containerType="SINGLE" label="Database__c" name="Database__c" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="212" __sourcePath="{}/Account/Decision_x005fMade_x005f_x005fc" containerType="SINGLE" label="Decision_Made__c" name="Decision_Made__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="153" __sourcePath="{}/Account/Deployment_x005fModel_x005f_x005fc" containerType="SINGLE" label="Deployment_Model__c" name="Deployment_Model__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="132" __sourcePath="{}/Account/Deployment_x005fSummary_x005f_x005fc" containerType="SINGLE" label="Deployment_Summary__c" name="Deployment_Summary__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="96" __sourcePath="{}/Account/Description" containerType="SINGLE" label="Description" name="Description" type="string"/>
+<Field __implementationClass="java.lang.String" __index="209" __sourcePath="{}/Account/Development_x005fteam_x005fsize_x005fand_x005fprofile_x005f_x005fc" containerType="SINGLE" label="Development_team_size_and_profile__c" name="Development_team_size_and_profile__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="9" __sourcePath="{}/Account/Do_x005fyou_x005fuse_x005for_x005fplan_x005fto_x005fuse_x005fMule_x005fStudio_x005f_x005fc" containerType="SINGLE" label="Do_you_use_or_plan_to_use_Mule_Studio__c" name="Do_you_use_or_plan_to_use_Mule_Studio__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="130" __sourcePath="{}/Account/DunsNumber" containerType="SINGLE" label="DunsNumber" name="DunsNumber" type="string"/>
+<Field __implementationClass="java.lang.String" __index="79" __sourcePath="{}/Account/Evaluated_x005fMule_x005fIon_x005f_x005fc" containerType="SINGLE" label="Evaluated_Mule_Ion__c" name="Evaluated_Mule_Ion__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="214" __sourcePath="{}/Account/Executive_x005fSponsor_x005fEmail_x005f_x005fc" containerType="SINGLE" label="Executive_Sponsor_Email__c" name="Executive_Sponsor_Email__c" type="string"/>
+<Field __index="147" __sourcePath="{}/Account/Executive_x005fSponsor_x005f_x005fc" containerType="SINGLE" label="Executive_Sponsor__c" name="Executive_Sponsor__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="208" __sourcePath="{}/Account/Fax" containerType="SINGLE" label="Fax" name="Fax" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="201" __sourcePath="{}/Account/GigaSpaces_x005f_x005fc" containerType="SINGLE" label="GigaSpaces__c" name="GigaSpaces__c" type="boolean"/>
+<Field __index="190" __sourcePath="{}/Account/High_x005fAvailability_x005f_x005fc" containerType="SINGLE" label="High_Availability__c" name="High_Availability__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="186" __sourcePath="{}/Account/Id" containerType="SINGLE" label="Id" name="Id" type="string"/>
+<Field __implementationClass="java.lang.String" __index="172" __sourcePath="{}/Account/Impl_x005fDetails_x005f_x005fc" containerType="SINGLE" label="Impl_Details__c" name="Impl_Details__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="119" __sourcePath="{}/Account/In_x005fProduction_x005f_x005fc" containerType="SINGLE" label="In_Production__c" name="In_Production__c" type="boolean"/>
+<Field __implementationClass="java.lang.String" __index="213" __sourcePath="{}/Account/Incident_x005fMessage_x005f_x005fc" containerType="SINGLE" label="Incident_Message__c" name="Incident_Message__c" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="163" __sourcePath="{}/Account/Incidents_x005fRemaining_x005f_x005fc" containerType="SINGLE" label="Incidents_Remaining__c" name="Incidents_Remaining__c" type="number"/>
+<Field __index="82" __sourcePath="{}/Account/Industry" containerType="SINGLE" label="Industry" name="Industry" type="string"/>
+<Field __implementationClass="java.lang.String" __index="23" __sourcePath="{}/Account/Intacct_x005fSeed_x005fNumber_x005f_x005fc" containerType="SINGLE" label="Intacct_Seed_Number__c" name="Intacct_Seed_Number__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="28" __sourcePath="{}/Account/IsCustomerPortal" containerType="SINGLE" label="IsCustomerPortal" name="IsCustomerPortal" type="boolean"/>
+<Field __implementationClass="java.lang.Boolean" __index="126" __sourcePath="{}/Account/IsDeleted" containerType="SINGLE" label="IsDeleted" name="IsDeleted" type="boolean"/>
+<Field __implementationClass="java.lang.Boolean" __index="188" __sourcePath="{}/Account/IsPartner" containerType="SINGLE" label="IsPartner" name="IsPartner" type="boolean"/>
+<Field __implementationClass="java.lang.String" __index="177" __sourcePath="{}/Account/Is_x005fMMC_x005fused_x005ffor_x005fperformance_x005ftuning_x005f_x005fc" containerType="SINGLE" label="Is_MMC_used_for_performance_tuning__c" name="Is_MMC_used_for_performance_tuning__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="71" __sourcePath="{}/Account/Is_x005fMMC_x005fused_x005ffor_x005fprod_x005f_x005fc" containerType="SINGLE" label="Is_MMC_used_for_prod__c" name="Is_MMC_used_for_prod__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="115" __sourcePath="{}/Account/Jigsaw" containerType="SINGLE" label="Jigsaw" name="Jigsaw" type="string"/>
+<Field __implementationClass="java.lang.String" __index="52" __sourcePath="{}/Account/JigsawCompanyId" containerType="SINGLE" label="JigsawCompanyId" name="JigsawCompanyId" type="string"/>
+<Field __index="121" __sourcePath="{}/Account/Joint_x005fAccount_x005fOwner_x005f_x005fc" containerType="SINGLE" label="Joint_Account_Owner__c" name="Joint_Account_Owner__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="205" __sourcePath="{}/Account/KimbleOne_x005f_x005fAllowPartItemInvoicing_x005f_x005fc" containerType="SINGLE" label="KimbleOne__AllowPartItemInvoicing__c" name="KimbleOne__AllowPartItemInvoicing__c" type="boolean"/>
+<Field __implementationClass="java.lang.String" __index="94" __sourcePath="{}/Account/KimbleOne_x005f_x005fBillingContact_x005f_x005fc" containerType="SINGLE" label="KimbleOne__BillingContact__c" name="KimbleOne__BillingContact__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="198" __sourcePath="{}/Account/KimbleOne_x005f_x005fBusinessUnitTradingEntity_x005f_x005fc" containerType="SINGLE" label="KimbleOne__BusinessUnitTradingEntity__c" name="KimbleOne__BusinessUnitTradingEntity__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="45" __sourcePath="{}/Account/KimbleOne_x005f_x005fBusinessUnit_x005f_x005fc" containerType="SINGLE" label="KimbleOne__BusinessUnit__c" name="KimbleOne__BusinessUnit__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="180" __sourcePath="{}/Account/KimbleOne_x005f_x005fCode_x005f_x005fc" containerType="SINGLE" label="KimbleOne__Code__c" name="KimbleOne__Code__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="35" __sourcePath="{}/Account/KimbleOne_x005f_x005fInvoiceFormat_x005f_x005fc" containerType="SINGLE" label="KimbleOne__InvoiceFormat__c" name="KimbleOne__InvoiceFormat__c" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="169" __sourcePath="{}/Account/KimbleOne_x005f_x005fInvoicePaymentTermDays_x005f_x005fc" containerType="SINGLE" label="KimbleOne__InvoicePaymentTermDays__c" name="KimbleOne__InvoicePaymentTermDays__c" type="number"/>
+<Field __implementationClass="java.lang.String" __index="40" __sourcePath="{}/Account/KimbleOne_x005f_x005fInvoiceTemplate_x005f_x005fc" containerType="SINGLE" label="KimbleOne__InvoiceTemplate__c" name="KimbleOne__InvoiceTemplate__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="81" __sourcePath="{}/Account/KimbleOne_x005f_x005fInvoicingCurrencyIsoCode_x005f_x005fc" containerType="SINGLE" label="KimbleOne__InvoicingCurrencyIsoCode__c" name="KimbleOne__InvoicingCurrencyIsoCode__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="176" __sourcePath="{}/Account/KimbleOne_x005f_x005fIsCustomer_x005f_x005fc" containerType="SINGLE" label="KimbleOne__IsCustomer__c" name="KimbleOne__IsCustomer__c" type="boolean"/>
+<Field __implementationClass="java.lang.Boolean" __index="134" __sourcePath="{}/Account/KimbleOne_x005f_x005fIsSupplier_x005f_x005fc" containerType="SINGLE" label="KimbleOne__IsSupplier__c" name="KimbleOne__IsSupplier__c" type="boolean"/>
+<Field __implementationClass="java.lang.String" __index="162" __sourcePath="{}/Account/KimbleOne_x005f_x005fPurchaseOrderRule_x005f_x005fc" containerType="SINGLE" label="KimbleOne__PurchaseOrderRule__c" name="KimbleOne__PurchaseOrderRule__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="111" __sourcePath="{}/Account/KimbleOne_x005f_x005fTaxCodeReference_x005f_x005fc" containerType="SINGLE" label="KimbleOne__TaxCodeReference__c" name="KimbleOne__TaxCodeReference__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="117" __sourcePath="{}/Account/KimbleOne_x005f_x005fTaxCode_x005f_x005fc" containerType="SINGLE" label="KimbleOne__TaxCode__c" name="KimbleOne__TaxCode__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="104" __sourcePath="{}/Account/LID_x005f_x005fLinkedIn_x005fCompany_x005fId_x005f_x005fc" containerType="SINGLE" label="LID__LinkedIn_Company_Id__c" name="LID__LinkedIn_Company_Id__c" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="90" __sourcePath="{}/Account/LastActivityDate" containerType="SINGLE" label="LastActivityDate" name="LastActivityDate" type="string"/>
+<Field __implementationClass="java.lang.String" __index="98" __sourcePath="{}/Account/LastModifiedById" containerType="SINGLE" label="LastModifiedById" name="LastModifiedById" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="109" __sourcePath="{}/Account/LastModifiedDate" containerType="SINGLE" label="LastModifiedDate" name="LastModifiedDate" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="44" __sourcePath="{}/Account/LastReferencedDate" containerType="SINGLE" label="LastReferencedDate" name="LastReferencedDate" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="78" __sourcePath="{}/Account/LastViewedDate" containerType="SINGLE" label="LastViewedDate" name="LastViewedDate" type="string"/>
+<Field __index="66" __sourcePath="{}/Account/Lead_x005fType_x005f_x005fc" containerType="SINGLE" label="Lead_Type__c" name="Lead_Type__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="38" __sourcePath="{}/Account/Legacy_x005fThreshold_x005f_x005fc" containerType="SINGLE" label="Legacy_Threshold__c" name="Legacy_Threshold__c" type="boolean"/>
+<Field __implementationClass="java.lang.String" __index="210" __sourcePath="{}/Account/Marketing_x005fBudget_x005f_x005fc" containerType="SINGLE" label="Marketing_Budget__c" name="Marketing_Budget__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="155" __sourcePath="{}/Account/MasterRecordId" containerType="SINGLE" label="MasterRecordId" name="MasterRecordId" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="86" __sourcePath="{}/Account/Max_x005fSupport_x005fContacts_x005f_x005fc" containerType="SINGLE" label="Max_Support_Contacts__c" name="Max_Support_Contacts__c" type="number"/>
+<Field __implementationClass="java.lang.String" __index="58" __sourcePath="{}/Account/Messaging_x005fSoftware_x005f_x005fc" containerType="SINGLE" label="Messaging_Software__c" name="Messaging_Software__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="129" __sourcePath="{}/Account/Milestone_x005fDates_x005f_x005fc" containerType="SINGLE" label="Milestone_Dates__c" name="Milestone_Dates__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="61" __sourcePath="{}/Account/Mission_x005fCritical_x005f_x005fc" containerType="SINGLE" label="Mission_Critical__c" name="Mission_Critical__c" type="string"/>
+<Field __index="77" __sourcePath="{}/Account/MuleCon_x005f_x005fc" containerType="SINGLE" label="MuleCon__c" name="MuleCon__c" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="72" __sourcePath="{}/Account/Mule_x005fEngagements_x005f_x005fc" containerType="SINGLE" label="Mule_Engagements__c" name="Mule_Engagements__c" type="number"/>
+<Field __index="200" __sourcePath="{}/Account/Mule_x005fVersion_x005fs_x005fIn_x005fProduction_x005f_x005fc" containerType="SINGLE" label="Mule_Version_s_In_Production__c" name="Mule_Version_s_In_Production__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="6" __sourcePath="{}/Account/NDA_x005f_x005fc" containerType="SINGLE" label="NDA__c" name="NDA__c" type="boolean"/>
+<Field __implementationClass="java.lang.String" __index="64" __sourcePath="{}/Account/NaicsCode" containerType="SINGLE" label="NaicsCode" name="NaicsCode" type="string"/>
+<Field __implementationClass="java.lang.String" __index="21" __sourcePath="{}/Account/NaicsDesc" containerType="SINGLE" label="NaicsDesc" name="NaicsDesc" type="string"/>
+<Field __implementationClass="java.lang.String" __index="211" __sourcePath="{}/Account/Name" containerType="SINGLE" label="Name" name="Name" type="string"/>
+<Field __implementationClass="java.lang.Integer" __index="113" __sourcePath="{}/Account/NumberOfEmployees" containerType="SINGLE" label="NumberOfEmployees" name="NumberOfEmployees" type="integer"/>
+<Field __implementationClass="java.lang.String" __index="101" __sourcePath="{}/Account/Number_x005fof_x005fendpoints_x005f_x005fc" containerType="SINGLE" label="Number_of_endpoints__c" name="Number_of_endpoints__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="42" __sourcePath="{}/Account/Number_x005fof_x005fhosted_x005fservices_x005f_x005fc" containerType="SINGLE" label="Number_of_hosted_services__c" name="Number_of_hosted_services__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="140" __sourcePath="{}/Account/Number_x005fof_x005finstances_x005fin_x005fproduction_x005f_x005fc" containerType="SINGLE" label="Number_of_instances_in_production__c" name="Number_of_instances_in_production__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="131" __sourcePath="{}/Account/Number_x005fof_x005fthird_x005fparty_x005fservices_x005f_x005fc" containerType="SINGLE" label="Number_of_third_party_services__c" name="Number_of_third_party_services__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="47" __sourcePath="{}/Account/OS_x005fand_x005fJVM_x005fversion_x005f_x005fc" containerType="SINGLE" label="OS_and_JVM_version__c" name="OS_and_JVM_version__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="110" __sourcePath="{}/Account/OnBoarding_x005fForm_x005fURL_x005f_x005fc" containerType="SINGLE" label="OnBoarding_Form_URL__c" name="OnBoarding_Form_URL__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="29" __sourcePath="{}/Account/OwnerId" containerType="SINGLE" label="OwnerId" name="OwnerId" type="string"/>
+<Field __index="105" __sourcePath="{}/Account/Ownership" containerType="SINGLE" label="Ownership" name="Ownership" type="string"/>
+<Field __implementationClass="java.lang.String" __index="107" __sourcePath="{}/Account/ParentId" containerType="SINGLE" label="ParentId" name="ParentId" type="string"/>
+<Field __implementationClass="java.lang.String" __index="83" __sourcePath="{}/Account/Phone" containerType="SINGLE" label="Phone" name="Phone" type="string"/>
+<Field __implementationClass="java.lang.String" __index="76" __sourcePath="{}/Account/Pipeline_x005fRevenue_x005f_x005fc" containerType="SINGLE" label="Pipeline_Revenue__c" name="Pipeline_Revenue__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="135" __sourcePath="{}/Account/Platinum_x005fContact_x005fMessage_x005f_x005fc" containerType="SINGLE" label="Platinum_Contact_Message__c" name="Platinum_Contact_Message__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="43" __sourcePath="{}/Account/Previous_x005fIncident_x005fDefinition_x005f_x005fc" containerType="SINGLE" label="Previous_Incident_Definition__c" name="Previous_Incident_Definition__c" type="boolean"/>
+<Field __implementationClass="java.lang.String" __index="34" __sourcePath="{}/Account/PrimaryDataCenterLocation_x005f_x005fc" containerType="SINGLE" label="PrimaryDataCenterLocation__c" name="PrimaryDataCenterLocation__c" type="string"/>
+<Field __index="146" __sourcePath="{}/Account/PrimaryERPSystem_x005f_x005fc" containerType="SINGLE" label="PrimaryERPSystem__c" name="PrimaryERPSystem__c" type="string"/>
+<Field __index="125" __sourcePath="{}/Account/Production_x005fJava_x005fEnvironment_x005f_x005fc" containerType="SINGLE" label="Production_Java_Environment__c" name="Production_Java_Environment__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="183" __sourcePath="{}/Account/Production_x005fOS_x005fs_x005f_x005fc" containerType="SINGLE" label="Production_OS_s__c" name="Production_OS_s__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="120" __sourcePath="{}/Account/Production_x005frelease_x005fdate_x005f_x005fc" containerType="SINGLE" label="Production_release_date__c" name="Production_release_date__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="36" __sourcePath="{}/Account/Programmable_x005fWeb_x005fAdvertiser_x005f_x005fc" containerType="SINGLE" label="Programmable_Web_Advertiser__c" name="Programmable_Web_Advertiser__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="67" __sourcePath="{}/Account/Project_x005fInformation_x005f_x005fc" containerType="SINGLE" label="Project_Information__c" name="Project_Information__c" type="string"/>
+<Field __index="20" __sourcePath="{}/Account/Rating" containerType="SINGLE" label="Rating" name="Rating" type="string"/>
+<Field __implementationClass="java.lang.String" __index="56" __sourcePath="{}/Account/RecordTypeId" containerType="SINGLE" label="RecordTypeId" name="RecordTypeId" type="string"/>
+<Field __index="150" __sourcePath="{}/Account/ReferenceProgramStatus_x005f_x005fc" containerType="SINGLE" label="ReferenceProgramStatus__c" name="ReferenceProgramStatus__c" type="string"/>
+<Field __index="164" __sourcePath="{}/Account/Resell_x005f_x005fc" containerType="SINGLE" label="Resell__c" name="Resell__c" type="string"/>
+<Field __index="30" __sourcePath="{}/Account/Revenue_x005fCategory_x005f_x005fc" containerType="SINGLE" label="Revenue_Category__c" name="Revenue_Category__c" type="string"/>
+<Field __index="11" __sourcePath="{}/Account/SAL_x005fAdditional_x005fConsideration_x005f_x005fc" containerType="SINGLE" label="SAL_Additional_Consideration__c" name="SAL_Additional_Consideration__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="175" __sourcePath="{}/Account/SI_x005fPartner_x005f_x005fc" containerType="SINGLE" label="SI_Partner__c" name="SI_Partner__c" type="boolean"/>
+<Field __index="149" __sourcePath="{}/Account/SaaS_x005fTop_x005f250_x005fCategory_x005f_x005fc" containerType="SINGLE" label="SaaS_Top_250_Category__c" name="SaaS_Top_250_Category__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="181" __sourcePath="{}/Account/SaaS_x005fTop_x005f250_x005fCompany_x005f_x005fc" containerType="SINGLE" label="SaaS_Top_250_Company__c" name="SaaS_Top_250_Company__c" type="boolean"/>
+<Field __implementationClass="java.lang.Boolean" __index="99" __sourcePath="{}/Account/Sales_x005fReady_x005f_x005fc" containerType="SINGLE" label="Sales_Ready__c" name="Sales_Ready__c" type="boolean"/>
+<Field __implementationClass="java.lang.String" __index="114" __sourcePath="{}/Account/ShippingCity" containerType="SINGLE" label="ShippingCity" name="ShippingCity" type="string"/>
+<Field __implementationClass="java.lang.String" __index="116" __sourcePath="{}/Account/ShippingCountry" containerType="SINGLE" label="ShippingCountry" name="ShippingCountry" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="168" __sourcePath="{}/Account/ShippingLatitude" containerType="SINGLE" label="ShippingLatitude" name="ShippingLatitude" type="number"/>
+<Field __implementationClass="java.lang.Double" __index="19" __sourcePath="{}/Account/ShippingLongitude" containerType="SINGLE" label="ShippingLongitude" name="ShippingLongitude" type="number"/>
+<Field __implementationClass="java.lang.String" __index="187" __sourcePath="{}/Account/ShippingPostalCode" containerType="SINGLE" label="ShippingPostalCode" name="ShippingPostalCode" type="string"/>
+<Field __implementationClass="java.lang.String" __index="197" __sourcePath="{}/Account/ShippingState" containerType="SINGLE" label="ShippingState" name="ShippingState" type="string"/>
+<Field __implementationClass="java.lang.String" __index="151" __sourcePath="{}/Account/ShippingStreet" containerType="SINGLE" label="ShippingStreet" name="ShippingStreet" type="string"/>
+<Field __implementationClass="java.lang.String" __index="53" __sourcePath="{}/Account/Sic" containerType="SINGLE" label="Sic" name="Sic" type="string"/>
+<Field __implementationClass="java.lang.String" __index="159" __sourcePath="{}/Account/SicDesc" containerType="SINGLE" label="SicDesc" name="SicDesc" type="string"/>
+<Field __implementationClass="java.lang.String" __index="65" __sourcePath="{}/Account/Site" containerType="SINGLE" label="Site" name="Site" type="string"/>
+<Field __implementationClass="java.lang.String" __index="14" __sourcePath="{}/Account/Solution_x005fSelected_x005f_x005fc" containerType="SINGLE" label="Solution_Selected__c" name="Solution_Selected__c" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="31" __sourcePath="{}/Account/Sourced_x005fLost_x005fOpps_x005f_x005fc" containerType="SINGLE" label="Sourced_Lost_Opps__c" name="Sourced_Lost_Opps__c" type="number"/>
+<Field __implementationClass="java.lang.Double" __index="196" __sourcePath="{}/Account/Sourced_x005fOpen_x005fOpps_x005f_x005fc" containerType="SINGLE" label="Sourced_Open_Opps__c" name="Sourced_Open_Opps__c" type="number"/>
+<Field __implementationClass="java.lang.Double" __index="199" __sourcePath="{}/Account/Sourced_x005fWon_x005fOpportunities_x005f_x005fc" containerType="SINGLE" label="Sourced_Won_Opportunities__c" name="Sourced_Won_Opportunities__c" type="number"/>
+<Field __index="189" __sourcePath="{}/Account/Status_x005f_x005fc" containerType="SINGLE" label="Status__c" name="Status__c" type="string"/>
+<Field __index="48" __sourcePath="{}/Account/Strategic_x005fAccount_x005fLevel_x005fOverride_x005f_x005fc" containerType="SINGLE" label="Strategic_Account_Level_Override__c" name="Strategic_Account_Level_Override__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="174" __sourcePath="{}/Account/Strategic_x005fAccount_x005fLevel_x005f_x005fc" containerType="SINGLE" label="Strategic_Account_Level__c" name="Strategic_Account_Level__c" type="string"/>
+<Field __index="102" __sourcePath="{}/Account/Sub_x005fRegion_x005f_x005fc" containerType="SINGLE" label="Sub_Region__c" name="Sub_Region__c" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="85" __sourcePath="{}/Account/Support_x005fExpiration_x005fDate_x005f_x005fc" containerType="SINGLE" label="Support_Expiration_Date__c" name="Support_Expiration_Date__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="148" __sourcePath="{}/Account/Support_x005fOn_x005fBoarding_x005fCall_x005f_x005fc" containerType="SINGLE" label="Support_On_Boarding_Call__c" name="Support_On_Boarding_Call__c" type="boolean"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="13" __sourcePath="{}/Account/Support_x005fStart_x005fDate_x005f_x005fc" containerType="SINGLE" label="Support_Start_Date__c" name="Support_Start_Date__c" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="39" __sourcePath="{}/Account/SystemModstamp" containerType="SINGLE" label="SystemModstamp" name="SystemModstamp" type="string"/>
+<Field __implementationClass="java.lang.String" __index="103" __sourcePath="{}/Account/Territory1_x005f_x005fc" containerType="SINGLE" label="Territory1__c" name="Territory1__c" type="string"/>
+<Field __index="167" __sourcePath="{}/Account/Territory_x005f_x005fc" containerType="SINGLE" label="Territory__c" name="Territory__c" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="89" __sourcePath="{}/Account/The_x005fPower_x005fof_x005fOne_x005f_x005fc" containerType="SINGLE" label="The_Power_of_One__c" name="The_Power_of_One__c" type="number"/>
+<Field __implementationClass="java.lang.Boolean" __index="112" __sourcePath="{}/Account/Threshold_x005fA_x005f_x005fc" containerType="SINGLE" label="Threshold_A__c" name="Threshold_A__c" type="boolean"/>
+<Field __implementationClass="java.lang.Boolean" __index="128" __sourcePath="{}/Account/Threshold_x005fB_x005f_x005fc" containerType="SINGLE" label="Threshold_B__c" name="Threshold_B__c" type="boolean"/>
+<Field __implementationClass="java.lang.Boolean" __index="24" __sourcePath="{}/Account/Threshold_x005fC_x005f_x005fc" containerType="SINGLE" label="Threshold_C__c" name="Threshold_C__c" type="boolean"/>
+<Field __index="142" __sourcePath="{}/Account/Threshold_x005fStatus_x005f_x005fc" containerType="SINGLE" label="Threshold_Status__c" name="Threshold_Status__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="1" __sourcePath="{}/Account/TickerSymbol" containerType="SINGLE" label="TickerSymbol" name="TickerSymbol" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="87" __sourcePath="{}/Account/TotalPotentialLicenses_x005f_x005fc" containerType="SINGLE" label="TotalPotentialLicenses__c" name="TotalPotentialLicenses__c" type="number"/>
+<Field __implementationClass="java.lang.String" __index="27" __sourcePath="{}/Account/Tradestyle" containerType="SINGLE" label="Tradestyle" name="Tradestyle" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="10" __sourcePath="{}/Account/Trained_x005fMule_x005fConsultants_x005f_x005fc" containerType="SINGLE" label="Trained_Mule_Consultants__c" name="Trained_Mule_Consultants__c" type="number"/>
+<Field __implementationClass="java.lang.Double" __index="54" __sourcePath="{}/Account/Trained_x005fMule_x005fInstructors_x005f_x005fc" containerType="SINGLE" label="Trained_Mule_Instructors__c" name="Trained_Mule_Instructors__c" type="number"/>
+<Field __index="192" __sourcePath="{}/Account/Type" containerType="SINGLE" label="Type" name="Type" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="191" __sourcePath="{}/Account/Using_x005fEmbedded_x005fMule_x005f_x005fc" containerType="SINGLE" label="Using_Embedded_Mule__c" name="Using_Embedded_Mule__c" type="boolean"/>
+<Field __implementationClass="java.lang.String" __index="3" __sourcePath="{}/Account/Versions_x005fof_x005fMule_x005f_x005fc" containerType="SINGLE" label="Versions_of_Mule__c" name="Versions_of_Mule__c" type="string"/>
+<Field __index="178" __sourcePath="{}/Account/Vertical_x005fFocus_x005f_x005fc" containerType="SINGLE" label="Vertical_Focus__c" name="Vertical_Focus__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="133" __sourcePath="{}/Account/Web_x005fCampaign_x005f_x005fc" containerType="SINGLE" label="Web_Campaign__c" name="Web_Campaign__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="51" __sourcePath="{}/Account/Web_x005fContent_x005f_x005fc" containerType="SINGLE" label="Web_Content__c" name="Web_Content__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="37" __sourcePath="{}/Account/Web_x005fKeyword_x005f_x005fc" containerType="SINGLE" label="Web_Keyword__c" name="Web_Keyword__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="100" __sourcePath="{}/Account/Web_x005fMedium_x005f_x005fc" containerType="SINGLE" label="Web_Medium__c" name="Web_Medium__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="41" __sourcePath="{}/Account/Web_x005fSource_x005f_x005fc" containerType="SINGLE" label="Web_Source__c" name="Web_Source__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="207" __sourcePath="{}/Account/Website" containerType="SINGLE" label="Website" name="Website" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="165" __sourcePath="{}/Account/Won_x005fOpportunity_x005fCount_x005f_x005fc" containerType="SINGLE" label="Won_Opportunity_Count__c" name="Won_Opportunity_Count__c" type="number"/>
+<Field __implementationClass="java.lang.String" __index="152" __sourcePath="{}/Account/YearStarted" containerType="SINGLE" label="YearStarted" name="YearStarted" type="string"/>
+<Field __implementationClass="java.lang.String" __index="68" __sourcePath="{}/Account/ZAccountNumber_x005f_x005fc" containerType="SINGLE" label="ZAccountNumber__c" name="ZAccountNumber__c" type="string"/>
+<Field __index="60" __sourcePath="{}/Account/Zuora_x005f_x005fActive_x005f_x005fc" containerType="SINGLE" label="Zuora__Active__c" name="Zuora__Active__c" type="string"/>
+<Field __index="93" __sourcePath="{}/Account/Zuora_x005f_x005fCustomerPriority_x005f_x005fc" containerType="SINGLE" label="Zuora__CustomerPriority__c" name="Zuora__CustomerPriority__c" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="75" __sourcePath="{}/Account/Zuora_x005f_x005fNumberofLocations_x005f_x005fc" containerType="SINGLE" label="Zuora__NumberofLocations__c" name="Zuora__NumberofLocations__c" type="number"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="73" __sourcePath="{}/Account/Zuora_x005f_x005fSLAExpirationDate_x005f_x005fc" containerType="SINGLE" label="Zuora__SLAExpirationDate__c" name="Zuora__SLAExpirationDate__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="50" __sourcePath="{}/Account/Zuora_x005f_x005fSLASerialNumber_x005f_x005fc" containerType="SINGLE" label="Zuora__SLASerialNumber__c" name="Zuora__SLASerialNumber__c" type="string"/>
+<Field __index="127" __sourcePath="{}/Account/Zuora_x005f_x005fSLA_x005f_x005fc" containerType="SINGLE" label="Zuora__SLA__c" name="Zuora__SLA__c" type="string"/>
+<Field __index="156" __sourcePath="{}/Account/Zuora_x005f_x005fUpsellOpportunity_x005f_x005fc" containerType="SINGLE" label="Zuora__UpsellOpportunity__c" name="Zuora__UpsellOpportunity__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="7" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fAdditional_x005fInformation_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Additional_Information__c" name="jigsaw_clean__Additional_Information__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="16" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fAutomatic_x005fUpdates_x005fDisabled_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Automatic_Updates_Disabled__c" name="jigsaw_clean__Automatic_Updates_Disabled__c" type="boolean"/>
+<Field __implementationClass="java.lang.String" __index="70" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fAutomatic_x005fUpdates_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Automatic_Updates__c" name="jigsaw_clean__Automatic_Updates__c" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="145" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fCRM_x005fLast_x005fModified_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__CRM_Last_Modified__c" name="jigsaw_clean__CRM_Last_Modified__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="193" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fDuplicate_x005fId_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Duplicate_Id__c" name="jigsaw_clean__Duplicate_Id__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="92" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fDuplicate_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Duplicate__c" name="jigsaw_clean__Duplicate__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="17" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fFresher_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Fresher__c" name="jigsaw_clean__Fresher__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="84" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fGraveyard_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Graveyard__c" name="jigsaw_clean__Graveyard__c" type="boolean"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="154" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fJigsaw_x005fCreated_x005fDate_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Jigsaw_Created_Date__c" name="jigsaw_clean__Jigsaw_Created_Date__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="160" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fJigsaw_x005fId_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Jigsaw_Id__c" name="jigsaw_clean__Jigsaw_Id__c" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="97" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fJigsaw_x005fLast_x005fModified_x005fDate_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Jigsaw_Last_Modified_Date__c" name="jigsaw_clean__Jigsaw_Last_Modified_Date__c" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="202" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fJigsaw_x005fLast_x005fSync_x005fLocked_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Jigsaw_Last_Sync_Locked__c" name="jigsaw_clean__Jigsaw_Last_Sync_Locked__c" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="143" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fJigsaw_x005fManaged_x005fBackend_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Jigsaw_Managed_Backend__c" name="jigsaw_clean__Jigsaw_Managed_Backend__c" type="number"/>
+<Field __implementationClass="java.lang.String" __index="123" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fJigsaw_x005fManaged_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Jigsaw_Managed__c" name="jigsaw_clean__Jigsaw_Managed__c" type="string"/>
+<Field __index="203" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fJigsaw_x005fSync_x005fActivity_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Jigsaw_Sync_Activity__c" name="jigsaw_clean__Jigsaw_Sync_Activity__c" type="string"/>
+<Field __dmType="Calendar" __implementationClass="java.util.Calendar" __index="33" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fLast_x005fSync_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Last_Sync__c" name="jigsaw_clean__Last_Sync__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="95" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fSilent_x005fUpdate_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Silent_Update__c" name="jigsaw_clean__Silent_Update__c" type="boolean"/>
+<Field __implementationClass="java.lang.String" __index="2" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fSync_x005fStatus_x005fIndicator_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Sync_Status_Indicator__c" name="jigsaw_clean__Sync_Status_Indicator__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="166" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fSync_x005fStatus_x005fSummary_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Sync_Status_Summary__c" name="jigsaw_clean__Sync_Status_Summary__c" type="string"/>
+<Field __implementationClass="java.lang.String" __index="185" __sourcePath="{}/Account/jigsaw_x005fclean_x005f_x005fSync_x005fStatus_x005f_x005fc" containerType="SINGLE" label="jigsaw_clean__Sync_Status__c" name="jigsaw_clean__Sync_Status__c" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="179" __sourcePath="{}/Account/jsImpacts_x005f_x005fAdded_x005ffrom_x005fData_x005fcom_x005f_x005fc" containerType="SINGLE" label="jsImpacts__Added_from_Data_com__c" name="jsImpacts__Added_from_Data_com__c" type="number"/>
+<Field __implementationClass="java.lang.Double" __index="80" __sourcePath="{}/Account/jsImpacts_x005f_x005fData_x005fcom_x005fManaged_x005f_x005fc" containerType="SINGLE" label="jsImpacts__Data_com_Managed__c" name="jsImpacts__Data_com_Managed__c" type="number"/>
+<Field __implementationClass="java.lang.String" __index="57" __sourcePath="{}/Account/jsImpacts_x005f_x005fData_x005fcom_x005fMatched_x005f_x005fc" containerType="SINGLE" label="jsImpacts__Data_com_Matched__c" name="jsImpacts__Data_com_Matched__c" type="string"/>
+<Field __implementationClass="java.lang.Boolean" __index="62" __sourcePath="{}/Account/jsImpacts_x005f_x005fData_x005fcom_x005fdoes_x005fnot_x005fauto_x005fupdate_x005f_x005fc" containerType="SINGLE" label="jsImpacts__Data_com_does_not_auto_update__c" name="jsImpacts__Data_com_does_not_auto_update__c" type="boolean"/>
+<Field __implementationClass="java.lang.Double" __index="124" __sourcePath="{}/Account/ofITStaff_x005f_x005fc" containerType="SINGLE" label="ofITStaff__c" name="ofITStaff__c" type="number"/>
+<Field __implementationClass="java.lang.Double" __index="206" __sourcePath="{}/Account/ofsalesreps_x005f_x005fc" containerType="SINGLE" label="ofsalesreps__c" name="ofsalesreps__c" type="number"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __schemaType="{http://schemas.xmlsoap.org/soap/envelope/}EnvelopeType" __sourcePath="{http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope" _dataStructure="OBJECT" _id="__id" _type="Input" id="38154e0c-6f4a-47f7-aca3-59f5f7b0c34a">
+<Record fieldDelimiter="," name="Envelope" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __schemaType="{http://soap.sforce.com/2005/09/outbound}notificationsType" __sourcePath="{http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:OrganizationId" containerType="SINGLE" label="OrganizationId" name="OrganizationId" type="string"/>
+<Field __index="1" __schemaType="{http://soap.sforce.com/2005/09/outbound}notificationsType" __sourcePath="{http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:ActionId" containerType="SINGLE" label="ActionId" name="ActionId" type="string"/>
+<Field __index="2" __schemaType="{http://soap.sforce.com/2005/09/outbound}notificationsType" __sourcePath="{http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:SessionId" containerType="SINGLE" label="SessionId" name="SessionId" type="string"/>
+<Field __index="3" __schemaType="{http://soap.sforce.com/2005/09/outbound}notificationsType" __sourcePath="{http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:EnterpriseUrl" containerType="SINGLE" label="EnterpriseUrl" name="EnterpriseUrl" type="string"/>
+<Field __index="4" __schemaType="{http://soap.sforce.com/2005/09/outbound}notificationsType" __sourcePath="{http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:PartnerUrl" containerType="SINGLE" label="PartnerUrl" name="PartnerUrl" type="string"/>
+<Field __index="5" __schemaType="{http://soap.sforce.com/2005/09/outbound}NotificationType" __sourcePath="{http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:Id" containerType="SINGLE" label="Id" name="Id" type="string"/>
+<Field __index="6" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Id" containerType="SINGLE" label="Id" name="Id_1" type="string"/>
+<Field __index="7" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:AccountNumber" containerType="SINGLE" label="AccountNumber" name="AccountNumber" type="integer"/>
+<Field __index="8" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:AnnualRevenue" containerType="SINGLE" label="AnnualRevenue" name="AnnualRevenue" type="number"/>
+<Field __index="9" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:BillingCity" containerType="SINGLE" label="BillingCity" name="BillingCity" type="string"/>
+<Field __index="10" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:BillingCountry" containerType="SINGLE" label="BillingCountry" name="BillingCountry" type="string"/>
+<Field __index="11" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:BillingPostalCode" containerType="SINGLE" label="BillingPostalCode" name="BillingPostalCode" type="integer"/>
+<Field __index="12" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:BillingState" containerType="SINGLE" label="BillingState" name="BillingState" type="string"/>
+<Field __index="13" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:BillingStreet" containerType="SINGLE" label="BillingStreet" name="BillingStreet" type="string"/>
+<Field __index="14" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:CreatedById" containerType="SINGLE" label="CreatedById" name="CreatedById" type="string"/>
+<Field __dmType="Calendar" __index="15" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:CreatedDate" containerType="SINGLE" label="CreatedDate" name="CreatedDate" type="string"/>
+<Field __index="16" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:CustomerPriority__c" containerType="SINGLE" label="CustomerPriority__c" name="CustomerPriority__c" type="string"/>
+<Field __index="17" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Description" containerType="SINGLE" label="Description" name="Description" type="string"/>
+<Field __index="18" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Fax" containerType="SINGLE" label="Fax" name="Fax" type="integer"/>
+<Field __index="19" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Industry" containerType="SINGLE" label="Industry" name="Industry" type="string"/>
+<Field __index="20" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:IsDeleted" containerType="SINGLE" label="IsDeleted" name="IsDeleted" type="string"/>
+<Field __index="21" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:LastModifiedById" containerType="SINGLE" label="LastModifiedById" name="LastModifiedById" type="string"/>
+<Field __dmType="Calendar" __index="22" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:LastModifiedDate" containerType="SINGLE" label="LastModifiedDate" name="LastModifiedDate" type="string"/>
+<Field __dmType="Calendar" __index="23" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:LastReferencedDate" containerType="SINGLE" label="LastReferencedDate" name="LastReferencedDate" type="string"/>
+<Field __dmType="Calendar" __index="24" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:LastViewedDate" containerType="SINGLE" label="LastViewedDate" name="LastViewedDate" type="string"/>
+<Field __index="25" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Name" containerType="SINGLE" label="Name" name="Name" type="string"/>
+<Field __index="26" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:NumberOfEmployees" containerType="SINGLE" label="NumberOfEmployees" name="NumberOfEmployees" type="integer"/>
+<Field __index="27" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:OwnerId" containerType="SINGLE" label="OwnerId" name="OwnerId" type="string"/>
+<Field __index="28" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Ownership" containerType="SINGLE" label="Ownership" name="Ownership" type="string"/>
+<Field __index="29" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Phone" containerType="SINGLE" label="Phone" name="Phone" type="integer"/>
+<Field __index="30" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:PhotoUrl" containerType="SINGLE" label="PhotoUrl" name="PhotoUrl" type="string"/>
+<Field __index="31" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Rating" containerType="SINGLE" label="Rating" name="Rating" type="string"/>
+<Field __index="32" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:SLA__c" containerType="SINGLE" label="SLA__c" name="SLA__c" type="string"/>
+<Field __index="33" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:ShippingCity" containerType="SINGLE" label="ShippingCity" name="ShippingCity" type="string"/>
+<Field __index="34" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:ShippingCountry" containerType="SINGLE" label="ShippingCountry" name="ShippingCountry" type="string"/>
+<Field __index="35" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:ShippingPostalCode" containerType="SINGLE" label="ShippingPostalCode" name="ShippingPostalCode" type="integer"/>
+<Field __index="36" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:ShippingState" containerType="SINGLE" label="ShippingState" name="ShippingState" type="string"/>
+<Field __index="37" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:ShippingStreet" containerType="SINGLE" label="ShippingStreet" name="ShippingStreet" type="string"/>
+<Field __index="38" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Site" containerType="SINGLE" label="Site" name="Site" type="string"/>
+<Field __dmType="Calendar" __index="39" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:SystemModstamp" containerType="SINGLE" label="SystemModstamp" name="SystemModstamp" type="string"/>
+<Field __index="40" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Type" containerType="SINGLE" label="Type" name="Type" type="string"/>
+<Field __index="41" __schemaType="{http://soap.sforce.com/2005/09/outbound}sObjectType" __sourcePath="{urn:sobject.enterprise.soap.sforce.com=ns2,http://soap.sforce.com/2005/09/outbound=ns1,http://schemas.xmlsoap.org/soap/envelope/=ns0}/ns0:Envelope/ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Website" containerType="SINGLE" label="Website" name="Website" type="string"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node enabled="enabled" guiName="Foreach 'ns0:Envelope' -&gt; 'Account'" guiX="460" guiY="20" id="FOREACH_NS0_ENVELOPE_ACCOUNT" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+//END -> DO NOT REMOVE
+output.ShippingStreet = input.ShippingStreet;
+output.Site = input.Site;
+output.LastModifiedDate = (isnull(input.LastModifiedDate) ? null : input.LastModifiedDate);
+output.Type = input.Type;
+output.Website = input.Website;
+output.Description = input.Description;
+output.Fax = (isnull(input.Fax) ? null : num2str(input.Fax));
+output.Industry = input.Industry;
+output.Name = input.Name;
+output.NumberOfEmployees = input.NumberOfEmployees;
+output.Description = input.Description;
+output.Phone = (isnull(input.Phone) ? null : num2str(input.Phone));
+output.ShippingCity = input.ShippingCity;
+output.ShippingCountry = input.ShippingCountry;
+output.ShippingPostalCode = (isnull(input.ShippingPostalCode) ? null : num2str(input.ShippingPostalCode));
+output.ShippingState = input.ShippingState;
+output.BillingCity = input.BillingCity;
+output.BillingCountry = input.BillingCountry;
+output.BillingPostalCode = (isnull(input.BillingPostalCode) ? null : num2str(input.BillingPostalCode));
+output.BillingState = input.BillingState;
+output.BillingStreet = input.BillingStreet;
+]]></attr>
+</Node>
+<Node cacheInMemory="true" enabled="enabled" fileURL="dict:outputPayload" guiName="Map&lt;k,v&gt; WRITER" guiX="900" guiY="20" id="MAP_WRITER0" type="MAP_WRITER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<clover:collection clover:name="Account" xmlns:clover="http://www.cloveretl.com/ns/xmlmapping">
+  <item clover:inPort="0">
+    <clover:element clover:name="DSCORGPKG__DeletedFromDiscoverOrg__c">$0.DSCORGPKG__DeletedFromDiscoverOrg__c</clover:element>
+    <TickerSymbol clover:dataType="java.lang.String">$0.TickerSymbol</TickerSymbol>
+    <clover:element clover:name="jigsaw_clean__Sync_Status_Indicator__c" clover:dataType="java.lang.String">$0.jigsaw_clean__Sync_Status_Indicator__c</clover:element>
+    <clover:element clover:name="Versions_of_Mule__c" clover:dataType="java.lang.String">$0.Versions_of_Mule__c</clover:element>
+    <clover:element clover:name="Company_Description__c" clover:dataType="java.lang.String">$0.Company_Description__c</clover:element>
+    <clover:element clover:name="NDA__c" clover:dataType="java.lang.Boolean">$0.NDA__c</clover:element>
+    <clover:element clover:name="jigsaw_clean__Additional_Information__c" clover:dataType="java.lang.String">$0.jigsaw_clean__Additional_Information__c</clover:element>
+    <clover:element clover:name="Do_you_use_or_plan_to_use_Mule_Studio__c" clover:dataType="java.lang.String">$0.Do_you_use_or_plan_to_use_Mule_Studio__c</clover:element>
+    <clover:element clover:name="Trained_Mule_Consultants__c" clover:dataType="java.lang.Double">$0.Trained_Mule_Consultants__c</clover:element>
+    <clover:element clover:name="SAL_Additional_Consideration__c">$0.SAL_Additional_Consideration__c</clover:element>
+    <clover:element clover:name="DSCORGPKG__ITOrgChart__c" clover:dataType="java.lang.String">$0.DSCORGPKG__ITOrgChart__c</clover:element>
+    <clover:element clover:name="Support_Start_Date__c" clover:dataType="java.util.Calendar">$0.Support_Start_Date__c</clover:element>
+    <clover:element clover:name="Solution_Selected__c" clover:dataType="java.lang.String">$0.Solution_Selected__c</clover:element>
+    <BillingStreet clover:dataType="java.lang.String">$0.BillingStreet</BillingStreet>
+    <clover:element clover:name="jigsaw_clean__Automatic_Updates_Disabled__c" clover:dataType="java.lang.Boolean">$0.jigsaw_clean__Automatic_Updates_Disabled__c</clover:element>
+    <clover:element clover:name="jigsaw_clean__Fresher__c" clover:dataType="java.lang.String">$0.jigsaw_clean__Fresher__c</clover:element>
+    <clover:element clover:name="DSCORGPKG__DiscoverOrg_ID__c" clover:dataType="java.lang.String">$0.DSCORGPKG__DiscoverOrg_ID__c</clover:element>
+    <ShippingLongitude clover:dataType="java.lang.Double">$0.ShippingLongitude</ShippingLongitude>
+    <Rating>$0.Rating</Rating>
+    <NaicsDesc clover:dataType="java.lang.String">$0.NaicsDesc</NaicsDesc>
+    <CreatedById clover:dataType="java.lang.String">$0.CreatedById</CreatedById>
+    <clover:element clover:name="Intacct_Seed_Number__c" clover:dataType="java.lang.String">$0.Intacct_Seed_Number__c</clover:element>
+    <clover:element clover:name="Threshold_C__c" clover:dataType="java.lang.Boolean">$0.Threshold_C__c</clover:element>
+    <clover:element clover:name="Database_Notes__c" clover:dataType="java.lang.String">$0.Database_Notes__c</clover:element>
+    <Tradestyle clover:dataType="java.lang.String">$0.Tradestyle</Tradestyle>
+    <IsCustomerPortal clover:dataType="java.lang.Boolean">$0.IsCustomerPortal</IsCustomerPortal>
+    <OwnerId clover:dataType="java.lang.String">$0.OwnerId</OwnerId>
+    <clover:element clover:name="Revenue_Category__c">$0.Revenue_Category__c</clover:element>
+    <clover:element clover:name="Sourced_Lost_Opps__c" clover:dataType="java.lang.Double">$0.Sourced_Lost_Opps__c</clover:element>
+    <BillingState clover:dataType="java.lang.String">$0.BillingState</BillingState>
+    <clover:element clover:name="jigsaw_clean__Last_Sync__c" clover:dataType="java.util.Calendar">$0.jigsaw_clean__Last_Sync__c</clover:element>
+    <clover:element clover:name="PrimaryDataCenterLocation__c" clover:dataType="java.lang.String">$0.PrimaryDataCenterLocation__c</clover:element>
+    <clover:element clover:name="KimbleOne__InvoiceFormat__c" clover:dataType="java.lang.String">$0.KimbleOne__InvoiceFormat__c</clover:element>
+    <clover:element clover:name="Programmable_Web_Advertiser__c" clover:dataType="java.lang.String">$0.Programmable_Web_Advertiser__c</clover:element>
+    <clover:element clover:name="Web_Keyword__c" clover:dataType="java.lang.String">$0.Web_Keyword__c</clover:element>
+    <clover:element clover:name="Legacy_Threshold__c" clover:dataType="java.lang.Boolean">$0.Legacy_Threshold__c</clover:element>
+    <SystemModstamp clover:dataType="java.util.Calendar">$0.SystemModstamp</SystemModstamp>
+    <clover:element clover:name="KimbleOne__InvoiceTemplate__c" clover:dataType="java.lang.String">$0.KimbleOne__InvoiceTemplate__c</clover:element>
+    <clover:element clover:name="Web_Source__c" clover:dataType="java.lang.String">$0.Web_Source__c</clover:element>
+    <clover:element clover:name="Number_of_hosted_services__c" clover:dataType="java.lang.String">$0.Number_of_hosted_services__c</clover:element>
+    <clover:element clover:name="Previous_Incident_Definition__c" clover:dataType="java.lang.Boolean">$0.Previous_Incident_Definition__c</clover:element>
+    <LastReferencedDate clover:dataType="java.util.Calendar">$0.LastReferencedDate</LastReferencedDate>
+    <clover:element clover:name="KimbleOne__BusinessUnit__c" clover:dataType="java.lang.String">$0.KimbleOne__BusinessUnit__c</clover:element>
+    <clover:element clover:name="Billing_Attention_Of__c" clover:dataType="java.lang.String">$0.Billing_Attention_Of__c</clover:element>
+    <clover:element clover:name="OS_and_JVM_version__c" clover:dataType="java.lang.String">$0.OS_and_JVM_version__c</clover:element>
+    <clover:element clover:name="Strategic_Account_Level_Override__c">$0.Strategic_Account_Level_Override__c</clover:element>
+    <CreatedDate clover:dataType="java.util.Calendar">$0.CreatedDate</CreatedDate>
+    <clover:element clover:name="Zuora__SLASerialNumber__c" clover:dataType="java.lang.String">$0.Zuora__SLASerialNumber__c</clover:element>
+    <clover:element clover:name="Web_Content__c" clover:dataType="java.lang.String">$0.Web_Content__c</clover:element>
+    <JigsawCompanyId clover:dataType="java.lang.String">$0.JigsawCompanyId</JigsawCompanyId>
+    <Sic clover:dataType="java.lang.String">$0.Sic</Sic>
+    <clover:element clover:name="Trained_Mule_Instructors__c" clover:dataType="java.lang.Double">$0.Trained_Mule_Instructors__c</clover:element>
+    <RecordTypeId clover:dataType="java.lang.String">$0.RecordTypeId</RecordTypeId>
+    <clover:element clover:name="jsImpacts__Data_com_Matched__c" clover:dataType="java.lang.String">$0.jsImpacts__Data_com_Matched__c</clover:element>
+    <clover:element clover:name="Messaging_Software__c" clover:dataType="java.lang.String">$0.Messaging_Software__c</clover:element>
+    <clover:element clover:name="Zuora__Active__c">$0.Zuora__Active__c</clover:element>
+    <clover:element clover:name="Mission_Critical__c" clover:dataType="java.lang.String">$0.Mission_Critical__c</clover:element>
+    <clover:element clover:name="jsImpacts__Data_com_does_not_auto_update__c" clover:dataType="java.lang.Boolean">$0.jsImpacts__Data_com_does_not_auto_update__c</clover:element>
+    <NaicsCode clover:dataType="java.lang.String">$0.NaicsCode</NaicsCode>
+    <Site clover:dataType="java.lang.String">$0.Site</Site>
+    <clover:element clover:name="Lead_Type__c">$0.Lead_Type__c</clover:element>
+    <clover:element clover:name="Project_Information__c" clover:dataType="java.lang.String">$0.Project_Information__c</clover:element>
+    <clover:element clover:name="ZAccountNumber__c" clover:dataType="java.lang.String">$0.ZAccountNumber__c</clover:element>
+    <clover:element clover:name="jigsaw_clean__Automatic_Updates__c" clover:dataType="java.lang.String">$0.jigsaw_clean__Automatic_Updates__c</clover:element>
+    <clover:element clover:name="Is_MMC_used_for_prod__c" clover:dataType="java.lang.String">$0.Is_MMC_used_for_prod__c</clover:element>
+    <clover:element clover:name="Mule_Engagements__c" clover:dataType="java.lang.Double">$0.Mule_Engagements__c</clover:element>
+    <clover:element clover:name="Zuora__SLAExpirationDate__c" clover:dataType="java.util.Calendar">$0.Zuora__SLAExpirationDate__c</clover:element>
+    <clover:element clover:name="Database__c">$0.Database__c</clover:element>
+    <clover:element clover:name="Zuora__NumberofLocations__c" clover:dataType="java.lang.Double">$0.Zuora__NumberofLocations__c</clover:element>
+    <clover:element clover:name="Pipeline_Revenue__c" clover:dataType="java.lang.String">$0.Pipeline_Revenue__c</clover:element>
+    <clover:element clover:name="MuleCon__c">$0.MuleCon__c</clover:element>
+    <LastViewedDate clover:dataType="java.util.Calendar">$0.LastViewedDate</LastViewedDate>
+    <clover:element clover:name="Evaluated_Mule_Ion__c" clover:dataType="java.lang.String">$0.Evaluated_Mule_Ion__c</clover:element>
+    <clover:element clover:name="jsImpacts__Data_com_Managed__c" clover:dataType="java.lang.Double">$0.jsImpacts__Data_com_Managed__c</clover:element>
+    <clover:element clover:name="KimbleOne__InvoicingCurrencyIsoCode__c" clover:dataType="java.lang.String">$0.KimbleOne__InvoicingCurrencyIsoCode__c</clover:element>
+    <Industry>$0.Industry</Industry>
+    <Phone clover:dataType="java.lang.String">$0.Phone</Phone>
+    <clover:element clover:name="jigsaw_clean__Graveyard__c" clover:dataType="java.lang.Boolean">$0.jigsaw_clean__Graveyard__c</clover:element>
+    <clover:element clover:name="Support_Expiration_Date__c" clover:dataType="java.util.Calendar">$0.Support_Expiration_Date__c</clover:element>
+    <clover:element clover:name="Max_Support_Contacts__c" clover:dataType="java.lang.Double">$0.Max_Support_Contacts__c</clover:element>
+    <clover:element clover:name="TotalPotentialLicenses__c" clover:dataType="java.lang.Double">$0.TotalPotentialLicenses__c</clover:element>
+    <BillingLatitude clover:dataType="java.lang.Double">$0.BillingLatitude</BillingLatitude>
+    <clover:element clover:name="The_Power_of_One__c" clover:dataType="java.lang.Double">$0.The_Power_of_One__c</clover:element>
+    <LastActivityDate clover:dataType="java.util.Calendar">$0.LastActivityDate</LastActivityDate>
+    <clover:element clover:name="jigsaw_clean__Duplicate__c" clover:dataType="java.lang.String">$0.jigsaw_clean__Duplicate__c</clover:element>
+    <clover:element clover:name="Zuora__CustomerPriority__c">$0.Zuora__CustomerPriority__c</clover:element>
+    <clover:element clover:name="KimbleOne__BillingContact__c" clover:dataType="java.lang.String">$0.KimbleOne__BillingContact__c</clover:element>
+    <clover:element clover:name="jigsaw_clean__Silent_Update__c" clover:dataType="java.lang.Boolean">$0.jigsaw_clean__Silent_Update__c</clover:element>
+    <Description clover:dataType="java.lang.String">$0.Description</Description>
+    <clover:element clover:name="jigsaw_clean__Jigsaw_Last_Modified_Date__c" clover:dataType="java.util.Calendar">$0.jigsaw_clean__Jigsaw_Last_Modified_Date__c</clover:element>
+    <LastModifiedById clover:dataType="java.lang.String">$0.LastModifiedById</LastModifiedById>
+    <clover:element clover:name="Sales_Ready__c" clover:dataType="java.lang.Boolean">$0.Sales_Ready__c</clover:element>
+    <clover:element clover:name="Web_Medium__c" clover:dataType="java.lang.String">$0.Web_Medium__c</clover:element>
+    <clover:element clover:name="Number_of_endpoints__c" clover:dataType="java.lang.String">$0.Number_of_endpoints__c</clover:element>
+    <clover:element clover:name="Sub_Region__c">$0.Sub_Region__c</clover:element>
+    <clover:element clover:name="Territory1__c" clover:dataType="java.lang.String">$0.Territory1__c</clover:element>
+    <clover:element clover:name="LID__LinkedIn_Company_Id__c" clover:dataType="java.lang.String">$0.LID__LinkedIn_Company_Id__c</clover:element>
+    <Ownership>$0.Ownership</Ownership>
+    <clover:element clover:name="Concurforce__AccruedUnApprovedExpenseTotal__c" clover:dataType="java.lang.String">$0.Concurforce__AccruedUnApprovedExpenseTotal__c</clover:element>
+    <ParentId clover:dataType="java.lang.String">$0.ParentId</ParentId>
+    <clover:element clover:name="Checkin_Date__c" clover:dataType="java.util.Calendar">$0.Checkin_Date__c</clover:element>
+    <LastModifiedDate clover:dataType="java.util.Calendar">$0.LastModifiedDate</LastModifiedDate>
+    <clover:element clover:name="OnBoarding_Form_URL__c" clover:dataType="java.lang.String">$0.OnBoarding_Form_URL__c</clover:element>
+    <clover:element clover:name="KimbleOne__TaxCodeReference__c" clover:dataType="java.lang.String">$0.KimbleOne__TaxCodeReference__c</clover:element>
+    <clover:element clover:name="Threshold_A__c" clover:dataType="java.lang.Boolean">$0.Threshold_A__c</clover:element>
+    <NumberOfEmployees clover:dataType="java.lang.Integer">$0.NumberOfEmployees</NumberOfEmployees>
+    <ShippingCity clover:dataType="java.lang.String">$0.ShippingCity</ShippingCity>
+    <Jigsaw clover:dataType="java.lang.String">$0.Jigsaw</Jigsaw>
+    <ShippingCountry clover:dataType="java.lang.String">$0.ShippingCountry</ShippingCountry>
+    <clover:element clover:name="KimbleOne__TaxCode__c" clover:dataType="java.lang.String">$0.KimbleOne__TaxCode__c</clover:element>
+    <clover:element clover:name="In_Production__c" clover:dataType="java.lang.Boolean">$0.In_Production__c</clover:element>
+    <clover:element clover:name="Production_release_date__c" clover:dataType="java.lang.String">$0.Production_release_date__c</clover:element>
+    <clover:element clover:name="Joint_Account_Owner__c">$0.Joint_Account_Owner__c</clover:element>
+    <BillingCity clover:dataType="java.lang.String">$0.BillingCity</BillingCity>
+    <clover:element clover:name="jigsaw_clean__Jigsaw_Managed__c" clover:dataType="java.lang.String">$0.jigsaw_clean__Jigsaw_Managed__c</clover:element>
+    <clover:element clover:name="ofITStaff__c" clover:dataType="java.lang.Double">$0.ofITStaff__c</clover:element>
+    <clover:element clover:name="Production_Java_Environment__c">$0.Production_Java_Environment__c</clover:element>
+    <IsDeleted clover:dataType="java.lang.Boolean">$0.IsDeleted</IsDeleted>
+    <clover:element clover:name="Zuora__SLA__c">$0.Zuora__SLA__c</clover:element>
+    <clover:element clover:name="Threshold_B__c" clover:dataType="java.lang.Boolean">$0.Threshold_B__c</clover:element>
+    <clover:element clover:name="Milestone_Dates__c" clover:dataType="java.lang.String">$0.Milestone_Dates__c</clover:element>
+    <DunsNumber clover:dataType="java.lang.String">$0.DunsNumber</DunsNumber>
+    <clover:element clover:name="Number_of_third_party_services__c" clover:dataType="java.lang.String">$0.Number_of_third_party_services__c</clover:element>
+    <clover:element clover:name="Deployment_Summary__c" clover:dataType="java.lang.String">$0.Deployment_Summary__c</clover:element>
+    <clover:element clover:name="Web_Campaign__c" clover:dataType="java.lang.String">$0.Web_Campaign__c</clover:element>
+    <clover:element clover:name="KimbleOne__IsSupplier__c" clover:dataType="java.lang.Boolean">$0.KimbleOne__IsSupplier__c</clover:element>
+    <clover:element clover:name="Platinum_Contact_Message__c" clover:dataType="java.lang.String">$0.Platinum_Contact_Message__c</clover:element>
+    <clover:element clover:name="Customer_Satisfaction__c">$0.Customer_Satisfaction__c</clover:element>
+    <clover:element clover:name="CloudHubOrganizationId__c" clover:dataType="java.lang.String">$0.CloudHubOrganizationId__c</clover:element>
+    <BillingPostalCode clover:dataType="java.lang.String">$0.BillingPostalCode</BillingPostalCode>
+    <clover:element clover:name="Number_of_instances_in_production__c" clover:dataType="java.lang.String">$0.Number_of_instances_in_production__c</clover:element>
+    <clover:element clover:name="CorporateDesktopHWStandard__c">$0.CorporateDesktopHWStandard__c</clover:element>
+    <clover:element clover:name="Threshold_Status__c">$0.Threshold_Status__c</clover:element>
+    <clover:element clover:name="jigsaw_clean__Jigsaw_Managed_Backend__c" clover:dataType="java.lang.Double">$0.jigsaw_clean__Jigsaw_Managed_Backend__c</clover:element>
+    <clover:element clover:name="CorporateDesktopOSStandard__c">$0.CorporateDesktopOSStandard__c</clover:element>
+    <clover:element clover:name="jigsaw_clean__CRM_Last_Modified__c" clover:dataType="java.util.Calendar">$0.jigsaw_clean__CRM_Last_Modified__c</clover:element>
+    <clover:element clover:name="PrimaryERPSystem__c">$0.PrimaryERPSystem__c</clover:element>
+    <clover:element clover:name="Executive_Sponsor__c">$0.Executive_Sponsor__c</clover:element>
+    <clover:element clover:name="Support_On_Boarding_Call__c" clover:dataType="java.lang.Boolean">$0.Support_On_Boarding_Call__c</clover:element>
+    <clover:element clover:name="SaaS_Top_250_Category__c">$0.SaaS_Top_250_Category__c</clover:element>
+    <clover:element clover:name="ReferenceProgramStatus__c">$0.ReferenceProgramStatus__c</clover:element>
+    <ShippingStreet clover:dataType="java.lang.String">$0.ShippingStreet</ShippingStreet>
+    <YearStarted clover:dataType="java.lang.String">$0.YearStarted</YearStarted>
+    <clover:element clover:name="Deployment_Model__c" clover:dataType="java.lang.String">$0.Deployment_Model__c</clover:element>
+    <clover:element clover:name="jigsaw_clean__Jigsaw_Created_Date__c" clover:dataType="java.util.Calendar">$0.jigsaw_clean__Jigsaw_Created_Date__c</clover:element>
+    <MasterRecordId clover:dataType="java.lang.String">$0.MasterRecordId</MasterRecordId>
+    <clover:element clover:name="Zuora__UpsellOpportunity__c">$0.Zuora__UpsellOpportunity__c</clover:element>
+    <clover:element clover:name="DSCORGPKG__DiscoverOrg_LastUpdate__c" clover:dataType="java.util.Calendar">$0.DSCORGPKG__DiscoverOrg_LastUpdate__c</clover:element>
+    <clover:element clover:name="Current_Developer_Portal__c" clover:dataType="java.lang.String">$0.Current_Developer_Portal__c</clover:element>
+    <SicDesc clover:dataType="java.lang.String">$0.SicDesc</SicDesc>
+    <clover:element clover:name="jigsaw_clean__Jigsaw_Id__c" clover:dataType="java.lang.String">$0.jigsaw_clean__Jigsaw_Id__c</clover:element>
+    <clover:element clover:name="DSCORGPKG__Conflict__c" clover:dataType="java.lang.String">$0.DSCORGPKG__Conflict__c</clover:element>
+    <clover:element clover:name="KimbleOne__PurchaseOrderRule__c" clover:dataType="java.lang.String">$0.KimbleOne__PurchaseOrderRule__c</clover:element>
+    <clover:element clover:name="Incidents_Remaining__c" clover:dataType="java.lang.Double">$0.Incidents_Remaining__c</clover:element>
+    <clover:element clover:name="Resell__c">$0.Resell__c</clover:element>
+    <clover:element clover:name="Won_Opportunity_Count__c" clover:dataType="java.lang.Double">$0.Won_Opportunity_Count__c</clover:element>
+    <clover:element clover:name="jigsaw_clean__Sync_Status_Summary__c" clover:dataType="java.lang.String">$0.jigsaw_clean__Sync_Status_Summary__c</clover:element>
+    <clover:element clover:name="Territory__c">$0.Territory__c</clover:element>
+    <ShippingLatitude clover:dataType="java.lang.Double">$0.ShippingLatitude</ShippingLatitude>
+    <clover:element clover:name="KimbleOne__InvoicePaymentTermDays__c" clover:dataType="java.lang.Double">$0.KimbleOne__InvoicePaymentTermDays__c</clover:element>
+    <BillingLongitude clover:dataType="java.lang.Double">$0.BillingLongitude</BillingLongitude>
+    <BillingCountry clover:dataType="java.lang.String">$0.BillingCountry</BillingCountry>
+    <clover:element clover:name="Impl_Details__c" clover:dataType="java.lang.String">$0.Impl_Details__c</clover:element>
+    <CurrencyIsoCode>$0.CurrencyIsoCode</CurrencyIsoCode>
+    <clover:element clover:name="Strategic_Account_Level__c" clover:dataType="java.lang.String">$0.Strategic_Account_Level__c</clover:element>
+    <clover:element clover:name="SI_Partner__c" clover:dataType="java.lang.Boolean">$0.SI_Partner__c</clover:element>
+    <clover:element clover:name="KimbleOne__IsCustomer__c" clover:dataType="java.lang.Boolean">$0.KimbleOne__IsCustomer__c</clover:element>
+    <clover:element clover:name="Is_MMC_used_for_performance_tuning__c" clover:dataType="java.lang.String">$0.Is_MMC_used_for_performance_tuning__c</clover:element>
+    <clover:element clover:name="Vertical_Focus__c">$0.Vertical_Focus__c</clover:element>
+    <clover:element clover:name="jsImpacts__Added_from_Data_com__c" clover:dataType="java.lang.Double">$0.jsImpacts__Added_from_Data_com__c</clover:element>
+    <clover:element clover:name="KimbleOne__Code__c" clover:dataType="java.lang.String">$0.KimbleOne__Code__c</clover:element>
+    <clover:element clover:name="SaaS_Top_250_Company__c" clover:dataType="java.lang.Boolean">$0.SaaS_Top_250_Company__c</clover:element>
+    <clover:element clover:name="Completed_by__c" clover:dataType="java.lang.String">$0.Completed_by__c</clover:element>
+    <clover:element clover:name="Production_OS_s__c" clover:dataType="java.lang.String">$0.Production_OS_s__c</clover:element>
+    <clover:element clover:name="Current_Support_Level__c">$0.Current_Support_Level__c</clover:element>
+    <clover:element clover:name="jigsaw_clean__Sync_Status__c" clover:dataType="java.lang.String">$0.jigsaw_clean__Sync_Status__c</clover:element>
+    <Id clover:dataType="java.lang.String">$0.Id</Id>
+    <ShippingPostalCode clover:dataType="java.lang.String">$0.ShippingPostalCode</ShippingPostalCode>
+    <IsPartner clover:dataType="java.lang.Boolean">$0.IsPartner</IsPartner>
+    <clover:element clover:name="Status__c">$0.Status__c</clover:element>
+    <clover:element clover:name="High_Availability__c">$0.High_Availability__c</clover:element>
+    <clover:element clover:name="Using_Embedded_Mule__c" clover:dataType="java.lang.Boolean">$0.Using_Embedded_Mule__c</clover:element>
+    <Type>$0.Type</Type>
+    <clover:element clover:name="jigsaw_clean__Duplicate_Id__c" clover:dataType="java.lang.String">$0.jigsaw_clean__Duplicate_Id__c</clover:element>
+    <clover:element clover:name="Concurforce__FinalExpenseTotal__c" clover:dataType="java.lang.String">$0.Concurforce__FinalExpenseTotal__c</clover:element>
+    <clover:element clover:name="Sourced_Open_Opps__c" clover:dataType="java.lang.Double">$0.Sourced_Open_Opps__c</clover:element>
+    <ShippingState clover:dataType="java.lang.String">$0.ShippingState</ShippingState>
+    <clover:element clover:name="KimbleOne__BusinessUnitTradingEntity__c" clover:dataType="java.lang.String">$0.KimbleOne__BusinessUnitTradingEntity__c</clover:element>
+    <clover:element clover:name="Sourced_Won_Opportunities__c" clover:dataType="java.lang.Double">$0.Sourced_Won_Opportunities__c</clover:element>
+    <clover:element clover:name="Mule_Version_s_In_Production__c">$0.Mule_Version_s_In_Production__c</clover:element>
+    <clover:element clover:name="GigaSpaces__c" clover:dataType="java.lang.Boolean">$0.GigaSpaces__c</clover:element>
+    <clover:element clover:name="jigsaw_clean__Jigsaw_Last_Sync_Locked__c" clover:dataType="java.util.Calendar">$0.jigsaw_clean__Jigsaw_Last_Sync_Locked__c</clover:element>
+    <clover:element clover:name="jigsaw_clean__Jigsaw_Sync_Activity__c">$0.jigsaw_clean__Jigsaw_Sync_Activity__c</clover:element>
+    <clover:element clover:name="KimbleOne__AllowPartItemInvoicing__c" clover:dataType="java.lang.Boolean">$0.KimbleOne__AllowPartItemInvoicing__c</clover:element>
+    <clover:element clover:name="ofsalesreps__c" clover:dataType="java.lang.Double">$0.ofsalesreps__c</clover:element>
+    <Website clover:dataType="java.lang.String">$0.Website</Website>
+    <Fax clover:dataType="java.lang.String">$0.Fax</Fax>
+    <clover:element clover:name="Development_team_size_and_profile__c" clover:dataType="java.lang.String">$0.Development_team_size_and_profile__c</clover:element>
+    <clover:element clover:name="Marketing_Budget__c" clover:dataType="java.lang.String">$0.Marketing_Budget__c</clover:element>
+    <Name clover:dataType="java.lang.String">$0.Name</Name>
+    <clover:element clover:name="Decision_Made__c" clover:dataType="java.util.Calendar">$0.Decision_Made__c</clover:element>
+    <clover:element clover:name="Incident_Message__c" clover:dataType="java.lang.String">$0.Incident_Message__c</clover:element>
+    <clover:element clover:name="Executive_Sponsor_Email__c" clover:dataType="java.lang.String">$0.Executive_Sponsor_Email__c</clover:element>
+    <clover:element clover:name="Customer_Score__c" clover:dataType="java.lang.Double">$0.Customer_Score__c</clover:element>
+  </item>
+</clover:collection>]]></attr>
+<attr name="__typeName"><![CDATA[Account]]></attr>
+<attr name="_data_format"><![CDATA[MAP]]></attr>
+<attr name="__connectorName"><![CDATA[SalesforceA]]></attr>
+</Node>
+<Node charset="UTF-8" enabled="enabled" fileURL="dict:inputPayload" guiName="XML READER" guiX="20" guiY="20" id="XML_READER0" type="XML_READER">
+<attr name="xmlSchemaURL"><![CDATA[.\src\main\resources\Id.xsd,F:\mule-workspace\template-sfdc2sfdc-account-broadcast\src\main\resources\notifications.xsd,F:\mule-workspace\template-sfdc2sfdc-account-broadcast\src\main\resources\Envelope.xsd]]></attr>
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" outPort="0" sequenceField="__id" xpath="/ns0:Envelope">
+  <Mapping cloverField="OrganizationId" namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:OrganizationId"/>
+  <Mapping cloverField="ActionId" namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:ActionId"/>
+  <Mapping cloverField="SessionId" namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:SessionId"/>
+  <Mapping cloverField="EnterpriseUrl" namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:EnterpriseUrl"/>
+  <Mapping cloverField="PartnerUrl" namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:PartnerUrl"/>
+  <Mapping cloverField="Id" namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:Id"/>
+  <Mapping cloverField="Id_1" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Id"/>
+  <Mapping cloverField="AccountNumber" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:AccountNumber"/>
+  <Mapping cloverField="AnnualRevenue" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:AnnualRevenue"/>
+  <Mapping cloverField="BillingCity" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:BillingCity"/>
+  <Mapping cloverField="BillingCountry" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:BillingCountry"/>
+  <Mapping cloverField="BillingPostalCode" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:BillingPostalCode"/>
+  <Mapping cloverField="BillingState" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:BillingState"/>
+  <Mapping cloverField="BillingStreet" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:BillingStreet"/>
+  <Mapping cloverField="CreatedById" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:CreatedById"/>
+  <Mapping cloverField="CreatedDate" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:CreatedDate"/>
+  <Mapping cloverField="CustomerPriority__c" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:CustomerPriority__c"/>
+  <Mapping cloverField="Description" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Description"/>
+  <Mapping cloverField="Fax" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Fax"/>
+  <Mapping cloverField="Industry" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Industry"/>
+  <Mapping cloverField="IsDeleted" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:IsDeleted"/>
+  <Mapping cloverField="LastModifiedById" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:LastModifiedById"/>
+  <Mapping cloverField="LastModifiedDate" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:LastModifiedDate"/>
+  <Mapping cloverField="LastReferencedDate" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:LastReferencedDate"/>
+  <Mapping cloverField="LastViewedDate" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:LastViewedDate"/>
+  <Mapping cloverField="Name" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Name"/>
+  <Mapping cloverField="NumberOfEmployees" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:NumberOfEmployees"/>
+  <Mapping cloverField="OwnerId" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:OwnerId"/>
+  <Mapping cloverField="Ownership" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Ownership"/>
+  <Mapping cloverField="Phone" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Phone"/>
+  <Mapping cloverField="PhotoUrl" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:PhotoUrl"/>
+  <Mapping cloverField="Rating" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Rating"/>
+  <Mapping cloverField="SLA__c" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:SLA__c"/>
+  <Mapping cloverField="ShippingCity" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:ShippingCity"/>
+  <Mapping cloverField="ShippingCountry" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:ShippingCountry"/>
+  <Mapping cloverField="ShippingPostalCode" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:ShippingPostalCode"/>
+  <Mapping cloverField="ShippingState" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:ShippingState"/>
+  <Mapping cloverField="ShippingStreet" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:ShippingStreet"/>
+  <Mapping cloverField="Site" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Site"/>
+  <Mapping cloverField="SystemModstamp" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:SystemModstamp"/>
+  <Mapping cloverField="Type" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Type"/>
+  <Mapping cloverField="Website" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Website"/>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[XML]]></attr>
+<attr name="__rootGlobalElementName"><![CDATA[{http://schemas.xmlsoap.org/soap/envelope/}Envelope]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="FOREACH_NS0_ENVELOPE_ACCOUNT:0" guiBendpoints="" id="Edge1" inPort="Port 0 (in)" metadata="019e1112-0645-4556-ac3f-056b27081d2a" outPort="Port 0 (out)" toNode="MAP_WRITER0:0"/>
+<Edge debugMode="true" fromNode="XML_READER0:0" guiBendpoints="" id="Edge0" inPort="Port 0 (in)" metadata="38154e0c-6f4a-47f7-aca3-59f5f7b0c34a" outPort="Port 0 (out)" toNode="FOREACH_NS0_ENVELOPE_ACCOUNT:0"/>
+</Phase>
+</Graph>

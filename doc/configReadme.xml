@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<configuration>
+	<placeholders>
+		<placeholder id="template_name">
+		</placeholder>
+	</placeholders>
+	<sections>
+		<section id="use_case">
+			<![CDATA[  ]]>
+		</section>
+		<section id="considerations">
+			<![CDATA[  ]]>
+		</section>
+		<section id="application_configuration">
+			<![CDATA[  ]]>
+		</section>
+		<section id="api_calls">
+			<![CDATA[  ]]>
+		</section>
+	</sections>
+</configuration>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Mule Anypoint Template
+    Copyright (c) MuleSoft, Inc.
+    All rights reserved.  http://www.mulesoft.com
+
+-->
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Envelope" type="soapenv:EnvelopeType" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"/>
+  <xs:complexType name="BodyType">
+    <xs:sequence>
+      <xs:element ref="out:notifications" xmlns:out="http://soap.sforce.com/2005/09/outbound"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EnvelopeType">
+    <xs:sequence>
+      <xs:element type="soapenv:BodyType" name="Body" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

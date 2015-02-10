@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.mule.templates</groupId>
+		<artifactId>templates-tooling-parent-pom</artifactId>
+		<version>1.1.0</version>
+	</parent>
+
+	<artifactId>template-sfdc2sfdc.wday.sap.db-account-broadcast</artifactId>
+	<packaging>mule</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>template-sfdc2sfdc.wday.sap.db-account-broadcast Anypoint Template Project</name>
+
+	<properties>		
+		<wday.hr.version>4.1.1</wday.hr.version>	
+		<sap.jco.version>3.0.10</sap.jco.version>
+		<sap.idoc.version>3.0.10</sap.idoc.version>
+		<sap.build.type>mac64</sap.build.type>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mule.tools</groupId>
+				<artifactId>maven-mule-plugin</artifactId>
+				<configuration>
+					<copyToAppsDirectory>true</copyToAppsDirectory>
+					<inclusions>
+					<inclusion>
+                            <groupId>org.mule.modules</groupId>
+                            <artifactId>mule-module-sfdc</artifactId>
+                        </inclusion>
+                    <inclusion>
+                            <groupId>org.mule.modules</groupId>
+                            <artifactId>mule-module-workday-humanresources</artifactId>
+                        </inclusion>
+                    <inclusion>
+                            <groupId>com.mulesoft.muleesb.transports</groupId>
+                            <artifactId>mule-transport-sap</artifactId>
+                        </inclusion>
+                    </inclusions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+
+	<dependency>
+            <groupId>org.mule.modules</groupId>
+            <artifactId>mule-module-sfdc</artifactId>
+            <version>${sfdc.version}</version>
+        </dependency>
+	    <dependency>
+	            <groupId>org.mule.modules</groupId>
+	            <artifactId>mule-module-workday-humanresources</artifactId>
+	            <version>${wday.hr.version}</version>
+	        </dependency>
+	    <dependency>
+	            <groupId>com.mulesoft.muleesb.transports</groupId>
+	            <artifactId>mule-transport-sap</artifactId>
+	            <version>${sap.version}</version>
+	        </dependency>
+	    <dependency>
+            <groupId>org.mule.modules</groupId>
+            <artifactId>mule-module-spring-config</artifactId>
+            <version>${mule.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+			<groupId>com.sap.conn.jco</groupId>
+			<artifactId>sapjco3</artifactId>
+			<version>${sap.jco.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.conn.jco</groupId>
+			<artifactId>sapjco-native</artifactId>
+			<version>${sap.jco.version}</version>
+			<classifier>${sap.build.type}</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-all</artifactId>
+			<version>5.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.26</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.muleesb.modules</groupId>
+			<artifactId>mule-module-batch-ee</artifactId>
+			<version>${mule.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.modules</groupId>
+			<artifactId>mule-module-spring-config</artifactId>
+			<version>${mule.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.transports</groupId>
+			<artifactId>mule-transport-jms</artifactId>
+			<version>${mule.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.conn.idoc</groupId>
+			<artifactId>sapidoc3</artifactId>
+			<version>${sap.idoc.version}</version>
+			<scope>test</scope>
+		</dependency>
+    <dependency>
+            <groupId>com.mulesoft.muleesb.modules</groupId>
+            <artifactId>mule-module-data-mapper</artifactId>
+            <version>${mule.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+	<repositories>
+		<repository>
+			<id>mulesoft-releases</id>
+			<name>MuleSoft Releases Repository</name>
+			<url>https://repository.mulesoft.org/nexus/content/repositories/releases/</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>mulesoft-snapshots</id>
+			<name>MuleSoft Snapshots Repository</name>
+			<url>https://repository.mulesoft.org/nexus/content/repositories/snapshots/</url>
+			<layout>default</layout>
+		</repository>
+	<repository>
+            <id>mule-ee-snapshots</id>
+            <name>Mule Snapshot Repository</name>
+            <url>https://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots/</url>
+        </repository>
+    </repositories>	
+	<scm>
+		<connection>scm:git:https://github.com/mulesoft/template-sfdc2sfdc.wday.sap.db-account-broadcast.git</connection>
+		<developerConnection>scm:git:https://github.com/mulesoft/template-sfdc2sfdc.wday.sap.db-account-broadcast.git</developerConnection>
+		<url>http://github.com/mulesoft/template-sfdc2sfdc.wday.sap.db-account-broadcast</url>
+	</scm>
+</project>

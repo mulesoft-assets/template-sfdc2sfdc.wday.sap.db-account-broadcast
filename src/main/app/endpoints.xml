@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http" 
+xmlns="http://www.mulesoft.org/schema/mule/core" 
+xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc"
+xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+xmlns:spring="http://www.springframework.org/schema/beans" 
+version="EE-3.6.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd">
+
+	<data-mapper:config name="XML_To_Account" transformationGraphPath="xml_to_account.grf" doc:name="XML_To_Account"/>
+	
+    <flow name="triggerPushFlow"  initialState="started">
+        <http:listener config-ref="HttpListenerConfig" doc:name="Push notifications listener" path="/" >
+        	<http:response-builder statusCode="200" reasonPhrase="OK"/>
+        	<http:error-response-builder statusCode="500" reasonPhrase="Internal error"/>
+        </http:listener>
+        <choice doc:name="Check trigger policy">
+            <when expression="#['push' == '${trigger.policy}']">
+                <data-mapper:transform config-ref="XML_To_Account" doc:name="XML To Account"/>
+		        <collection-splitter doc:name="Collection Splitter"/>
+		        <jms:outbound-endpoint topic="A" connector-ref="Active_MQ" doc:name="JMS Topic A">
+		        	<message-properties-transformer>
+						<add-message-property key="MULE_CORRELATION_GROUP_SIZE" value="#[java.lang.Integer.MAX_VALUE]"/>
+					</message-properties-transformer> 
+		        </jms:outbound-endpoint>
+            </when>
+            <otherwise>
+                <logger message="Trigger policy has been set to POLL. Skipping this message" level="INFO" doc:name="Discard notification"/>
+            </otherwise>
+        </choice>
+        <parse-template doc:name="Build soap response" location="src/main/resources/response.xml"/>
+		<exception-strategy ref="defaultChoiceExceptionStrategy"
+			doc:name="Default Exception Strategy" />
+    </flow>
+
+    
+    <flow name="triggerFlow"  processingStrategy="synchronous">
+        <poll doc:name="fireup Account synchronization">
+            <fixed-frequency-scheduler frequency="${polling.frequency}" startDelay="${polling.start.delay}"/>
+            <watermark variable="lastQueryDate" default-expression="${watermark.default.expression}" selector="MAX" selector-expression="#[payload.LastModifiedDate]"/>
+			<processor-chain doc:name="Policy check">
+            <expression-filter expression="#['poll' == '${trigger.policy}']" doc:name="Check trigger policy"/>
+            <sfdc:query config-ref="SalesforceA" query="dsql:SELECT AccountNumber, Description, Id, Industry, LastModifiedById, LastModifiedDate, Name, NumberOfEmployees, ParentId FROM Account WHERE LastModifiedDate &gt; #[flowVars['lastQueryDate']] AND NumberOfEmployees &gt; 5000 " doc:name="query Accounts with filtering criteria from Salesforce Instance A"/>
+            </processor-chain>
+        </poll>
+        <collection-splitter doc:name="Collection Splitter"/>
+        <jms:outbound-endpoint topic="A" connector-ref="Active_MQ" doc:name="JMS Topic A">
+        	<message-properties-transformer>
+				<add-message-property key="MULE_CORRELATION_GROUP_SIZE" value="#[java.lang.Integer.MAX_VALUE]"/>
+			</message-properties-transformer> 
+        </jms:outbound-endpoint>
+		<exception-strategy ref="defaultChoiceExceptionStrategy"
+			doc:name="Default Exception Strategy" />
+    </flow>   
+</mule>
