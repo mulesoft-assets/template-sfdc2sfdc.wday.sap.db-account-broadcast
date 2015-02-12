@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:wd-hr="http://www.mulesoft.org/schema/mule/wd-hr" xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+<mule xmlns:wd-revenue="http://www.mulesoft.org/schema/mule/wd-revenue" xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:http="http://www.mulesoft.org/schema/mule/http"
 	xmlns:db="http://www.mulesoft.org/schema/mule/db"
 	xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
 	xmlns:context="http://www.springframework.org/schema/context" 
@@ -17,8 +17,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
-http://www.mulesoft.org/schema/mule/wd-hr http://www.mulesoft.org/schema/mule/wd-hr/current/mule-wd-hr.xsd
-http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd">
+http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
+http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mule/wd-revenue/current/mule-wd-revenue.xsd">
 	
 	<!-- This is the main configuration file, you should place here all the Connectors configuration and declarations -->
 	
@@ -45,39 +45,10 @@ http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/
         <db:in-param name="paramId" defaultValue=" "/>
 
     </db:template-query>
-        <db:template-query name="UpdateAccount" doc:name="Template Query">
-        <db:parameterized-query><![CDATA[UPDATE Account SET 
-accountNumber = :accountNumber, 
-description = :description,
-numberOfEmployees = :numberOfEmployees,
-phone = :phone,
-type = :type,
-salesforceId = :salesforceId
-WHERE name = :name]]></db:parameterized-query>
-        <db:in-param name="accountNumber" defaultValue=" "/>
-        <db:in-param name="description" defaultValue=" "/>
-        <db:in-param name="numberOfEmployees" defaultValue=" "/>
-        <db:in-param name="phone" defaultValue=" "/>
-        <db:in-param name="type" defaultValue=" "/>
-        <db:in-param name="salesforceId" defaultValue=" "/>
-        <db:in-param name="name" defaultValue=" "/>
-
-    </db:template-query>
-    <db:template-query name="InsertAccount" doc:name="Template Query">
-        <db:parameterized-query><![CDATA[INSERT INTO Account (accountNumber, description, numberOfEmployees, phone, typesalesforceId, name)
-VALUES (:accountNumber, :description, :numberOfEmployees, :phone, :type, :salesforceId, :name)]]></db:parameterized-query>
-        <db:in-param name="accountNumber" defaultValue=" "/>
-        <db:in-param name="description" defaultValue=" "/>
-        <db:in-param name="numberOfEmployees" defaultValue=" "/>
-        <db:in-param name="phone" defaultValue=" "/>
-        <db:in-param name="type" defaultValue=" "/>
-        <db:in-param name="salesforceId" defaultValue=" "/>
-        <db:in-param name="name" defaultValue=" "/>
-
-    </db:template-query>
-    <wd-hr:config name="Workday_Human_Resource" hrUser="${wday.user}" hrPassword="${wday.password}" hrEndpoint="${wday.endpoint}" doc:name="Workday Human Resource">
-        <wd-hr:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
-    </wd-hr:config>
+       
+    <wd-revenue:config name="Workday_Revenue_Management" revenueUser="${wday.user}" revenuePassword="${wday.password}" revenueEndpoint="${wday.endpoint}" doc:name="Workday Revenue Management">
+        <wd-revenue:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
+    </wd-revenue:config>
     
     
 </mule>

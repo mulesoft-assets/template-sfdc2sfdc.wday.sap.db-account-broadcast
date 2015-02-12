@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+<mule xmlns:wd-revenue="http://www.mulesoft.org/schema/mule/wd-revenue" xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:db="http://www.mulesoft.org/schema/mule/db"
 	xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
 http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
 http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
-http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd">
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
+http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mule/wd-revenue/current/mule-wd-revenue.xsd">
     <sub-flow name="createAccountFlowA" >
         <sfdc:create config-ref="SalesforceA" type="Account" doc:name="Salesforce">
             <sfdc:objects ref="#[payload]"/>
@@ -49,28 +50,29 @@ http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schem
 		<sap:outbound-endpoint exchange-pattern="request-response"
 			connector-ref="SAP" type="function" functionName="BAPI_CUSTOMER_FIND"
 			xmlVersion="2" outputXml="true" evaluateFunctionResponse="true"
-			responseTimeout="10000" doc:name="Find Customers in SAP">
+			responseTimeout="10000" doc:name="find Customers in SAP">
             <sap:definition><![CDATA[<BAPI_CUSTOMER_FIND type="function">
-	<import>
-		<MAX_CNT type="field" sapType="INT">0</MAX_CNT>
-		<PL_HOLD type="field" sapType="CHAR" sapLength="1">X</PL_HOLD>
-	</import>
-  	<tables>
-  	<SELOPT_TAB type="table">
-		<table name="SELOPT_TAB">
-			<row id="0">
-				<TABNAME type="field" 
-					sapType="CHAR" sapLength="4">KNA1</TABNAME>
-				<FIELDNAME type="field" 
-					sapType="CHAR" sapLength="5">NAME1</FIELDNAME>
-				<FIELDVALUE type="field" 
-					sapType="CHAR" sapLength="20">#[payload['Name']]</FIELDVALUE>
-			</row>
-		</table>
-		</SELOPT_TAB>
-	</tables>
-</BAPI_CUSTOMER_FIND>
-]]></sap:definition>
+ 	<import> 
+ 		<MAX_CNT type="field" sapType="INT">0</MAX_CNT> 
+ 		<PL_HOLD type="field" sapType="CHAR" sapLength="1">X</PL_HOLD> 
+ 	</import> 
+   	<tables> 
+   	<SELOPT_TAB type="table"> 
+ 		<table name="SELOPT_TAB"> 
+ 			<row id="0"> 
+ 				<TABNAME type="field"  
+ 					sapType="CHAR" sapLength="4">KNA1</TABNAME> 
+ 				<FIELDNAME type="field"  
+ 					sapType="CHAR" sapLength="5">NAME1</FIELDNAME> 
+ 				<FIELDVALUE type="field"  
+ 					sapType="CHAR" sapLength="20">#[payload['Name']]</FIELDVALUE> 
+ 			</row> 
+ 		</table> 
+ 		</SELOPT_TAB> 
+ 	</tables> 
+ </BAPI_CUSTOMER_FIND> 
+ ]]></sap:definition>
+ 
 
 
 		</sap:outbound-endpoint>
@@ -79,13 +81,14 @@ http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schem
 	</sub-flow>
 	<sub-flow name="deleteAccountsFromSapFlow" >
 		<foreach doc:name="For Each">
-            <sap:outbound-endpoint exchange-pattern="request-response" connector-ref="SAP" type="function" functionName="ZMULE_CUSTOMER_DELETE" xmlVersion="2" outputXml="true" evaluateFunctionResponse="true" responseTimeout="10000" doc:name="Delete Customer from SAP">
+            <sap:outbound-endpoint exchange-pattern="request-response" connector-ref="SAP" type="function" functionName="ZMULE_CUSTOMER_DELETE" xmlVersion="2" outputXml="true" evaluateFunctionResponse="true" responseTimeout="10000" doc:name="delete Customer from SAP">
                 <sap:definition><![CDATA[<ZMULE_CUSTOMER_DELETE type="function">
-	<import>
-			<I_CUSTOMER type="field">#[payload]</I_CUSTOMER>
-	</import>
-</ZMULE_CUSTOMER_DELETE>
-]]></sap:definition>
+ 	<import> 
+ 			<I_CUSTOMER type="field">#[payload]</I_CUSTOMER> 
+ 	</import> 
+ </ZMULE_CUSTOMER_DELETE> 
+ ]]></sap:definition>
+ 
 
 
             </sap:outbound-endpoint>
@@ -93,4 +96,7 @@ http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schem
             <logger message="delete SAP response: #[payload]" level="INFO" doc:name="Logger"/>
 		</foreach>
 	</sub-flow>
+    <sub-flow name="retrieveAccountWdayFlow">
+        <wd-revenue:get-customers config-ref="Workday_Revenue_Management" getCustomersRequest-ref="#[org.mule.templates.CustomerRequest.getCustomer(payload)]" doc:name="query for Customer"/>
+    </sub-flow>
 </mule>

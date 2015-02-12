@@ -288,7 +288,7 @@ output.BillingCountry = input.BillingCountry;
 output.BillingPostalCode = (isnull(input.BillingPostalCode) ? null : num2str(input.BillingPostalCode));
 output.BillingState = input.BillingState;
 output.BillingStreet = input.BillingStreet;
-]]></attr>
+output.Id = input.Id_1;]]></attr>
 </Node>
 <Node cacheInMemory="true" enabled="enabled" fileURL="dict:outputPayload" guiName="Map&lt;k,v&gt; WRITER" guiX="900" guiY="20" id="MAP_WRITER0" type="MAP_WRITER">
 <attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -508,12 +508,12 @@ output.BillingStreet = input.BillingStreet;
 <attr name="xmlSchemaURL"><![CDATA[.\src\main\resources\Id.xsd,F:\mule-workspace\template-sfdc2sfdc-account-broadcast\src\main\resources\notifications.xsd,F:\mule-workspace\template-sfdc2sfdc-account-broadcast\src\main\resources\Envelope.xsd]]></attr>
 <attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Context namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" outPort="0" sequenceField="__id" xpath="/ns0:Envelope">
-  <Mapping cloverField="OrganizationId" namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:OrganizationId"/>
-  <Mapping cloverField="ActionId" namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:ActionId"/>
-  <Mapping cloverField="SessionId" namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:SessionId"/>
-  <Mapping cloverField="EnterpriseUrl" namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:EnterpriseUrl"/>
-  <Mapping cloverField="PartnerUrl" namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:PartnerUrl"/>
-  <Mapping cloverField="Id" namespacePaths="ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:Id"/>
+  <Mapping cloverField="OrganizationId" namespacePaths="ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:OrganizationId"/>
+  <Mapping cloverField="ActionId" namespacePaths="ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:ActionId"/>
+  <Mapping cloverField="SessionId" namespacePaths="ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:SessionId"/>
+  <Mapping cloverField="EnterpriseUrl" namespacePaths="ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:EnterpriseUrl"/>
+  <Mapping cloverField="PartnerUrl" namespacePaths="ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:PartnerUrl"/>
+  <Mapping cloverField="Id" namespacePaths="ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:Id"/>
   <Mapping cloverField="Id_1" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:Id"/>
   <Mapping cloverField="AccountNumber" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:AccountNumber"/>
   <Mapping cloverField="AnnualRevenue" namespacePaths="ns2=&quot;urn:sobject.enterprise.soap.sforce.com&quot;;ns1=&quot;http://soap.sforce.com/2005/09/outbound&quot;;ns0=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;" trim="true" xpath="ns0:Body/ns1:notifications/ns1:Notification/ns1:sObject/ns2:AnnualRevenue"/>

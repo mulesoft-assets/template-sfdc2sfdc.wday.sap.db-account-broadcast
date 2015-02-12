@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.mule.templates</groupId>
 		<artifactId>templates-tooling-parent-pom</artifactId>
-		<version>1.1.0</version>
+		<version>1.1.1</version>
 	</parent>
 
 	<artifactId>template-sfdc2sfdc.wday.sap.db-account-broadcast</artifactId>
@@ -32,14 +32,14 @@
 					<inclusion>
                             <groupId>org.mule.modules</groupId>
                             <artifactId>mule-module-sfdc</artifactId>
-                        </inclusion>
-                    <inclusion>
-                            <groupId>org.mule.modules</groupId>
-                            <artifactId>mule-module-workday-humanresources</artifactId>
-                        </inclusion>
+                    </inclusion>                    
                     <inclusion>
                             <groupId>com.mulesoft.muleesb.transports</groupId>
                             <artifactId>mule-transport-sap</artifactId>
+                        </inclusion>
+                    <inclusion>
+                            <groupId>org.mule.modules</groupId>
+                            <artifactId>mule-module-workday-revenuemanagement</artifactId>
                         </inclusion>
                     </inclusions>
 				</configuration>
@@ -53,12 +53,7 @@
             <groupId>org.mule.modules</groupId>
             <artifactId>mule-module-sfdc</artifactId>
             <version>${sfdc.version}</version>
-        </dependency>
-	    <dependency>
-	            <groupId>org.mule.modules</groupId>
-	            <artifactId>mule-module-workday-humanresources</artifactId>
-	            <version>${wday.hr.version}</version>
-	        </dependency>
+        </dependency>	    
 	    <dependency>
 	            <groupId>com.mulesoft.muleesb.transports</groupId>
 	            <artifactId>mule-transport-sap</artifactId>
@@ -123,6 +118,17 @@
             <version>${mule.version}</version>
             <scope>provided</scope>
         </dependency>
+    <dependency>
+            <groupId>org.mule.modules</groupId>
+            <artifactId>mule-module-workday-revenuemanagement</artifactId>
+            <version>4.1.1</version>
+        </dependency>
+    <dependency>
+            <groupId>org.mule.modules</groupId>
+            <artifactId>mule-module-scripting</artifactId>
+            <version>${mule.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 	<repositories>
@@ -138,11 +144,17 @@
 			<url>https://repository.mulesoft.org/nexus/content/repositories/snapshots/</url>
 			<layout>default</layout>
 		</repository>
-	<repository>
+		<repository>
             <id>mule-ee-snapshots</id>
             <name>Mule Snapshot Repository</name>
             <url>https://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots/</url>
         </repository>
+        <repository>
+			<id>mule-ee-thirdparty</id>
+			<name>MuleSoft Thirdparty Repository</name>
+			<url>https://repository.mulesoft.org/nexus/content/repositories/thirdparty/</url>
+			<layout>default</layout>
+		</repository>
     </repositories>	
 	<scm>
 		<connection>scm:git:https://github.com/mulesoft/template-sfdc2sfdc.wday.sap.db-account-broadcast.git</connection>

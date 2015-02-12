@@ -20,8 +20,7 @@ http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/
 	
     <flow name="triggerPushFlow"  initialState="started">
         <http:listener config-ref="HttpListenerConfig" doc:name="Push notifications listener" path="/" >
-        	<http:response-builder statusCode="200" reasonPhrase="OK"/>
-        	<http:error-response-builder statusCode="500" reasonPhrase="Internal error"/>
+
         </http:listener>
         <choice doc:name="Check trigger policy">
             <when expression="#['push' == '${trigger.policy}']">
@@ -34,10 +33,10 @@ http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/
 		        </jms:outbound-endpoint>
             </when>
             <otherwise>
-                <logger message="Trigger policy has been set to POLL. Skipping this message" level="INFO" doc:name="Discard notification"/>
+                <logger message="Trigger policy has been set to POLL. Skipping this message" level="INFO" doc:name="discard notification"/>
             </otherwise>
         </choice>
-        <parse-template doc:name="Build soap response" location="src/main/resources/response.xml"/>
+        <parse-template doc:name="build soap response" location="src/main/resources/response.xml"/>
 		<exception-strategy ref="defaultChoiceExceptionStrategy"
 			doc:name="Default Exception Strategy" />
     </flow>
@@ -48,10 +47,12 @@ http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/
             <fixed-frequency-scheduler frequency="${polling.frequency}" startDelay="${polling.start.delay}"/>
             <watermark variable="lastQueryDate" default-expression="${watermark.default.expression}" selector="MAX" selector-expression="#[payload.LastModifiedDate]"/>
 			<processor-chain doc:name="Policy check">
-            <expression-filter expression="#['poll' == '${trigger.policy}']" doc:name="Check trigger policy"/>
+            <expression-filter expression="#['poll' == '${trigger.policy}']" doc:name="check trigger policy"/>
+
             <sfdc:query config-ref="SalesforceA" query="dsql:SELECT AccountNumber, Description, Id, Industry, LastModifiedById, LastModifiedDate, Name, NumberOfEmployees, ParentId FROM Account WHERE LastModifiedDate &gt; #[flowVars['lastQueryDate']] AND NumberOfEmployees &gt; 5000 " doc:name="query Accounts with filtering criteria from Salesforce Instance A"/>
             </processor-chain>
         </poll>
+
         <collection-splitter doc:name="Collection Splitter"/>
         <jms:outbound-endpoint topic="A" connector-ref="Active_MQ" doc:name="JMS Topic A">
         	<message-properties-transformer>

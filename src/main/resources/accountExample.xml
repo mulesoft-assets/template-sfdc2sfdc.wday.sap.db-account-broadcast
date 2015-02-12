@@ -23,7 +23,7 @@
      <sf:CustomerPriority__c>High</sf:CustomerPriority__c>
      <sf:Description>description ddddd</sf:Description>
      <sf:Fax>+421995555</sf:Fax>
-     <sf:Industry>Apparel</sf:Industry>
+     <sf:Industry>Biotechnology</sf:Industry>
      <sf:IsDeleted>false</sf:IsDeleted>
      <sf:LastModifiedById>005d0000000yYC7AAM</sf:LastModifiedById>
      <sf:LastModifiedDate>2014-05-19T11:02:14.000Z</sf:LastModifiedDate>

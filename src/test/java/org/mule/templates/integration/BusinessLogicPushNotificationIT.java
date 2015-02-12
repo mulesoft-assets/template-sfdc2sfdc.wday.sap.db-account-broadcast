@@ -9,6 +9,7 @@ package org.mule.templates.integration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,11 +18,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.mule.DefaultMuleMessage;
 import org.mule.MessageExchangePattern;
 import org.mule.api.MuleEvent;
@@ -32,7 +35,11 @@ import org.mule.context.notification.NotificationException;
 import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
 import org.mule.templates.db.MySQLDbCreator;
 
+import com.googlecode.sardine.model.Collection;
 import com.mulesoft.module.batch.BatchTestHelper;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+import com.workday.revenue.CustomerType;
+import com.workday.revenue.GetCustomersResponseType;
 
 /**
  * The objective of this class is to validate the correct behavior of the
@@ -50,16 +57,19 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 			+ new Long(new Date().getTime()).toString();
 	private BatchTestHelper helper;
 	private Flow triggerPushFlow;
-	private SubflowInterceptingChainLifecycleWrapper selectAccountFromDBFlow;
+	private SubflowInterceptingChainLifecycleWrapper selectAccountFromDBFlow, retrieveAccountFromSapFlow;
 	private List<String> accountsToDelete = new ArrayList<String>();
+	private String accountName;
 	private static final MySQLDbCreator DBCREATOR = new MySQLDbCreator(
 			DATABASE_NAME, PATH_TO_SQL_SCRIPT, PATH_TO_TEST_PROPERTIES);
+	private static String SFDC_ACCOUNT_ID, BIOTECH_ID;
 	
 	@BeforeClass
 	public static void beforeClass() {
 		DBCREATOR.setUpDatabase();
 		System.setProperty("database.url", DBCREATOR.getDatabaseUrlWithName());
 		System.setProperty("trigger.policy", "push");
+		
 	}
 
 	@AfterClass
@@ -70,12 +80,26 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 	
 	@Before
 	public void setUp() throws Exception {
+		Properties props = new Properties();
+		try {
+			
+			props.load(new FileInputStream(PATH_TO_TEST_PROPERTIES));			
+		} catch (Exception e) {
+			throw new IllegalStateException(
+					"Could not find the test properties file.");
+		}
+		
+		SFDC_ACCOUNT_ID = props.getProperty("sfdc.a.testaccount.id");
+		BIOTECH_ID = props.getProperty("category.biotechnology");
+		
 		System.setProperty("trigger.policy", "push");
 		stopFlowSchedulers(POLL_FLOW_NAME);
 		registerListeners();
 		helper = new BatchTestHelper(muleContext);
 		triggerPushFlow = getFlow("triggerPushFlow");
 		selectAccountFromDBFlow = getSubFlow("selectAccountFromDB");
+		retrieveAccountFromSapFlow = getSubFlow("retrieveAccountFromSapFlow");
+		retrieveAccountFromSapFlow.initialise();
 	}
 
 	@After
@@ -84,9 +108,9 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 		deleteEntities();
 	}
 
-//	@Test
+	@Test
 	public void testMainFlow() throws Exception {
-		String accountName = buildUniqueName();
+		accountName = buildUniqueName();
 		MuleMessage message = new DefaultMuleMessage(buildRequest(accountName), muleContext);
 		MuleEvent testEvent = getTestEvent(message, MessageExchangePattern.REQUEST_RESPONSE);
 		triggerPushFlow.process(testEvent);
@@ -103,10 +127,12 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 		testEvent = getTestEvent(message, MessageExchangePattern.REQUEST_RESPONSE);
 		Map<String, String> accountInB = (Map<String, String>) retrieveAccountFlow.process(testEvent).getMessage().getPayload();
 		
+		// SFDC B test
 		assertNotNull(accountInB);
 		assertEquals("Account Names should be equals", account.get("Name"), accountInB.get("Name"));
 		accountsToDelete.add(accountInB.get("Id"));
 		
+		// DB test
 		testEvent = selectAccountFromDBFlow.process(getTestEvent(
 				account, MessageExchangePattern.REQUEST_RESPONSE));
 		final List<Map<String, Object>> payloadDb = (List<Map<String, Object>>) testEvent
@@ -123,14 +149,54 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 		assertEquals("The account name in DB should match",
 				account.get("Name"), 
 				payloadDb.get(0).get("name"));
+		
+		// WDAY test
+		
+		CustomerType cus1 = invokeRetrieveWdayFlow(getSubFlow("retrieveAccountWdayFlow"), SFDC_ACCOUNT_ID);
+		assertEquals("Customer Category should be synced", BIOTECH_ID, cus1.getCustomerData().getCustomerCategoryReference().getID().get(1).getValue());
+		assertEquals("Customer Name should be synced", accountName, cus1.getCustomerData().getCustomerName());
+		
+		// SAP test
+		Thread.sleep(15000);
+		Map<String, Object> payload0 = invokeRetrieveSAPFlow(retrieveAccountFromSapFlow, account);
+		assertNotNull(payload0);
+		assertEquals(account.get("Name"), payload0.get("Name"));				
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected Map<String, Object> invokeRetrieveSAPFlow(SubflowInterceptingChainLifecycleWrapper flow, Map<String, Object> payload) throws Exception {
+		MuleEvent event = flow.process(getTestEvent(payload, MessageExchangePattern.REQUEST_RESPONSE));
+		Object resultPayload = event.getMessage().getPayload();
+		List<Map<String, Object>> resultPayload2 = (List<Map<String, Object>>) resultPayload;
+		return resultPayload2.isEmpty() ? null : resultPayload2.get(0).get("CustomerNumber") == null ? null : resultPayload2.get(0);
+	}
+	
+	protected CustomerType invokeRetrieveWdayFlow(SubflowInterceptingChainLifecycleWrapper flow, String payload) throws Exception {
+		flow.initialise();
+		MuleEvent event = flow.process(getTestEvent(payload, MessageExchangePattern.REQUEST_RESPONSE));
+		Object resultPayload = event.getMessage().getPayload();
+		return ((GetCustomersResponseType) resultPayload).getResponseData().get(0).getCustomer().get(0);		
 	}
 	
 	private void deleteEntities() throws MuleException, Exception {
+		// SFDC Org B
 		SubflowInterceptingChainLifecycleWrapper deleteAccountFromBflow = getSubFlow("deleteAccountFromBFlow");
 		deleteAccountFromBflow.initialise();
 		deleteAccountFromBflow.process(getTestEvent(accountsToDelete, MessageExchangePattern.REQUEST_RESPONSE));
+		
+		// SAP 
+		Map<String, Object> account = new HashMap<String, Object>();
+		account.put("Name", accountName);
+		account = invokeRetrieveSAPFlow(retrieveAccountFromSapFlow, account);
+		List<String> idList = new ArrayList<String>();
+		idList.add(account.get("CustomerNumber").toString());
+		
+		SubflowInterceptingChainLifecycleWrapper deleteAccountFromSAPflow = getSubFlow("deleteAccountsFromSapFlow");
+		deleteAccountFromSAPflow.initialise();
+		deleteAccountFromSAPflow.process(getTestEvent(idList, MessageExchangePattern.REQUEST_RESPONSE));
 	}
-
+	
+	
 	private void registerListeners() throws NotificationException {
 		muleContext.registerListener(pipelineListener);
 	}
