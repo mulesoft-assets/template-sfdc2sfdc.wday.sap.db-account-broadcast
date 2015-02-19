@@ -35,9 +35,7 @@ import org.mule.context.notification.NotificationException;
 import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
 import org.mule.templates.db.MySQLDbCreator;
 
-import com.googlecode.sardine.model.Collection;
 import com.mulesoft.module.batch.BatchTestHelper;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 import com.workday.revenue.CustomerType;
 import com.workday.revenue.GetCustomersResponseType;
 
@@ -49,6 +47,7 @@ import com.workday.revenue.GetCustomersResponseType;
 @SuppressWarnings("unchecked")
 public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 	
+	private static final String SALESFORCE_ID = "001d000001XD5XKAA1";
 	private static final int TIMEOUT_MILLIS = 60;
 	private static final String REQUEST_PATH = "./src/main/resources/accountExample.xml";
 	private static final String PATH_TO_TEST_PROPERTIES = "./src/test/resources/mule.test.properties";
@@ -62,7 +61,7 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 	private String accountName;
 	private static final MySQLDbCreator DBCREATOR = new MySQLDbCreator(
 			DATABASE_NAME, PATH_TO_SQL_SCRIPT, PATH_TO_TEST_PROPERTIES);
-	private static String SFDC_ACCOUNT_ID, BIOTECH_ID;
+	private static String BIOTECH_ID;
 	
 	@BeforeClass
 	public static void beforeClass() {
@@ -89,7 +88,6 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 					"Could not find the test properties file.");
 		}
 		
-		SFDC_ACCOUNT_ID = props.getProperty("sfdc.a.testaccount.id");
 		BIOTECH_ID = props.getProperty("category.biotechnology");
 		
 		System.setProperty("trigger.policy", "push");
@@ -120,7 +118,7 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 
 		HashMap<String, Object> account = new HashMap<String, Object>();
 		account.put("Name", accountName);
-		
+		account.put("Id", SALESFORCE_ID);
 		SubflowInterceptingChainLifecycleWrapper retrieveAccountFlow = getSubFlow("retrieveAccountFlow");
 		retrieveAccountFlow.initialise();
 		message = new DefaultMuleMessage(account, muleContext);
@@ -150,9 +148,8 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 				account.get("Name"), 
 				payloadDb.get(0).get("name"));
 		
-		// WDAY test
-		
-		CustomerType cus1 = invokeRetrieveWdayFlow(getSubFlow("retrieveAccountWdayFlow"), SFDC_ACCOUNT_ID);
+		// WDAY test		
+		CustomerType cus1 = invokeRetrieveWdayFlow(getSubFlow("retrieveAccountWdayFlow"), account.get("Name").toString());
 		assertEquals("Customer Category should be synced", BIOTECH_ID, cus1.getCustomerData().getCustomerCategoryReference().getID().get(1).getValue());
 		assertEquals("Customer Name should be synced", accountName, cus1.getCustomerData().getCustomerName());
 		

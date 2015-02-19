@@ -66,6 +66,7 @@ payload.put('NumberOfEmployees', Integer.parseInt(payload['NumberOfEmployees']) 
 					<sfdc:upsert config-ref="SalesforceB"
 						externalIdFieldName="Id" type="Account"
 						doc:name="upsert Accounts in Salesforce Instance B">
+                        <sfdc:objects ref="#[payload]"/>
 
 					</sfdc:upsert>
 				</batch:commit>
@@ -273,7 +274,7 @@ payload.put('AccountGroup', '${sap.default.accountGroup}');
 		</batch:on-complete>
 	</batch:job>
     <flow name="commitAccountsFlow" >
-        <logger message="Accounts to update/create: #[payload]" level="INFO" doc:name="Log Accounts to update/create"/>
+        <logger message="Accounts to update/create: #[payload] .......... #[recordVars['sapCustomer']] ............. #[recordVars]" level="INFO" doc:name="Log Accounts to update/create"/>
         <data-mapper:transform config-ref="Salesforce_Account_to_DEBMAS01" doc:name="Salesforce Account to DEBMAS01"/>
         <sap:outbound-endpoint exchange-pattern="request-response" connector-ref="SAP" type="idoc" functionName="DEBMAS01" xmlVersion="2" outputXml="true"  responseTimeout="10000" doc:name="Upsert Customer in SAP"/>
         <logger message="Upsert result: #[payload]" level="INFO" doc:name="Log Result"/>

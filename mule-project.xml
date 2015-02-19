@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-project xmlns="http://www.mulesoft.com/tooling/project" runtimeId="org.mule.tooling.server.3.6.0.ee" schemaVersion="3.5.0.0">
-    <name>template-sfdc2sfdc.sap.wday.db-account-broadcast</name>
+    <name>template-sfdc2sfdc.wday.sap.db-account-broadcast</name>
     <description></description>
     <muleExtension name="SAP" qualifier="org.mule.tooling.ui.contribution.sap.3.5.0"/>
     <muleExtension name="Workday Revenue Management" qualifier="org.mule.tooling.ui.contribution.wd-revenue"/>

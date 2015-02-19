@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.drools.guvnor.client.modeldriven.brl.IAction;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -112,6 +111,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		helper.awaitJobTermination(TIMEOUT_SEC * 1000, 8000);
 		helper.assertJobWasSuccessful();
 
+		// SFDC
 		assertEquals("The first account should not have been sync to SFDC",
 				null,
 				invokeRetrieveFlow(retrieveAccountFromBFlow,
@@ -139,7 +139,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 						retrieveAccountFromBFlow, 
 						createdAccountsInA.get(3)).get("NumberOfEmployees")));
 		
-		
+		// DB
 		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> payloadDb = (List<Map<String, Object>>) selectAccountFromDBFlow
 				.process(
@@ -178,7 +178,16 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		assertEquals("The fourth account name should match to DB",
 				createdAccountsInA.get(3).get("Name"), 
 				payloadDb2.get(0).get("name"));
+				
+		// WORKDAY
+		Thread.sleep(25000);
+		CustomerType cus1 = invokeRetrieveWdayFlow(retrieveAccountWdayFlow, createdAccountsInA.get(2));
+		assertEquals(BIOTECH_ID, cus1.getCustomerData().getCustomerCategoryReference().getID().get(1).getValue());
 		
+		cus1 = invokeRetrieveWdayFlow(retrieveAccountWdayFlow, createdAccountsInA.get(3));
+		assertEquals(MANUFACTURING_ID, cus1.getCustomerData().getCustomerCategoryReference().getID().get(1).getValue());
+		
+		// SAP
 		Thread.sleep(15000);
 		Map<String, Object> payload0 = invokeRetrieveSAPFlow(retrieveAccountFromSapFlow, createdAccountsInA.get(2));
 		assertNotNull(payload0);
@@ -188,16 +197,10 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		assertNotNull(payload0);
 		assertEquals(createdAccountsInA.get(3).get("Name"), payload0.get("Name"));
 		
-		CustomerType cus1 = invokeRetrieveWdayFlow(retrieveAccountWdayFlow, createdAccountsInA.get(2));
-		assertEquals(BIOTECH_ID, cus1.getCustomerData().getCustomerCategoryReference().getID().get(1).getValue());
-		
-		cus1 = invokeRetrieveWdayFlow(retrieveAccountWdayFlow, createdAccountsInA.get(3));
-		assertEquals(MANUFACTURING_ID, cus1.getCustomerData().getCustomerCategoryReference().getID().get(1).getValue());
-		
 	}
 	
 	protected CustomerType invokeRetrieveWdayFlow(SubflowInterceptingChainLifecycleWrapper flow, Map<String, Object> payload) throws Exception {
-		MuleEvent event = flow.process(getTestEvent(payload.get("Id"), MessageExchangePattern.REQUEST_RESPONSE));
+		MuleEvent event = flow.process(getTestEvent(payload.get("Name"), MessageExchangePattern.REQUEST_RESPONSE));
 		Object resultPayload = event.getMessage().getPayload();
 		return ((GetCustomersResponseType) resultPayload).getResponseData().get(0).getCustomer().get(0);		
 	}
@@ -224,7 +227,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		createAccountInBFlow.initialise();
 
 		SfdcObjectBuilder updateAccount = anAccount().with("Name",
-				buildUniqueName(TEMPLATE_NAME, "DemoUpdateAccount")).with(
+				buildUniqueName(TEMPLATE_NAME, "DemoUpdate")).with(
 				"Industry", "Education");
 
 		List<Map<String, Object>> createdAccountInB = new ArrayList<Map<String, Object>>();
@@ -252,7 +255,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 
 		createdAccountsInA.add(anAccount()
 				.with("Name",
-						buildUniqueName(TEMPLATE_NAME, "DemoCreateAccount"))
+						buildUniqueName(TEMPLATE_NAME, "DemoCreate"))
 				.with("Industry", "Biotechnology")
 				.with("NumberOfEmployees", 18000).build());
 

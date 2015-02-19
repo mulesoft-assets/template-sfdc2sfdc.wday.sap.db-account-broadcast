@@ -49,7 +49,7 @@ http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/
 			<processor-chain doc:name="Policy check">
             <expression-filter expression="#['poll' == '${trigger.policy}']" doc:name="check trigger policy"/>
 
-            <sfdc:query config-ref="SalesforceA" query="dsql:SELECT AccountNumber, Description, Id, Industry, LastModifiedById, LastModifiedDate, Name, NumberOfEmployees, ParentId FROM Account WHERE LastModifiedDate &gt; #[flowVars['lastQueryDate']] AND NumberOfEmployees &gt; 5000 " doc:name="query Accounts with filtering criteria from Salesforce Instance A"/>
+            <sfdc:query config-ref="SalesforceA" query="dsql:SELECT AccountNumber,BillingCity,BillingCountry,BillingPostalCode,BillingStreet,Description,Fax,Id,Industry,LastModifiedById,LastModifiedDate,Name,NumberOfEmployees,ParentId,Phone FROM Account WHERE (LastModifiedDate &gt; #[flowVars['lastQueryDate']] AND NumberOfEmployees &gt; 5000)" doc:name="query Accounts with filtering criteria from Salesforce Instance A"/>
             </processor-chain>
         </poll>
 

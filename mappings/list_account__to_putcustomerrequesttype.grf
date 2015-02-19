@@ -1631,7 +1631,7 @@ output.type = "Customer_Category_ID";]]></attr>
 output.__id = input.__id;
 //END -> DO NOT REMOVE
 output.customerName = input.Name;
-output.customerReferenceID = input.Id;
+output.customerReferenceID = input.Name;
 output.businessEntityName = input.Name;
 ]]></attr>
 </Node>
