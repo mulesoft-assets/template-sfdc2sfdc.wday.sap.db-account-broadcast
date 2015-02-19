@@ -312,17 +312,17 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		deleteAccountFromBflow.process(getTestEvent(idList,
 				MessageExchangePattern.REQUEST_RESPONSE));
 		
-//		SubflowInterceptingChainLifecycleWrapper deleteAccountFromSAPflow = getSubFlow("deleteAccountsFromSapFlow");
-//		deleteAccountFromSAPflow.initialise();
-//		
-//		for (final Map<String, Object> createdAccount : createdAccountsInA) {
-//			final Map<String, Object> account = invokeRetrieveSAPFlow(
-//					retrieveAccountFromSapFlow, createdAccount);
-//			if (account != null) {
-//				idList.add(account.get("CustomerNumber"));
-//			}
-//		}
-//		deleteAccountFromSAPflow.process(getTestEvent(idList,
-//				MessageExchangePattern.REQUEST_RESPONSE));		
+		SubflowInterceptingChainLifecycleWrapper deleteAccountFromSAPflow = getSubFlow("deleteAccountsFromSapFlow");
+		deleteAccountFromSAPflow.initialise();
+		
+		for (final Map<String, Object> createdAccount : createdAccountsInA) {
+			final Map<String, Object> account = invokeRetrieveSAPFlow(
+					retrieveAccountFromSapFlow, createdAccount);
+			if (account != null) {
+				idList.add(account.get("CustomerNumber"));
+			}
+		}
+		deleteAccountFromSAPflow.process(getTestEvent(idList,
+				MessageExchangePattern.REQUEST_RESPONSE));		
 	}
 }
