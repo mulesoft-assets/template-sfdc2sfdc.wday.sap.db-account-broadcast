@@ -212,6 +212,7 @@ WHERE Name = #[payload['Name']]]]></db:parameterized-query>
 
 
 
+
                         </sap:outbound-endpoint>
                         <data-mapper:transform config-ref="BAPI_CUSTOMER_FIND_to_Customer" doc:name="BAPI_CUSTOMER_FIND to Customer"/>
                     </processor-chain>
@@ -227,6 +228,7 @@ WHERE Name = #[payload['Name']]]]></db:parameterized-query>
 	</import>
 </CUSTOMER_GET_KTOKD>
 ]]></sap:definition>
+
 
 
 
@@ -250,6 +252,7 @@ payload.put('CustomerNumber', recordVars['sapCustomer']['CustomerNumber']);
 </BAPI_CUSTOMER_GETINTNUMBER>
 
 ]]></sap:definition>
+
 
 
 
@@ -291,6 +294,7 @@ payload.put('AccountGroup', '${sap.default.accountGroup}');
             <batch:step name="forEachAccountInSalesforceUpsertCustomerInWorkday">
                 <data-mapper:transform config-ref="List_Account__To_PutCustomerRequestType" doc:name="List&lt;Account&gt; To PutCustomerRequestType"/>
                 <wd-revenue:put-customer config-ref="Workday_Revenue_Management" doc:name="Upsert Customer"/>
+                <logger message="wday response: #[payload]" level="INFO" doc:name="Logger"/>
             </batch:step>
         </batch:process-records>
         <batch:on-complete>

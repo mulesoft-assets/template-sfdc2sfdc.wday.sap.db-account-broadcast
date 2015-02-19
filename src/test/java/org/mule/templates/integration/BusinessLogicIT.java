@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -47,7 +45,6 @@ import com.workday.revenue.GetCustomersResponseType;
 public class BusinessLogicIT extends AbstractTemplateTestCase {
 	
 	private BatchTestHelper helper;
-	private static final Logger LOGGER = LogManager.getLogger(BusinessLogicIT.class);
 	private static final String PATH_TO_TEST_PROPERTIES = "./src/test/resources/mule.test.properties";
 	private static final String PATH_TO_SQL_SCRIPT = "src/main/resources/account.sql";
 	private static final String DATABASE_NAME = "SFDC2DBAccountBroadcast"
@@ -82,12 +79,10 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 			throw new IllegalStateException(
 					"Could not find the test properties file.");
 		}
-		LOGGER.info("aaaa");
 		BIOTECH_ID = props.getProperty("category.biotechnology");
 		MANUFACTURING_ID = props.getProperty("category.manufacturing");
 		stopFlowSchedulers(POLL_FLOW_NAME);
 		registerListeners();
-		LOGGER.info("bbbb");
 		helper = new BatchTestHelper(muleContext);
 		retrieveAccountFromBFlow = getSubFlow("retrieveAccountFlow");
 		retrieveAccountFromBFlow.initialise();
@@ -97,9 +92,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		retrieveAccountFromSapFlow.initialise();
 		retrieveAccountWdayFlow = getSubFlow("retrieveAccountWdayFlow");
 		retrieveAccountWdayFlow.initialise();
-		LOGGER.info("dddd");
 		createEntities();
-		LOGGER.info("eeee");
 	}
 
 	@After
@@ -184,7 +177,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		assertEquals("The fourth account name should match to DB",
 				createdAccountsInA.get(3).get("Name"), 
 				payloadDb2.get(0).get("name"));
-		LOGGER.info("fffff " + createdAccountsInA.get(2));
+		
 		// WORKDAY
 		Thread.sleep(25000);
 		CustomerType cus1 = invokeRetrieveWdayFlow(retrieveAccountWdayFlow, createdAccountsInA.get(2));
