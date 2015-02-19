@@ -67,37 +67,55 @@
 									<includes>**/*.dll,**/*.so,**/*.jnilib</includes>
 									<excludes>META-INF</excludes>
 								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-clover-plugins</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<stripVersion>true</stripVersion>
+							<outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
+							<artifactItems>
 								<artifactItem>
-                                    <groupId>com.mulesoft.muleesb.datamapper</groupId>
-                                    <artifactId>mule-clover-plugins</artifactId>
-                                    <version>${mule.version}</version>
-                                    <type>zip</type>
-                                </artifactItem>			
-                                <artifactItem>
 									<groupId>com.cloveretl</groupId>
 									<artifactId>cloveretl-engine</artifactId>
 									<version>${mule.version}</version>
 									<!-- version for Mule 3.4.0 or newer -->
 									<type>zip</type>
-								</artifactItem>                                				
+								</artifactItem>
+                                <artifactItem>
+                                    <groupId>com.mulesoft.muleesb.datamapper</groupId>
+                                    <artifactId>mule-clover-plugins</artifactId>
+                                    <version>${mule.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
 							</artifactItems>
 						</configuration>
 					</execution>
+					
 				</executions>
 			</plugin>			
 		</plugins>
 	</build>
 
-	<dependencies>				
-		<dependency>
+	<dependencies>
+
+	<dependency>
             <groupId>org.mule.modules</groupId>
             <artifactId>mule-module-sfdc</artifactId>
             <version>${sfdc.version}</version>
         </dependency>	    
 	    <dependency>
-            <groupId>com.mulesoft.muleesb.transports</groupId>
-            <artifactId>mule-transport-sap</artifactId>
-            <version>${sap.version}</version>
+	            <groupId>com.mulesoft.muleesb.transports</groupId>
+	            <artifactId>mule-transport-sap</artifactId>
+	            <version>${sap.version}</version>
 	        </dependency>
 	    <dependency>
             <groupId>org.mule.modules</groupId>
