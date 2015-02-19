@@ -72,7 +72,14 @@
                                     <artifactId>mule-clover-plugins</artifactId>
                                     <version>${mule.version}</version>
                                     <type>zip</type>
-                                </artifactItem>								
+                                </artifactItem>			
+                                <artifactItem>
+									<groupId>com.cloveretl</groupId>
+									<artifactId>cloveretl-engine</artifactId>
+									<version>${mule.version}</version>
+									<!-- version for Mule 3.4.0 or newer -->
+									<type>zip</type>
+								</artifactItem>                                				
 							</artifactItems>
 						</configuration>
 					</execution>
