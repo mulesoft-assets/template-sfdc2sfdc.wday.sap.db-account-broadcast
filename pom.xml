@@ -101,6 +101,25 @@
 					</execution>
 					
 				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<configuration>
+							<tasks>
+								<!-- Using an ant task to deflate cloveretl-engine.zip -->
+								<unzip src="${project.build.testOutputDirectory}/cloveretl-engine.zip" dest="${project.build.testOutputDirectory}"/>
+								<!-- Mule Clover Plugin -->
+								<unzip dest="${project.build.testOutputDirectory}" src="${project.build.testOutputDirectory}/mule-clover-plugins.zip"/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>			
 		</plugins>
 	</build>
