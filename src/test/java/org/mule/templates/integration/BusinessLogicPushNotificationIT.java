@@ -62,6 +62,7 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 	private static final MySQLDbCreator DBCREATOR = new MySQLDbCreator(
 			DATABASE_NAME, PATH_TO_SQL_SCRIPT, PATH_TO_TEST_PROPERTIES);
 	private static String BIOTECH_ID;
+	private CustomerType customer;
 	
 	@BeforeClass
 	public static void beforeClass() {
@@ -152,7 +153,7 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 		CustomerType cus1 = invokeRetrieveWdayFlow(getSubFlow("retrieveAccountWdayFlow"), account.get("Name").toString());
 		assertEquals("Customer Category should be synced", BIOTECH_ID, cus1.getCustomerData().getCustomerCategoryReference().getID().get(1).getValue());
 		assertEquals("Customer Name should be synced", accountName, cus1.getCustomerData().getCustomerName());
-		
+		customer = cus1;
 		// SAP test
 		Thread.sleep(15000);
 		Map<String, Object> payload0 = invokeRetrieveSAPFlow(retrieveAccountFromSapFlow, account);
@@ -191,6 +192,11 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 		SubflowInterceptingChainLifecycleWrapper deleteAccountFromSAPflow = getSubFlow("deleteAccountsFromSapFlow");
 		deleteAccountFromSAPflow.initialise();
 		deleteAccountFromSAPflow.process(getTestEvent(idList, MessageExchangePattern.REQUEST_RESPONSE));
+		// Workday
+		SubflowInterceptingChainLifecycleWrapper deleteAccountFromWdayflow = getSubFlow("inactivateAccountWorkdayFlow");
+		deleteAccountFromWdayflow.initialise();
+		deleteAccountFromWdayflow.process(getTestEvent(BusinessLogicIT.inactivateCustomer(customer), MessageExchangePattern.REQUEST_RESPONSE));
+						
 	}
 	
 	

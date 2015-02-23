@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -34,8 +36,16 @@ import org.mule.transport.NullPayload;
 
 import com.mulesoft.module.batch.BatchTestHelper;
 import com.sforce.soap.partner.SaveResult;
+import com.workday.revenue.BusinessEntityStatusValueObjectIDType;
+import com.workday.revenue.BusinessEntityStatusValueObjectType;
+import com.workday.revenue.BusinessEntityWWSDataType;
+import com.workday.revenue.CustomerStatusDataType;
 import com.workday.revenue.CustomerType;
+import com.workday.revenue.CustomerWWSDataType;
 import com.workday.revenue.GetCustomersResponseType;
+import com.workday.revenue.PutCustomerRequestType;
+import com.workday.revenue.ReasonForCustomerStatusChangeObjectIDType;
+import com.workday.revenue.ReasonForCustomerStatusChangeObjectType;
 
 /**
  * The objective of this class is to validate the correct behavior of the
@@ -44,6 +54,7 @@ import com.workday.revenue.GetCustomersResponseType;
  */
 public class BusinessLogicIT extends AbstractTemplateTestCase {
 	
+	private static String WDAY_REASON_ID;
 	private BatchTestHelper helper;
 	private static final String PATH_TO_TEST_PROPERTIES = "./src/test/resources/mule.test.properties";
 	private static final String PATH_TO_SQL_SCRIPT = "src/main/resources/account.sql";
@@ -56,7 +67,9 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 	private SubflowInterceptingChainLifecycleWrapper retrieveAccountWdayFlow;
 	private String BIOTECH_ID;
 	private String MANUFACTURING_ID;
-
+	private List<CustomerType> wdayIDs = new ArrayList<CustomerType>();
+	private static final Logger LOGGER = LogManager.getLogger(BusinessLogicIT.class);
+	
 	@BeforeClass
 	public static void beforeClass() {
 		DBCREATOR.setUpDatabase();
@@ -79,6 +92,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 			throw new IllegalStateException(
 					"Could not find the test properties file.");
 		}
+		WDAY_REASON_ID = props.getProperty("wday.status.change.reason");
 		BIOTECH_ID = props.getProperty("category.biotechnology");
 		MANUFACTURING_ID = props.getProperty("category.manufacturing");
 		stopFlowSchedulers(POLL_FLOW_NAME);
@@ -182,10 +196,10 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		Thread.sleep(25000);
 		CustomerType cus1 = invokeRetrieveWdayFlow(retrieveAccountWdayFlow, createdAccountsInA.get(2));
 		assertEquals(BIOTECH_ID, cus1.getCustomerData().getCustomerCategoryReference().getID().get(1).getValue());
-		
+		wdayIDs.add(cus1);
 		cus1 = invokeRetrieveWdayFlow(retrieveAccountWdayFlow, createdAccountsInA.get(3));
 		assertEquals(MANUFACTURING_ID, cus1.getCustomerData().getCustomerCategoryReference().getID().get(1).getValue());
-		
+		wdayIDs.add(cus1);
 		// SAP
 		Thread.sleep(15000);
 		Map<String, Object> payload0 = invokeRetrieveSAPFlow(retrieveAccountFromSapFlow, createdAccountsInA.get(2));
@@ -287,6 +301,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 	}
 	
 	private void deleteEntities() throws MuleException, Exception {
+		// SFDC
 		SubflowInterceptingChainLifecycleWrapper deleteAccountFromAflow = getSubFlow("deleteAccountFromAFlow");
 		deleteAccountFromAflow.initialise();
 
@@ -311,6 +326,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		deleteAccountFromBflow.process(getTestEvent(idList,
 				MessageExchangePattern.REQUEST_RESPONSE));
 		
+		// SAP
 		SubflowInterceptingChainLifecycleWrapper deleteAccountFromSAPflow = getSubFlow("deleteAccountsFromSapFlow");
 		deleteAccountFromSAPflow.initialise();
 		
@@ -322,6 +338,49 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 			}
 		}
 		deleteAccountFromSAPflow.process(getTestEvent(idList,
-				MessageExchangePattern.REQUEST_RESPONSE));		
+				MessageExchangePattern.REQUEST_RESPONSE));
+		
+		// Workday
+		SubflowInterceptingChainLifecycleWrapper deleteAccountFromWdayflow = getSubFlow("inactivateAccountWorkdayFlow");
+		deleteAccountFromWdayflow.initialise();
+		deleteAccountFromWdayflow.process(getTestEvent(inactivateCustomer(wdayIDs.get(0)), MessageExchangePattern.REQUEST_RESPONSE));
+		deleteAccountFromWdayflow.process(getTestEvent(inactivateCustomer(wdayIDs.get(1)), MessageExchangePattern.REQUEST_RESPONSE));
+	}
+	
+	static PutCustomerRequestType inactivateCustomer(CustomerType customer){
+		
+		PutCustomerRequestType put = new PutCustomerRequestType();
+		CustomerWWSDataType data = new CustomerWWSDataType();
+		LOGGER.info("deleting wday: " + customer.getCustomerData().getCustomerName());
+		data.setCustomerName(customer.getCustomerData().getCustomerName());
+		BusinessEntityWWSDataType entity = new BusinessEntityWWSDataType();
+		entity.setBusinessEntityName(customer.getCustomerData().getCustomerName());
+		data.setBusinessEntityData(entity );
+		data.setCustomerCategoryReference(customer.getCustomerData().getCustomerCategoryReference());
+		List<CustomerStatusDataType> statusList = new ArrayList<CustomerStatusDataType>();
+		CustomerStatusDataType status = new CustomerStatusDataType();
+		BusinessEntityStatusValueObjectType value = new BusinessEntityStatusValueObjectType();
+		List<BusinessEntityStatusValueObjectIDType> ids = new ArrayList<>();
+		BusinessEntityStatusValueObjectIDType e = new BusinessEntityStatusValueObjectIDType();
+		e.setType("WID");
+		e.setValue(WDAY_REASON_ID);
+		ids.add(e );
+		value.setID(ids );
+		ReasonForCustomerStatusChangeObjectType reason = new ReasonForCustomerStatusChangeObjectType();
+		List<ReasonForCustomerStatusChangeObjectIDType> reasonIds = new ArrayList<ReasonForCustomerStatusChangeObjectIDType>();
+		ReasonForCustomerStatusChangeObjectIDType reasonId = new ReasonForCustomerStatusChangeObjectIDType();
+		reasonId.setType("WID");
+		reasonId.setValue("119f5acfb1da41c295471eb079b12428");
+		reasonIds.add(reasonId);
+		reason.setID(reasonIds );
+		//		status.setCustomerStatusChangeReasonDescription("test cleanup");
+		status.setReasonForCustomerStatusChangeReference(reason );
+		status.setCustomerStatusValueReference(value );
+		statusList.add(status );
+		data.setCustomerStatusData(statusList );
+				
+		put.setCustomerReference(customer.getCustomerReference());
+		put.setCustomerData(data );
+		return put ;
 	}
 }

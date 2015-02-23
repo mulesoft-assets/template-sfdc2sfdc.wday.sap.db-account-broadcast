@@ -72,6 +72,7 @@ http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mu
  	</tables> 
  </BAPI_CUSTOMER_FIND> 
  ]]></sap:definition>
+
  
 
 
@@ -88,6 +89,7 @@ http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mu
  	</import> 
  </ZMULE_CUSTOMER_DELETE> 
  ]]></sap:definition>
+
  
 
 
@@ -98,5 +100,8 @@ http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mu
 	</sub-flow>
     <sub-flow name="retrieveAccountWdayFlow">
         <wd-revenue:get-customers config-ref="Workday_Revenue_Management" getCustomersRequest-ref="#[org.mule.templates.CustomerRequest.getCustomer(payload)]" doc:name="query for Customer"/>
+    </sub-flow>
+    <sub-flow name="inactivateAccountWorkdayFlow">
+        <wd-revenue:put-customer config-ref="Workday_Revenue_Management" doc:name="Workday Revenue Management"/>
     </sub-flow>
 </mule>
