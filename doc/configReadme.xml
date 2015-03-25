@@ -49,7 +49,6 @@ Once your app is all set and started, there is no need to do anything else. Ever
 		<section id="application_configuration">
 		<![CDATA[
 
-+ http.port `9090` 
 + poll.frequency `60000`
 + poll.start.delay `0`
 + watermark.defaultExpression `YESTERDAY`

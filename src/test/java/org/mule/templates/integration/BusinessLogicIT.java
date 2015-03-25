@@ -123,7 +123,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 
 		helper.awaitJobTermination(TIMEOUT_SEC * 1000, 8000);
 		helper.assertJobWasSuccessful();
-		
+		Thread.sleep(5000);
 		// SFDC
 		assertEquals("The first account should not have been sync to SFDC",
 				null,

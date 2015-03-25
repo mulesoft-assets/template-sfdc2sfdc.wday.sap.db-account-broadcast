@@ -5,7 +5,7 @@ xmlns="http://www.mulesoft.org/schema/mule/core"
 xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc"
 xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
 xmlns:spring="http://www.springframework.org/schema/beans" 
-version="EE-3.6.0" 
+version="EE-3.6.1" 
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
@@ -25,7 +25,8 @@ http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/
         <choice doc:name="Check trigger policy">
             <when expression="#['push' == '${trigger.policy}']">
                 <data-mapper:transform config-ref="XML_To_Account" doc:name="XML To Account"/>
-		        <collection-splitter doc:name="Collection Splitter"/>
+                <serializable-to-byte-array-transformer doc:name="Serializable to Byte Array"/>
+
 		        <jms:outbound-endpoint topic="A" connector-ref="Active_MQ" doc:name="JMS Topic A">
 		        	<message-properties-transformer>
 						<add-message-property key="MULE_CORRELATION_GROUP_SIZE" value="#[java.lang.Integer.MAX_VALUE]"/>
@@ -52,8 +53,15 @@ http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/
             <sfdc:query config-ref="SalesforceA" query="dsql:SELECT AccountNumber,BillingCity,BillingCountry,BillingPostalCode,BillingStreet,Description,Fax,Id,Industry,LastModifiedById,LastModifiedDate,Name,NumberOfEmployees,ParentId,Phone FROM Account WHERE (LastModifiedDate &gt; #[flowVars['lastQueryDate']] AND NumberOfEmployees &gt; 5000)" doc:name="query Accounts with filtering criteria from Salesforce Instance A"/>
             </processor-chain>
         </poll>
+        <expression-component doc:name="transform to a list"><![CDATA[list = new ArrayList();
 
-        <collection-splitter doc:name="Collection Splitter"/>
+while (payload.hasNext()){
+	list.add(payload.next());
+}
+payload =list;]]></expression-component>
+        <logger message="aaaa: #[payload.size()]" level="INFO" doc:name="Logger"/>
+        <serializable-to-byte-array-transformer doc:name="Serializable to Byte Array"/>
+
         <jms:outbound-endpoint topic="A" connector-ref="Active_MQ" doc:name="JMS Topic A">
         	<message-properties-transformer>
 				<add-message-property key="MULE_CORRELATION_GROUP_SIZE" value="#[java.lang.Integer.MAX_VALUE]"/>
