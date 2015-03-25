@@ -59,7 +59,6 @@ while (payload.hasNext()){
 	list.add(payload.next());
 }
 payload =list;]]></expression-component>
-        <logger message="aaaa: #[payload.size()]" level="INFO" doc:name="Logger"/>
         <serializable-to-byte-array-transformer doc:name="Serializable to Byte Array"/>
 
         <jms:outbound-endpoint topic="A" connector-ref="Active_MQ" doc:name="JMS Topic A">
