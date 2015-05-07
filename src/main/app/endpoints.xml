@@ -53,12 +53,12 @@ http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/
             <sfdc:query config-ref="SalesforceA" query="dsql:SELECT AccountNumber,BillingCity,BillingCountry,BillingPostalCode,BillingStreet,Description,Fax,Id,Industry,LastModifiedById,LastModifiedDate,Name,NumberOfEmployees,ParentId,Phone FROM Account WHERE (LastModifiedDate &gt; #[flowVars['lastQueryDate']] AND NumberOfEmployees &gt; 5000)" doc:name="query Accounts with filtering criteria from Salesforce Instance A"/>
             </processor-chain>
         </poll>
-        <expression-component doc:name="transform to a list"><![CDATA[list = new ArrayList();
+        <expression-component doc:name="Iterator to List"><![CDATA[list = new ArrayList();
 
 while (payload.hasNext()){
 	list.add(payload.next());
 }
-payload =list;]]></expression-component>
+payload = list;]]></expression-component>
         <serializable-to-byte-array-transformer doc:name="Serializable to Byte Array"/>
 
         <jms:outbound-endpoint topic="A" connector-ref="Active_MQ" doc:name="JMS Topic A">
