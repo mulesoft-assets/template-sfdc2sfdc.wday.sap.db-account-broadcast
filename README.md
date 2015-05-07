@@ -4,7 +4,10 @@
 + [License Agreement](#licenseagreement)
 + [Use Case](#usecase)
 + [Considerations](#considerations)
+	* [DB Considerations](#dbconsiderations)
+	* [SAP Considerations](#sapconsiderations)
 	* [Salesforce Considerations](#salesforceconsiderations)
+	* [Workday Considerations](#workdayconsiderations)
 + [Run it!](#runit)
 	* [Running on premise](#runonopremise)
 	* [Running on Studio](#runonstudio)
@@ -46,8 +49,27 @@ To make this Anypoint Template run, there are certain preconditions that must be
 
 1. The batch will fail, if you do not provide correct value for Workday Customer Category Id. You will need to extend the custom mapping, contained in **categoryLookupFlow**, if accounts with a different than five mapped Salesforce Industry / Workday Customer Category values are updated.
 
+## DB Considerations <a name="dbconsiderations"/>
+
+There may be a few things that you need to know regarding DB, in order for this template to work.
+
+This Anypoint Template may be using date time/timestamp fields from the DB in order to do comparisons and take further actions.
+While the template handles the time zone by sending all such fields in a neutral time zone, it can not handle **time offsets**.
+We define as **time offsets** the time difference that may surface between date time/timestamp fields from different systems due to a differences in the system's internal clock.
+The user of this template should take this in consideration and take the actions needed to avoid the time offset.
 
 
+### DB as destination of data
+
+There are no particular considerations for this Anypoint Template regarding DB as data destination.
+## SAP Considerations <a name="sapconsiderations"/>
+
+There may be a few things that you need to know regarding SAP, in order for this template to work.
+
+
+### As destination of data
+
+There are no particular considerations for this Anypoint Template regarding Sap as data destination.
 ## Salesforce Considerations <a name="salesforceconsiderations"/>
 
 There may be a few things that you need to know regarding Salesforce, in order for this template to work.
@@ -86,6 +108,17 @@ column='486'
 ]
 ```
 
+### As destination of data
+
+There are no particular considerations for this Anypoint Template regarding Salesforce as data destination.
+
+
+## Workday Considerations <a name="workdayconsiderations"/>
+
+
+### As destination of data
+
+There are no particular considerations for this Anypoint Template regarding Workday as data destination.
 
 
 
