@@ -11,7 +11,7 @@
 
 	<artifactId>template-sfdc2sfdc.wday.sap.db-account-broadcast</artifactId>
 	<packaging>mule</packaging>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.1.0</version>
 	<name>template-sfdc2sfdc.wday.sap.db-account-broadcast Anypoint Template Project</name>
 
 	<properties>		
@@ -110,9 +110,9 @@
 						<configuration>
 							<tasks>
 								<!-- Using an ant task to deflate cloveretl-engine.zip -->
-								<unzip src="${project.build.testOutputDirectory}/cloveretl-engine.zip" dest="${project.build.testOutputDirectory}"/>
+								<unzip src="${project.build.testOutputDirectory}/cloveretl-engine.zip" dest="${project.build.testOutputDirectory}" />
 								<!-- Mule Clover Plugin -->
-								<unzip dest="${project.build.testOutputDirectory}" src="${project.build.testOutputDirectory}/mule-clover-plugins.zip"/>
+								<unzip dest="${project.build.testOutputDirectory}" src="${project.build.testOutputDirectory}/mule-clover-plugins.zip" />
 							</tasks>
 						</configuration>
 						<goals>
@@ -242,5 +242,6 @@
 		<connection>scm:git:https://github.com/mulesoft/template-sfdc2sfdc.wday.sap.db-account-broadcast.git</connection>
 		<developerConnection>scm:git:https://github.com/mulesoft/template-sfdc2sfdc.wday.sap.db-account-broadcast.git</developerConnection>
 		<url>http://github.com/mulesoft/template-sfdc2sfdc.wday.sap.db-account-broadcast</url>
-	</scm>
+	  <tag>v1.1.0</tag>
+  </scm>
 </project>
