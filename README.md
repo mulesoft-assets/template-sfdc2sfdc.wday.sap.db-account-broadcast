@@ -28,9 +28,9 @@ Note that using this template is subject to the conditions of this [License Agre
 Please review the terms of the license before downloading and using this template. In short, you are allowed to use the template for free with Mule ESB Enterprise Edition, CloudHub, or as a trial in Anypoint Studio.
 
 # Use Case <a name="usecase"/>
-As a Salesforce admin I want to synchronize accounts from a Salesforce Org to another Salesforce Org, a Workday system, an SAP system and a Database.
+As a Salesforce admin I want to synchronize accounts from a Salesforce Org to another Salesforce Org, Workday, SAP and Database instances.
 
-This Anypoint Template should serve as a foundation for setting an online sync of accounts from a Salesforce instance to many destination systems, using publisher and subscriber pattern. Every time there is a new account or a change in an already existing one, the integration will poll for changes in the Salesforce source Org, publish the changes to a topic and each subscriber will be responsible for updating the accounts in the target systems.
+This Anypoint Template should serve as a foundation for setting an online sync of accounts from a Salesforce instance to many destination systems, using the Publish-subscribe pattern. Every time there is a new account or a change in an already existing one, the integration will poll for changes in the Salesforce source Org, publish the changes to a topic and each subscriber will be responsible for updating the accounts in the target systems.
 
 Requirements have been set not only to be used as example, but also to establish a starting point to adapt the integration to your requirements.
 
