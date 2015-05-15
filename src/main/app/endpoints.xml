@@ -26,12 +26,7 @@ http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/
             <when expression="#['push' == '${trigger.policy}']">
                 <data-mapper:transform config-ref="XML_To_Account" doc:name="XML To Account"/>
                 <serializable-to-byte-array-transformer doc:name="Serializable to Byte Array"/>
-
-		        <jms:outbound-endpoint topic="A" connector-ref="Active_MQ" doc:name="JMS Topic A">
-		        	<message-properties-transformer>
-						<add-message-property key="MULE_CORRELATION_GROUP_SIZE" value="#[java.lang.Integer.MAX_VALUE]"/>
-					</message-properties-transformer> 
-		        </jms:outbound-endpoint>
+		        <jms:outbound-endpoint topic="A" connector-ref="Active_MQ" doc:name="JMS Topic A" />
             </when>
             <otherwise>
                 <logger message="Trigger policy has been set to POLL. Skipping this message" level="INFO" doc:name="discard notification"/>
@@ -61,11 +56,7 @@ while (payload.hasNext()){
 payload = list;]]></expression-component>
         <serializable-to-byte-array-transformer doc:name="Serializable to Byte Array"/>
 
-        <jms:outbound-endpoint topic="A" connector-ref="Active_MQ" doc:name="JMS Topic A">
-        	<message-properties-transformer>
-				<add-message-property key="MULE_CORRELATION_GROUP_SIZE" value="#[java.lang.Integer.MAX_VALUE]"/>
-			</message-properties-transformer> 
-        </jms:outbound-endpoint>
+        <jms:outbound-endpoint topic="A" connector-ref="Active_MQ" doc:name="JMS Topic A" />
 		<exception-strategy ref="defaultChoiceExceptionStrategy"
 			doc:name="Default Exception Strategy" />
     </flow>   
