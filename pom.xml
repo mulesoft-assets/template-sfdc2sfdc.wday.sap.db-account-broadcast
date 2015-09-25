@@ -143,6 +143,12 @@
             <version>${mule.version}</version>
             <scope>provided</scope>
         </dependency>
+	<dependency>
+            <groupId>com.mulesoft.weave</groupId>
+            <artifactId>mule-plugin-weave_2.11</artifactId>
+            <version>${mule.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 	<repositories>
