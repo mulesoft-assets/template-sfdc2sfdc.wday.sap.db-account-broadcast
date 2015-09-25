@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http" 
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http" 
 xmlns="http://www.mulesoft.org/schema/mule/core" 
 xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc"
 xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
 xmlns:spring="http://www.springframework.org/schema/beans" 
-version="EE-3.6.2" 
+version="EE-3.7.2"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
@@ -13,10 +13,9 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
 http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
 http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
-http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
-http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd">
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
 
-	<data-mapper:config name="XML_To_Account" transformationGraphPath="xml_to_account.grf" doc:name="XML_To_Account"/>
 	
     <flow name="triggerPushFlow"  initialState="started">
         <http:listener config-ref="HttpListenerConfig" doc:name="Push notifications listener" path="/" >
@@ -24,7 +23,36 @@ http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/
         </http:listener>
         <choice doc:name="Check trigger policy">
             <when expression="#['push' == '${trigger.policy}']">
-                <data-mapper:transform config-ref="XML_To_Account" doc:name="XML To Account"/>
+                <dw:transform-message doc:name="Transform XML to Account">
+                    <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+payload.Envelope.Body.notifications.Notification.*sObject map {
+	Id : $.Id,
+	ShippingStreet : $.ShippingStreet,
+	Site : $.Site,
+	LastModifiedDate : $.LastModifiedDate when $.LastModifiedDate != null otherwise null,
+	Type : $.Type,
+	Website : $.Website,
+	Description : $.Description,
+	Fax : $.Fax as :string when $.Fax != null otherwise null,
+	Industry : $.Industry,
+	Name : $.Name,
+	NumberOfEmployees : $.NumberOfEmployees as :number{class: "java.lang.Integer"} default 0,
+	Description : $.Description,
+	Phone : $.Phone as :string when $.Phone != null otherwise null,
+	ShippingCity : $.ShippingCity,
+	ShippingCountry : $.ShippingCountry,
+	ShippingPostalCode : $.ShippingPostalCode as :string when $.ShippingPostalCode != null otherwise null,
+	ShippingState : $.ShippingState,
+	BillingCity : $.BillingCity,
+	BillingCountry : $.BillingCountry,
+	BillingPostalCode : $.BillingPostalCode as :string when $.BillingPostalCode != null otherwise null,
+	BillingState : $.BillingState,
+	BillingStreet : $.BillingStreet
+}]]></dw:set-payload>
+                </dw:transform-message>
+
                 <serializable-to-byte-array-transformer doc:name="Serializable to Byte Array"/>
 		        <jms:outbound-endpoint topic="A" connector-ref="Active_MQ" doc:name="JMS Topic A" />
             </when>

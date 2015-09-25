@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:wd-revenue="http://www.mulesoft.org/schema/mule/wd-revenue" xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:db="http://www.mulesoft.org/schema/mule/db"
-	xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.6.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+<mule version="EE-3.7.2" 
+xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:wd-revenue="http://www.mulesoft.org/schema/mule/wd-revenue" xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
 http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
 http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
-http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
-http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mule/wd-revenue/current/mule-wd-revenue.xsd">
+http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mule/wd-revenue/current/mule-wd-revenue.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
     <sub-flow name="createAccountFlowA" >
         <sfdc:create config-ref="SalesforceA" type="Account" doc:name="Salesforce">
             <sfdc:objects ref="#[payload]"/>
@@ -50,7 +51,7 @@ http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mu
 		<sap:outbound-endpoint exchange-pattern="request-response"
 			connector-ref="SAP" type="function" functionName="BAPI_CUSTOMER_FIND"
 			xmlVersion="2" outputXml="true" evaluateFunctionResponse="true"
-			responseTimeout="10000" doc:name="find Customers in SAP">
+			responseTimeout="10000" doc:name="Find Customers in SAP">
             <sap:definition><![CDATA[<BAPI_CUSTOMER_FIND type="function">
  	<import> 
  		<MAX_CNT type="field" sapType="INT">0</MAX_CNT> 
@@ -65,7 +66,7 @@ http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mu
  				<FIELDNAME type="field"  
  					sapType="CHAR" sapLength="5">NAME1</FIELDNAME> 
  				<FIELDVALUE type="field"  
- 					sapType="CHAR" sapLength="20">#[payload['Name']]</FIELDVALUE> 
+ 					sapType="CHAR" sapLength="20">#[org.apache.commons.lang3.StringEscapeUtils.escapeXml(payload['Name'].length() > 20 ? payload['Name'].substring(0,20) : payload['Name'])]</FIELDVALUE> 
  			</row> 
  		</table> 
  		</SELOPT_TAB> 
@@ -77,12 +78,21 @@ http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mu
 
 
 		</sap:outbound-endpoint>
-		<data-mapper:transform config-ref="BAPI_CUSTOMER_FIND_to_Customer"
-			doc:name="BAPI_CUSTOMER_FIND to Customer" />
+        <dw:transform-message doc:name="Transform BAPI_CUSTOMER_FIND to Customer">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+payload."BAPI_CUSTOMER_FIND".tables."RESULT_TAB".*row map {
+	CustomerNumber : $.CUSTOMER when ($.CUSTOMER != "") otherwise null,
+	Name : $.FIELDVALUE
+}]]></dw:set-payload>
+        </dw:transform-message>
+
+
 	</sub-flow>
 	<sub-flow name="deleteAccountsFromSapFlow" >
 		<foreach doc:name="For Each">
-            <sap:outbound-endpoint exchange-pattern="request-response" connector-ref="SAP" type="function" functionName="ZMULE_CUSTOMER_DELETE" xmlVersion="2" outputXml="true" evaluateFunctionResponse="true" responseTimeout="10000" doc:name="delete Customer from SAP">
+            <sap:outbound-endpoint exchange-pattern="request-response" connector-ref="SAP" type="function" functionName="ZMULE_CUSTOMER_DELETE" xmlVersion="2" outputXml="true" evaluateFunctionResponse="true" responseTimeout="10000" doc:name="Delete Customer from SAP">
                 <sap:definition><![CDATA[<ZMULE_CUSTOMER_DELETE type="function">
  	<import> 
  			<I_CUSTOMER type="field">#[payload]</I_CUSTOMER> 
@@ -99,7 +109,19 @@ http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mu
 		</foreach>
 	</sub-flow>
     <sub-flow name="retrieveAccountWdayFlow">
-        <wd-revenue:get-customers config-ref="Workday_Revenue_Management" getCustomersRequest-ref="#[org.mule.templates.CustomerRequest.getCustomer(payload)]" doc:name="query for Customer"/>
+        <dw:transform-message doc:name="Create GetCustomerRequestType request">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	requestCriteria: [{
+		customerReferenceID: payload
+	}]
+} as :object {
+	class : "com.workday.revenue.GetCustomersRequestType"
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <wd-revenue:get-customers config-ref="Workday_Revenue_Management"  doc:name="Query for Customer"/>
     </sub-flow>
     <sub-flow name="inactivateAccountWorkdayFlow">
         <wd-revenue:put-customer config-ref="Workday_Revenue_Management" doc:name="Workday Revenue Management"/>

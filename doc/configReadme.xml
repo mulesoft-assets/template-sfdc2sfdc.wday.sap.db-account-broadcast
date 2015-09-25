@@ -97,8 +97,10 @@ If it is required to connect to a different Database there should be provided th
 + category.hospitality `CUSTOMER_CATEGORY-4`
 + category.manufacturing `CUSTOMER_CATEGORY-4-8`
 + category.technology `CUSTOMER_CATEGORY-5`
++ category.default `CUSTOMER_CATEGORY-5`
 
-A Category group defines CUSTOMER_CATEGORY_ID for each category as identified in Workday. The values are used for mapping Salesforce Account Industry field to Workday Customer Category.   
+A Category group defines CUSTOMER_CATEGORY_ID for each category as identified in Workday. The values are used for mapping Salesforce Account Industry field to Workday Customer Category. 
+If the category is not found between the specified industries, the **category.default** is used.   
 
 ]]>
 		</section>

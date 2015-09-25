@@ -11,6 +11,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -29,11 +30,11 @@ import org.mule.DefaultMuleMessage;
 import org.mule.MessageExchangePattern;
 import org.mule.api.MuleEvent;
 import org.mule.api.MuleException;
-import org.mule.api.MuleMessage;
 import org.mule.construct.Flow;
 import org.mule.context.notification.NotificationException;
 import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
 import org.mule.templates.db.MySQLDbCreator;
+import org.mule.transformer.types.DataTypeFactory;
 
 import com.mulesoft.module.batch.BatchTestHelper;
 import com.workday.revenue.CustomerType;
@@ -97,6 +98,7 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 		helper = new BatchTestHelper(muleContext);
 		triggerPushFlow = getFlow("triggerPushFlow");
 		selectAccountFromDBFlow = getSubFlow("selectAccountFromDB");
+		selectAccountFromDBFlow.initialise();
 		retrieveAccountFromSapFlow = getSubFlow("retrieveAccountFromSapFlow");
 		retrieveAccountFromSapFlow.initialise();
 	}
@@ -110,19 +112,21 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 	@Test
 	public void testMainFlow() throws Exception {
 		accountName = buildUniqueName();
-		MuleMessage message = new DefaultMuleMessage(buildRequest(accountName), muleContext);
-		MuleEvent testEvent = getTestEvent(message, MessageExchangePattern.REQUEST_RESPONSE);
+		MuleEvent testEvent = getTestEvent(null, triggerPushFlow);
+		testEvent.getMessage().setPayload(buildRequest(accountName), DataTypeFactory.create(InputStream.class, "application/xml"));
 		triggerPushFlow.process(testEvent);
 		
 		helper.awaitJobTermination(TIMEOUT_MILLIS * 1000, 500);
 		helper.assertJobWasSuccessful();
-
+		
+		Thread.sleep(5000);
+		
 		HashMap<String, Object> account = new HashMap<String, Object>();
 		account.put("Name", accountName);
 		account.put("Id", SALESFORCE_ID);
 		SubflowInterceptingChainLifecycleWrapper retrieveAccountFlow = getSubFlow("retrieveAccountFlow");
 		retrieveAccountFlow.initialise();
-		message = new DefaultMuleMessage(account, muleContext);
+		DefaultMuleMessage message = new DefaultMuleMessage(account, muleContext);
 		testEvent = getTestEvent(message, MessageExchangePattern.REQUEST_RESPONSE);
 		Map<String, String> accountInB = (Map<String, String>) retrieveAccountFlow.process(testEvent).getMessage().getPayload();
 		
@@ -155,13 +159,13 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 		assertEquals("Customer Name should be synced", accountName, cus1.getCustomerData().getCustomerName());
 		customer = cus1;
 		// SAP test
-		Thread.sleep(15000);
+		Thread.sleep(15000);		
 		Map<String, Object> payload0 = invokeRetrieveSAPFlow(retrieveAccountFromSapFlow, account);
 		assertNotNull(payload0);
-		assertEquals(account.get("Name"), payload0.get("Name"));				
+		String testAccountName = (String)account.get("Name");
+		assertEquals(testAccountName.length() > 20 ? testAccountName.substring(0, 20) : testAccountName, payload0.get("Name"));				
 	}
 	
-	@SuppressWarnings("unchecked")
 	protected Map<String, Object> invokeRetrieveSAPFlow(SubflowInterceptingChainLifecycleWrapper flow, Map<String, Object> payload) throws Exception {
 		MuleEvent event = flow.process(getTestEvent(payload, MessageExchangePattern.REQUEST_RESPONSE));
 		Object resultPayload = event.getMessage().getPayload();

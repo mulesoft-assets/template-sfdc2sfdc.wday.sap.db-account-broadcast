@@ -204,12 +204,13 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		Thread.sleep(15000);
 		Map<String, Object> payload0 = invokeRetrieveSAPFlow(retrieveAccountFromSapFlow, createdAccountsInA.get(2));
 		assertNotNull(payload0);
-		assertEquals(createdAccountsInA.get(2).get("Name"), payload0.get("Name"));
+		String testAccountName = (String) createdAccountsInA.get(2).get("Name");
+		assertEquals(testAccountName.length() > 20 ? testAccountName.substring(0, 20) : testAccountName, payload0.get("Name"));
 		
 		payload0 = invokeRetrieveSAPFlow(retrieveAccountFromSapFlow, createdAccountsInA.get(3));
 		assertNotNull(payload0);
-		assertEquals(createdAccountsInA.get(3).get("Name"), payload0.get("Name"));
-		
+		testAccountName = (String) createdAccountsInA.get(3).get("Name");
+		assertEquals(testAccountName.length() > 20 ? testAccountName.substring(0, 20) : testAccountName, payload0.get("Name"));		
 	}
 	
 	protected CustomerType invokeRetrieveWdayFlow(SubflowInterceptingChainLifecycleWrapper flow, Map<String, Object> payload) throws Exception {
@@ -373,7 +374,7 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		reasonId.setValue("119f5acfb1da41c295471eb079b12428");
 		reasonIds.add(reasonId);
 		reason.setID(reasonIds );
-		//		status.setCustomerStatusChangeReasonDescription("test cleanup");
+		
 		status.setReasonForCustomerStatusChangeReference(reason );
 		status.setCustomerStatusValueReference(value );
 		statusList.add(status );
