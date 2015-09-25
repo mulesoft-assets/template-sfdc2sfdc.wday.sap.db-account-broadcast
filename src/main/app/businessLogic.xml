@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:wd-revenue="http://www.mulesoft.org/schema/mule/wd-revenue" xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper"
+<mule 
+ xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:wd-revenue="http://www.mulesoft.org/schema/mule/wd-revenue" xmlns:sap="http://www.mulesoft.org/schema/mule/sap"
 	xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
 	xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
 	xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.6.2"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	version="EE-3.7.2"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:json="http://www.mulesoft.org/schema/mule/json"
-	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
 http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
@@ -15,25 +19,18 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
 http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
 http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
-http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
 http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
 http://www.mulesoft.org/schema/mule/wd-revenue http://www.mulesoft.org/schema/mule/wd-revenue/current/mule-wd-revenue.xsd
 http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
 
-	<data-mapper:config name="Salesforce_Account_to_DEBMAS01" transformationGraphPath="salesforce_account_to_debmas01.grf" doc:name="Salesforce_Account_to_DEBMAS01"/>
-    <data-mapper:config name="CUSTOMER_GET_KTOKD_to_KTOKD" transformationGraphPath="customer_get_ktokd_to_ktokd.grf" doc:name="CUSTOMER_GET_KTOKD_to_KTOKD"/>
-    <data-mapper:config name="BAPI_CUSTOMER_FIND_to_Customer" transformationGraphPath="bapi_customer_find_to_customer.grf" doc:name="BAPI_CUSTOMER_FIND_to_Customer"/>
-    <data-mapper:config name="BAPI_CUSTOMER_GETINTNUMBER_to_Customr_Number" transformationGraphPath="bapi_customer_getintnumber_to_customr_number.grf" doc:name="BAPI_CUSTOMER_GETINTNUMBER_to_Customr_Number"/>
-    <data-mapper:config name="List_Account__To_PutCustomerRequestType" transformationGraphPath="list_account__to_putcustomerrequesttype.grf" doc:name="List_Account__To_PutCustomerRequestType"/>
-    
-	<flow name="processAQueueObjectsToBatchFlow">
+    <flow name="processAQueueObjectsToBatchFlow">
 		<jms:inbound-endpoint topic="A" connector-ref="Active_MQ"
 			doc:name="JMS Topic A">
 			<jms:jmsmessage-to-object-transformer />
 		</jms:inbound-endpoint>
         <byte-array-to-serializable-transformer doc:name="Byte Array to Serializable"/>
 
-		<batch:execute name="syncAccountsBatch" doc:name="syncAccountsBatch" />
+		<batch:execute name="syncAccountsBatch" doc:name="Execute syncAccountsBatch" />
 		<exception-strategy ref="defaultChoiceExceptionStrategy"
 			doc:name="Default Exception Strategy" />
 	</flow>
@@ -41,42 +38,39 @@ http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mul
 		<batch:threading-profile poolExhaustedAction="WAIT" />
 		<batch:process-records>
 			<batch:step name="foreachAccountInAGetAccountInBStep">
-				<enricher source="#[payload]" target="#[recordVars['accountInB']]"
-					doc:name="store result in record var 'accountInB'">
-					<sfdc:query-single config-ref="SalesforceB"
-						query="SELECT Id FROM Account WHERE Name = '#[payload['Name']]'"
-						doc:name="query Account in Salesforce Instance B" />
+
+				<enricher source="#[payload == null ? null : payload.Id ]" target="#[payload.Id]"
+					doc:name="store 'Id' in the payload">
+                    <sfdc:query-single config-ref="SalesforceB" query="SELECT Id FROM Account WHERE Name = '#[payload['Name']]'" doc:name="Query Account in Salesforce Instance B"/>
+
 				</enricher>
 			</batch:step>
 			<batch:step name="foreachAccountInAUpsertAccountInBStep">
-				<expression-component doc:name="set ID for upsert"><![CDATA[if (recordVars['accountInB'] instanceof NullPayload) {
-	// Remove ID as it is an insert
-	payload.remove('Id')
-} else {
-	// Add target system ID as it is an update
-    payload.put('Id', recordVars['accountInB']['Id'])
-}]]></expression-component>
-				<expression-component
-					doc:name="remove unnecessary fields and map field types"><![CDATA[payload.remove('LastModifiedDate');
-payload.remove('LastModifiedById');
 
-// TODO - This is necessary due to: https://www.mulesoft.org/jira/browse/CLDCONNECT-1248
-payload.put('NumberOfEmployees', Integer.parseInt(payload['NumberOfEmployees']) );]]></expression-component>
+
 				<batch:commit size="200" doc:name="Batch Commit">
-					<sfdc:upsert config-ref="SalesforceB"
+
+                    <dw:transform-message doc:name="Remove unnecessary fields and map field types">
+                        <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+payload map $ - "LastModifiedDate"
+			  - "LastModifiedById"		]]></dw:set-payload>
+                    </dw:transform-message>
+					<sfdc:upsert-bulk config-ref="SalesforceB"
 						externalIdFieldName="Id" type="Account"
-						doc:name="upsert Accounts in Salesforce Instance B">
+						doc:name="Upsert Accounts in Salesforce Instance B">
                         <sfdc:objects ref="#[payload]"/>
 
-					</sfdc:upsert>
+					</sfdc:upsert-bulk>
 				</batch:commit>
 			</batch:step>
 		</batch:process-records>
 		<batch:on-complete>
 			<json:object-to-json-transformer
-				doc:name="transform BatchJobInstance to JSON" />
+				doc:name="Transform BatchJobInstance to JSON" />
 			<logger message="The SFDC Batch job has finished: #[payload]" level="INFO"
-				doc:name="log 'Batch job has finished'" />
+				doc:name="Log 'Batch job has finished'" />
 		</batch:on-complete>
 	</batch:job>
 
@@ -87,7 +81,7 @@ payload.put('NumberOfEmployees', Integer.parseInt(payload['NumberOfEmployees']) 
 		</jms:inbound-endpoint>
         <byte-array-to-serializable-transformer doc:name="Byte Array to Serializable"/>
 
-		<batch:execute name="dbSyncAccountsBatch" doc:name="dbSyncAccountsBatch" />
+		<batch:execute name="dbSyncAccountsBatch" doc:name="Execute dbSyncAccountsBatch" />
 		<exception-strategy ref="defaultChoiceExceptionStrategy"
 			doc:name="Default Exception Strategy" />
 	</flow>
@@ -99,9 +93,10 @@ payload.put('NumberOfEmployees', Integer.parseInt(payload['NumberOfEmployees']) 
 				<enricher source="#[payload]" target="#[recordVars.account]"
 					doc:name="Store payload into variable 'account'">
 					<db:select config-ref="GenericDatabaseConnector"
-						doc:name="query Account by matching name from Database">
+						doc:name="Query Account by matching name from Database">
                         <db:template-query-ref name="QueryAccount"/>
                         <db:in-param name="paramName" value="#[payload.Name]"/>
+
 
 
 					</db:select>
@@ -113,7 +108,7 @@ payload.put('NumberOfEmployees', Integer.parseInt(payload['NumberOfEmployees']) 
 				accept-expression="#[recordVars['account'].size() &gt; 0]">
 				<batch:commit size="100" doc:name="Batch Commit">
 					<db:update config-ref="GenericDatabaseConnector"
-						doc:name="update account in database" bulkMode="true">
+						doc:name="Update account in database" bulkMode="true">
                         <db:parameterized-query><![CDATA[UPDATE Account SET
 Industry = #[payload['Industry']], 
 AccountNumber = #[payload['AccountNumber']], 
@@ -127,6 +122,7 @@ WHERE Name = #[payload['Name']]]]></db:parameterized-query>
 
 
 
+
 					</db:update>
 				</batch:commit>
 			</batch:step>
@@ -134,7 +130,7 @@ WHERE Name = #[payload['Name']]]]></db:parameterized-query>
 				accept-expression="#[recordVars['account'].size() == 0]">
 				<batch:commit size="100" doc:name="Batch Commit">
 					<db:insert config-ref="GenericDatabaseConnector"
-						doc:name="insert account in database" bulkMode="true">
+						doc:name="Insert account in database" bulkMode="true">
                         <db:parameterized-query><![CDATA[INSERT INTO Account (
 	AccountNumber,
 	Description,
@@ -159,6 +155,7 @@ WHERE Name = #[payload['Name']]]]></db:parameterized-query>
 
 
 
+
 					</db:insert>
 				</batch:commit>
 			</batch:step>
@@ -166,9 +163,9 @@ WHERE Name = #[payload['Name']]]]></db:parameterized-query>
 		<batch:on-complete>
 
 			<json:object-to-json-transformer
-				doc:name="transform BatchJobInstance to JSON" />
+				doc:name="Transform BatchJobInstance to JSON" />
 			<logger message="The DB Batch job has finished: #[payload]" level="INFO"
-				doc:name="log 'Batch job has finished'" />
+				doc:name="Log 'Batch job has finished'" />
 		</batch:on-complete>
 	</batch:job>
 
@@ -179,7 +176,7 @@ WHERE Name = #[payload['Name']]]]></db:parameterized-query>
 		</jms:inbound-endpoint>
         <byte-array-to-serializable-transformer doc:name="Byte Array to Serializable"/>
 
-		<batch:execute name="SAPsyncAccountsBatch" doc:name="SAPsyncAccountsBatch" />
+		<batch:execute name="SAPsyncAccountsBatch" doc:name="Execute SAPsyncAccountsBatch" />
 		<exception-strategy ref="defaultChoiceExceptionStrategy"
 			doc:name="Default Exception Strategy" />
 	</flow>
@@ -189,8 +186,8 @@ WHERE Name = #[payload['Name']]]]></db:parameterized-query>
 		<batch:process-records>
 
 			<batch:step name="foreachAccountInSalesforceGetAccountInSap">
-				<enricher source="#[payload.isEmpty() ? NullPayload.getInstance() : payload[0]]" target="#[recordVars['sapCustomer']]"
-					doc:name="store result in record var 'sapCustomer'">
+				<enricher source="#[payload.isEmpty() ? null : payload[0]['CustomerNumber']]" target="#[payload['CustomerNumber']]"
+					doc:name="store 'CustomerNumber' to payload">
                     <processor-chain doc:name="Processor Chain">
                         <sap:outbound-endpoint exchange-pattern="request-response" connector-ref="SAP" type="function" functionName="BAPI_CUSTOMER_FIND" xmlVersion="2" outputXml="true" evaluateFunctionResponse="true" responseTimeout="10000" doc:name="Get Customer by Name">
                             <sap:definition><![CDATA[<BAPI_CUSTOMER_FIND type="function">
@@ -207,7 +204,7 @@ WHERE Name = #[payload['Name']]]]></db:parameterized-query>
 				<FIELDNAME type="field"
 					sapType="CHAR" sapLength="5">NAME1</FIELDNAME>
 				<FIELDVALUE type="field" 
-					sapType="CHAR" sapLength="20">#[org.apache.commons.lang3.StringEscapeUtils.escapeXml(payload['Name'])]</FIELDVALUE>
+					sapType="CHAR" sapLength="20">#[org.apache.commons.lang3.StringEscapeUtils.escapeXml(payload['Name'].length() > 20 ? payload['Name'].substring(0,20) : payload['Name'])]</FIELDVALUE>
 			</row>
 		</table>
 		</SELOPT_TAB>
@@ -219,17 +216,25 @@ WHERE Name = #[payload['Name']]]]></db:parameterized-query>
 
 
                         </sap:outbound-endpoint>
-                        <data-mapper:transform config-ref="BAPI_CUSTOMER_FIND_to_Customer" doc:name="BAPI_CUSTOMER_FIND to Customer"/>
+                        <dw:transform-message doc:name="Transform BAPI_CUSTOMER_FIND to Customer">
+                            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+payload."BAPI_CUSTOMER_FIND".tables."RESULT_TAB".*row map {
+	CustomerNumber : $.CUSTOMER when ($.CUSTOMER != "") otherwise null
+}]]></dw:set-payload>
+                        </dw:transform-message>
+
                     </processor-chain>
 				</enricher>
 			</batch:step>
-            <batch:step name="forEachAccountInSapGetAccountGroup" accept-expression="!(recordVars['sapCustomer'] is NullPayload)">
+            <batch:step name="forEachAccountInSapGetAccountGroup" accept-expression="payload['CustomerNumber'] != null">
                 <enricher source="#[payload['AccountGroup']]" target="#[payload['AccountGroup']]" doc:name="store 'AccountGroup' to payload">
                     <processor-chain doc:name="Processor Chain">
                         <sap:outbound-endpoint exchange-pattern="request-response" connector-ref="SAP" type="function" functionName="CUSTOMER_GET_KTOKD" xmlVersion="2" outputXml="true" evaluateFunctionResponse="true" responseTimeout="10000" doc:name="Get Account Group from SAP">
                             <sap:definition><![CDATA[<CUSTOMER_GET_KTOKD type="function">
 	<import>
-			<IV_KUNNR type="field" sapType="CHAR" sapLength="20">#[recordVars['sapCustomer']['Id']]</IV_KUNNR>
+			<IV_KUNNR type="field" sapType="CHAR" sapLength="20">#[payload['CustomerNumber']]</IV_KUNNR>
 	</import>
 </CUSTOMER_GET_KTOKD>
 ]]></sap:definition>
@@ -240,14 +245,20 @@ WHERE Name = #[payload['Name']]]]></db:parameterized-query>
 
 
                         </sap:outbound-endpoint>
-                        <data-mapper:transform config-ref="CUSTOMER_GET_KTOKD_to_KTOKD" doc:name="CUSTOMER_GET_KTOKD to AccountGroup"/>
+                        <dw:transform-message doc:name="Transform CUSTOMER_GET_KTOKD to AccountGroup">
+                            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	AccountGroup : payload.CUSTOMER_GET_KTOKD.export.EV_KTOKD
+}]]></dw:set-payload>
+                        </dw:transform-message>
+
                     </processor-chain>
                 </enricher>
-                <expression-component doc:name="Setup Properties for Update"><![CDATA[payload.put('MessageFunction', '005'); // Replace: This message replaces previous messages
-payload.put('CustomerNumber', recordVars['sapCustomer']['CustomerNumber']);
-]]></expression-component>
+
             </batch:step>
-            <batch:step name="forEachNewAccountGetCustomerNumber" accept-expression="recordVars['sapCustomer'] is NullPayload">
+            <batch:step name="forEachNewAccountGetCustomerNumber" accept-expression="payload['CustomerNumber'] == null">
                 <enricher source="#[payload['CustomerNumber']]" target="#[payload['CustomerNumber']]" doc:name="store 'CustomerNumber' to payload">
                     <processor-chain doc:name="Processor Chain">
                         <sap:outbound-endpoint exchange-pattern="request-response" connector-ref="SAP" type="function" functionName="BAPI_CUSTOMER_GETINTNUMBER" xmlVersion="2" outputXml="true" evaluateFunctionResponse="true" responseTimeout="10000" doc:name="Get Next Customer Number from SAP">
@@ -265,15 +276,21 @@ payload.put('CustomerNumber', recordVars['sapCustomer']['CustomerNumber']);
 
 
                         </sap:outbound-endpoint>
-                        <data-mapper:transform config-ref="BAPI_CUSTOMER_GETINTNUMBER_to_Customr_Number" doc:name="BAPI_CUSTOMER_GETINTNUMBER to Customr Number"/>
+                        <dw:transform-message doc:name="Transform BAPI_CUSTOMER_GETINTNUMBER to Customr Number">
+                            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	CustomerNumber : payload.BAPI_CUSTOMER_GETINTNUMBER.export.CUSTOMERID
+}]]></dw:set-payload>
+                        </dw:transform-message>
+
                     </processor-chain>
                 </enricher>
-                <expression-component doc:name="Setup Properties for Create"><![CDATA[payload.put('MessageFunction', '009'); // Original: First message for process
-payload.put('AccountGroup', '${sap.default.accountGroup}');
-]]></expression-component>
+
             </batch:step>
 			<batch:step name="foreachAccountInSalesForceUpsertAccountInSapStep">
-                <flow-ref name="commitAccountsFlow" doc:name="commitAccountsFlow"/>
+                <flow-ref name="commitAccountsFlow" doc:name="Execute commitAccountsFlow"/>
 			</batch:step>
 		</batch:process-records>
 		<batch:on-complete>
@@ -284,8 +301,48 @@ payload.put('AccountGroup', '${sap.default.accountGroup}');
 		</batch:on-complete>
 	</batch:job>
     <flow name="commitAccountsFlow" >
-        <logger message="Accounts to update/create: #[payload] .......... #[recordVars['sapCustomer']] ............. #[recordVars]" level="INFO" doc:name="Log Accounts to update/create"/>
-        <data-mapper:transform config-ref="Salesforce_Account_to_DEBMAS01" doc:name="Salesforce Account to DEBMAS01"/>
+        <dw:transform-message doc:name="Transform Salesforce Account to DEBMAS01">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+---
+	
+	DEBMAS01: {
+		IDOC @(BEGIN: "1"): {
+			"EDI_DC40" @(SEGMENT: "1"): {
+				TABNAM: "EDI_DC40",
+				DIRECT: "2",
+				IDOCTYP: "DEBMAS01",
+				MESTYP: "DEBMAS",
+				SNDPOR: "MULESOFT",
+				SNDPRT: "LS",
+				SNDPRN: "MULESOFT",
+				RCVPOR: "MULESOFT",
+				RCVPRT: "LS",
+				RCVPRN: "MULESOFT"
+			},
+			E1KNA1M @(SEGMENT: "1"): {
+				//setup properties for update or create (005 for update and 009 for create)
+				MSGFN: "009" when (payload.AccountGroup == null) 
+					   otherwise "005",
+				KUNNR: payload.CustomerNumber,
+				KTOKD: payload.AccountGroup when (payload.AccountGroup != null)
+					   otherwise p('sap.default.accountGroup'),
+				LAND1: "SK",
+				NAME1: payload.Name when ((sizeOf payload.Name) <= 20) otherwise payload.Name[0..19],
+				(ORT01: payload.BillingCity) when (payload.BillingCity != null),
+				(PSTLZ: payload.BillingPostalCode) when (payload.BillingPostalCode != null),
+				SPRAS: "E",
+				(STRAS: payload.BillingStreet) when (payload.BillingStreet != null),
+				(TELF1: payload.Phone) when (payload.Phone != null),
+				(TELFX: payload.Fax) when (payload.Fax != null),
+				"SPRAS_ISO": "EN"				
+			}
+		}
+	}
+]]></dw:set-payload>
+        </dw:transform-message>
+        <logger message="Accounts to update/create: #[payload]" level="INFO" doc:name="Log Accounts to update/create"/>
+
         <sap:outbound-endpoint exchange-pattern="request-response" connector-ref="SAP" type="idoc" functionName="DEBMAS01" xmlVersion="2" outputXml="true"  responseTimeout="10000" doc:name="Upsert Customer in SAP"/>
         <logger message="Upsert result: #[payload]" level="INFO" doc:name="Log Result"/>
     </flow>
@@ -294,37 +351,55 @@ payload.put('AccountGroup', '${sap.default.accountGroup}');
         <jms:inbound-endpoint topic="A" connector-ref="Active_MQ" doc:name="JMS Topic A"/>
         <byte-array-to-serializable-transformer doc:name="Byte Array to Serializable"/>
 
-        <batch:execute name="WorkdaySyncAccountsBatch" doc:name="WorkdaysyncAccountsBatch"/>
+        <batch:execute name="WorkdaySyncAccountsBatch" doc:name="Execute WorkdaysyncAccountsBatch"/>
         <exception-strategy ref="defaultChoiceExceptionStrategy" doc:name="Default Exception Strategy"/>
     </flow>
     <batch:job name="WorkdaySyncAccountsBatch">
         <batch:process-records>
             <batch:step name="forEachAccountInSalesforceUpsertCustomerInWorkday">
-                <data-mapper:transform config-ref="List_Account__To_PutCustomerRequestType" doc:name="List&lt;Account&gt; To PutCustomerRequestType"/>
+                <logger message="ccc - #[payload]" level="INFO" doc:name="Logger"/>
+                <dw:transform-message doc:name="Transform Account To PutCustomerRequestType">
+                    <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+
+%function findCategory(industry) {
+	Category: p('category.biotechnology') when industry == "Biotechnology" otherwise
+	 		 (p('category.financialServices') when industry == "Finances" otherwise
+	 		 (p('category.hospitality') when industry == "Hospitality" otherwise
+	 		 (p('category.manufacturing') when industry == "Manufacturing" otherwise	
+	 		 (p('category.technology') when industry == "Technology" otherwise	
+	 		  p('category.default')))))
+}
+---
+{
+	customerData: {
+		businessEntityData: {
+			businessEntityName: payload.Name
+		},
+		customerCategoryReference: {
+			ID: [{
+				type: "Customer_Category_ID",
+				value: findCategory(payload.Industry).Category
+			}]
+		},
+		customerName: payload.Name,
+		customerReferenceID: payload.Name
+	}
+} as :object {
+	class : "com.workday.revenue.PutCustomerRequestType"
+}]]></dw:set-payload>
+                </dw:transform-message>
+
                 <wd-revenue:put-customer config-ref="Workday_Revenue_Management" doc:name="Upsert Customer"/>
 
             </batch:step>
         </batch:process-records>
         <batch:on-complete>
 			<json:object-to-json-transformer
-				doc:name="transform BatchJobInstance to JSON" />
+				doc:name="Transform BatchJobInstance to JSON" />
 			<logger message="The SFDC Batch job has finished: #[payload]" level="INFO"
-				doc:name="log 'Batch job has finished'" />
+				doc:name="Log 'Batch job has finished'" />
 		</batch:on-complete>
     </batch:job>
-    <flow name="categoryLookupFlow">
 
-        <scripting:component doc:name="get Workday categoryId">
-            <scripting:script engine="Groovy"><![CDATA[switch (payload.Industry){
-	case 'Biotechnology' : payload = ['categoryId' : '${category.biotechnology}']; break;
-	case 'Finances' : payload = ['categoryId' : '${category.financialServices}']; break;
-	case 'Hospitality' : payload = ['categoryId' : '${category.hospitality}']; break;
-	case 'Manufacturing' : payload = ['categoryId' : '${category.manufacturing}']; break;
-	case 'Technology' : payload = ['categoryId' : '${category.technology}']; break;
-
-}]]></scripting:script>
-        </scripting:component>
-
-
-    </flow>
 </mule>

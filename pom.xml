@@ -6,19 +6,18 @@
 	<parent>
 		<groupId>org.mule.templates</groupId>
 		<artifactId>templates-tooling-parent-pom</artifactId>
-		<version>1.1.9</version>
+		<version>1.2.3</version>
 	</parent>
 
 	<artifactId>template-sfdc2sfdc.wday.sap.db-account-broadcast</artifactId>
 	<packaging>mule</packaging>
-	<version>1.1.2-SNAPSHOT</version>
+	<version>1.2.0-SNAPSHOT</version>
 	<name>template-sfdc2sfdc.wday.sap.db-account-broadcast Anypoint Template Project</name>
 
 	<properties>		
 		<wday.revenue.version>4.1.1</wday.revenue.version>	
-		<sap.jco.version>3.0.10</sap.jco.version>
-		<sap.idoc.version>3.0.10</sap.idoc.version>
-		<sap.build.type>mac64</sap.build.type>
+		<sap.jco.version>3.0.13</sap.jco.version>
+		<sap.idoc.version>3.0.12</sap.idoc.version>
 	</properties>
 
 	<build>
@@ -45,82 +44,20 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>com.sap.conn.jco</groupId>
-									<artifactId>sapjco-native</artifactId>
-									<version>${sap.jco.version}</version>
-									<classifier>${sap.build.type}</classifier>
-									<type>jar</type>
-									<overWrite>true</overWrite>
-									<outputDirectory>${project.build.directory}/temp-native-lib</outputDirectory>
-									<includes>**/*.dll,**/*.so,**/*.jnilib</includes>
-									<excludes>META-INF</excludes>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy-clover-plugins</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<overWriteReleases>true</overWriteReleases>
-							<overWriteSnapshots>true</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-							<stripVersion>true</stripVersion>
-							<outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
-							<artifactItems>
-								<artifactItem>
-									<groupId>com.cloveretl</groupId>
-									<artifactId>cloveretl-engine</artifactId>
-									<version>${mule.version}</version>
-									<!-- version for Mule 3.4.0 or newer -->
-									<type>zip</type>
-								</artifactItem>
-                                <artifactItem>
-                                    <groupId>com.mulesoft.muleesb.datamapper</groupId>
-                                    <artifactId>mule-clover-plugins</artifactId>
-                                    <version>${mule.version}</version>
-                                    <type>zip</type>
-                                </artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-					
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-						<configuration>
-							<tasks>
-								<!-- Using an ant task to deflate cloveretl-engine.zip -->
-								<unzip src="${project.build.testOutputDirectory}/cloveretl-engine.zip" dest="${project.build.testOutputDirectory}" />
-								<!-- Mule Clover Plugin -->
-								<unzip dest="${project.build.testOutputDirectory}" src="${project.build.testOutputDirectory}/mule-clover-plugins.zip" />
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>			
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<argLine>-Djava.library.path=${project.basedir}/libraries/SAP.${sap.jco.version}</argLine>
+					<classpathDependencyExcludes>
+						<classpathDependencyExcludes>com.sap.conn.jco:sapjco</classpathDependencyExcludes>
+						<classpathDependencyExcludes>com.sap.conn.idoc:sapidoc</classpathDependencyExcludes>
+					</classpathDependencyExcludes>
+					<additionalClasspathElements>
+						<additionalClasspathElement>${project.basedir}/libraries/SAP.${sap.jco.version}/sapjco3.jar</additionalClasspathElement>
+						<additionalClasspathElement>${project.basedir}/libraries/SAP.${sap.idoc.version}/sapidoc3.jar</additionalClasspathElement>
+					</additionalClasspathElements>
+				</configuration>
+			</plugin> 		
 		</plugins>
 	</build>
 
@@ -130,36 +67,37 @@
             <groupId>org.mule.modules</groupId>
             <artifactId>mule-module-sfdc</artifactId>
             <version>${sfdc.version}</version>
-        </dependency>	    
-	    <dependency>
-	            <groupId>com.mulesoft.muleesb.transports</groupId>
-	            <artifactId>mule-transport-sap</artifactId>
-	            <version>${sap.version}</version>
-	        </dependency>
+        </dependency>	   
 	    <dependency>
             <groupId>org.mule.modules</groupId>
             <artifactId>mule-module-spring-config</artifactId>
             <version>${mule.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-			<groupId>com.sap.conn.jco</groupId>
-			<artifactId>sapjco3</artifactId>
-			<version>${sap.jco.version}</version>
-			<scope>test</scope>
+		<dependency>
+			<groupId>com.mulesoft.muleesb.transports</groupId>
+			<artifactId>mule-transport-sap</artifactId>
+			<version>${sap.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sap.conn.jco</groupId>
-			<artifactId>sapjco-native</artifactId>
+			<artifactId>sapjco</artifactId>
 			<version>${sap.jco.version}</version>
-			<classifier>${sap.build.type}</classifier>
-			<scope>test</scope>
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.conn.idoc</groupId>
+			<artifactId>sapidoc</artifactId>
+			<version>${sap.idoc.version}</version>
+			<scope>provided</scope>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.0</version>
-		</dependency>		
+			<version>3.3.2</version>
+		</dependency>	
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
@@ -188,12 +126,6 @@
 			<version>${mule.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.sap.conn.idoc</groupId>
-			<artifactId>sapidoc3</artifactId>
-			<version>${sap.idoc.version}</version>
-			<scope>test</scope>
-		</dependency>
     <dependency>
             <groupId>com.mulesoft.muleesb.modules</groupId>
             <artifactId>mule-module-data-mapper</artifactId>
@@ -221,20 +153,15 @@
 			<layout>default</layout>
 		</repository>
 		<repository>
-			<id>mulesoft-snapshots</id>
-			<name>MuleSoft Snapshots Repository</name>
-			<url>https://repository.mulesoft.org/nexus/content/repositories/snapshots/</url>
+			<id>mule-ee-releases</id>
+			<name>MuleSoft Releases EE Repository</name>
+			<url>https://repository.mulesoft.org/nexus/content/repositories/releases-ee/</url>
 			<layout>default</layout>
 		</repository>
 		<repository>
-            <id>mule-ee-snapshots</id>
-            <name>Mule Snapshot Repository</name>
-            <url>https://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots/</url>
-        </repository>
-        <repository>
-			<id>mule-ee-thirdparty</id>
-			<name>MuleSoft Thirdparty Repository</name>
-			<url>https://repository.mulesoft.org/nexus/content/repositories/thirdparty/</url>
+			<id>mulesoft-snapshots</id>
+			<name>MuleSoft Snapshots Repository</name>
+			<url>https://repository.mulesoft.org/nexus/content/repositories/snapshots/</url>
 			<layout>default</layout>
 		</repository>
     </repositories>	
