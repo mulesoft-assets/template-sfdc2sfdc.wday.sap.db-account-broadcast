@@ -127,12 +127,6 @@
 			<scope>provided</scope>
 		</dependency>
     <dependency>
-            <groupId>com.mulesoft.muleesb.modules</groupId>
-            <artifactId>mule-module-data-mapper</artifactId>
-            <version>${mule.version}</version>
-            <scope>provided</scope>
-        </dependency>
-    <dependency>
             <groupId>org.mule.modules</groupId>
             <artifactId>mule-module-workday-revenuemanagement</artifactId>
             <version>${wday.revenue.version}</version>
