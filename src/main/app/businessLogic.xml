@@ -8,7 +8,7 @@
 	xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:spring="http://www.springframework.org/schema/beans" 
-	version="EE-3.7.2"
+	
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:json="http://www.mulesoft.org/schema/mule/json"
 	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
@@ -297,7 +297,7 @@ payload."BAPI_CUSTOMER_FIND".tables."RESULT_TAB".*row map {
 			<json:object-to-json-transformer
 				doc:name="Transform BatchJobInstance to JSON" />
 			<logger level="INFO" doc:name="Log 'Migration process has finished'"
-				message="Migration process has finished: #[payload]" />
+				message="The SAP Batch job has finished: #[payload]" />
 		</batch:on-complete>
 	</batch:job>
     <flow name="commitAccountsFlow" >
@@ -313,12 +313,12 @@ payload."BAPI_CUSTOMER_FIND".tables."RESULT_TAB".*row map {
 				DIRECT: "2",
 				IDOCTYP: "DEBMAS01",
 				MESTYP: "DEBMAS",
-				SNDPOR: "MULESOFT",
+				SNDPOR: "MULE01_LS",
 				SNDPRT: "LS",
-				SNDPRN: "MULESOFT",
-				RCVPOR: "MULESOFT",
+				SNDPRN: "MULE01_LS",
+				RCVPOR: "T90CLNT090",
 				RCVPRT: "LS",
-				RCVPRN: "MULESOFT"
+				RCVPRN: "T90CLNT090"
 			},
 			E1KNA1M @(SEGMENT: "1"): {
 				//setup properties for update or create (005 for update and 009 for create)
@@ -397,7 +397,7 @@ payload."BAPI_CUSTOMER_FIND".tables."RESULT_TAB".*row map {
         <batch:on-complete>
 			<json:object-to-json-transformer
 				doc:name="Transform BatchJobInstance to JSON" />
-			<logger message="The SFDC Batch job has finished: #[payload]" level="INFO"
+			<logger message="The WDAY Batch job has finished: #[payload]" level="INFO"
 				doc:name="Log 'Batch job has finished'" />
 		</batch:on-complete>
     </batch:job>
