@@ -119,7 +119,7 @@ public class BusinessLogicPushNotificationIT extends AbstractTemplateTestCase {
 		helper.awaitJobTermination(TIMEOUT_MILLIS * 1000, 500);
 		helper.assertJobWasSuccessful();
 		
-		Thread.sleep(5000);
+		Thread.sleep(10000);
 		
 		HashMap<String, Object> account = new HashMap<String, Object>();
 		account.put("Name", accountName);
