@@ -6,26 +6,26 @@
 	<parent>
 		<groupId>org.mule.templates</groupId>
 		<artifactId>templates-tooling-parent-pom</artifactId>
-		<version>1.2.3</version>
+		<version>1.3.6</version>
 	</parent>
 
 	<artifactId>template-sfdc2sfdc.wday.sap.db-account-broadcast</artifactId>
 	<packaging>mule</packaging>
-	<version>1.2.2-SNAPSHOT</version>
+	<version>1.3.0-SNAPSHOT</version>
 	<name>template-sfdc2sfdc.wday.sap.db-account-broadcast Anypoint Template Project</name>
 
 	<properties>		
 		<wday.revenue.version>4.1.1</wday.revenue.version>	
-		<sap.jco.version>3.0.13</sap.jco.version>
-		<sap.idoc.version>3.0.12</sap.idoc.version>
-	<mule.version>3.7.3</mule.version>
+		<sap.jco.version>3.0.15</sap.jco.version>
+		<sap.idoc.version>3.0.15</sap.idoc.version>
+	
     </properties>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.mule.tools</groupId>
-				<artifactId>maven-mule-plugin</artifactId>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-app-maven-plugin</artifactId>
 				<configuration>
 					<copyToAppsDirectory>true</copyToAppsDirectory>
 					<inclusions>
@@ -140,7 +140,7 @@
         </dependency>
 	<dependency>
             <groupId>com.mulesoft.weave</groupId>
-            <artifactId>mule-plugin-weave_2.11</artifactId>
+            <artifactId>mule-plugin-weave</artifactId>
             <version>${mule.version}</version>
             <scope>provided</scope>
         </dependency>
