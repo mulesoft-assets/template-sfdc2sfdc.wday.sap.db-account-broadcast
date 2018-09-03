@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Mule Anypoint Template
+    Copyright (c) MuleSoft, Inc.
+    All rights reserved.  http://www.mulesoft.com
+
+-->
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:sobject.enterprise.soap.sforce.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Id" type="xs:string"/>
+  <xs:element name="AccountNumber" type="xs:int"/>
+  <xs:element name="AnnualRevenue" type="xs:float"/>
+  <xs:element name="BillingCity" type="xs:string"/>
+  <xs:element name="BillingCountry" type="xs:string"/>
+  <xs:element name="BillingPostalCode" type="xs:short"/>
+  <xs:element name="BillingState" type="xs:string"/>
+  <xs:element name="BillingStreet" type="xs:string"/>
+  <xs:element name="CreatedById" type="xs:string"/>
+  <xs:element name="CreatedDate" type="xs:dateTime"/>
+  <xs:element name="CustomerPriority__c" type="xs:string"/>
+  <xs:element name="Description" type="xs:string"/>
+  <xs:element name="Fax" type="xs:int"/>
+  <xs:element name="Industry" type="xs:string"/>
+  <xs:element name="IsDeleted" type="xs:string"/>
+  <xs:element name="LastModifiedById" type="xs:string"/>
+  <xs:element name="LastModifiedDate" type="xs:dateTime"/>
+  <xs:element name="LastReferencedDate" type="xs:dateTime"/>
+  <xs:element name="LastViewedDate" type="xs:dateTime"/>
+  <xs:element name="Name" type="xs:string"/>
+  <xs:element name="NumberOfEmployees" type="xs:short"/>
+  <xs:element name="OwnerId" type="xs:string"/>
+  <xs:element name="Ownership" type="xs:string"/>
+  <xs:element name="Phone" type="xs:int"/>
+  <xs:element name="PhotoUrl" type="xs:string"/>
+  <xs:element name="Rating" type="xs:string"/>
+  <xs:element name="SLA__c" type="xs:string"/>
+  <xs:element name="ShippingCity" type="xs:string"/>
+  <xs:element name="ShippingCountry" type="xs:string"/>
+  <xs:element name="ShippingPostalCode" type="xs:short"/>
+  <xs:element name="ShippingState" type="xs:string"/>
+  <xs:element name="ShippingStreet" type="xs:string"/>
+  <xs:element name="Site" type="xs:anyURI"/>
+  <xs:element name="SystemModstamp" type="xs:dateTime"/>
+  <xs:element name="Type" type="xs:string"/>
+  <xs:element name="Website" type="xs:anyURI"/>
+</xs:schema>

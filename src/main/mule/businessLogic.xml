@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:workday="http://www.mulesoft.org/schema/mule/workday"
+      xmlns:sap="http://www.mulesoft.org/schema/mule/sap"
+      xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+      xmlns:db="http://www.mulesoft.org/schema/mule/db"
+      xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
+http://www.mulesoft.org/schema/mule/workday http://www.mulesoft.org/schema/mule/workday/current/mule-workday.xsd">
+
+<flow name="processAQueueObjectsToBatchFlow" doc:id="c343a061-aea3-45a2-992e-250071b4e3e3">
+		<jms:listener doc:name="JMS Topic A" doc:id="c03c28c3-6f14-4f3c-8bd1-53ec312ed9ee" config-ref="ActiveMQ" destination="A" numberOfConsumers="1">
+			<jms:consumer-type >
+				<jms:topic-consumer />
+			</jms:consumer-type>
+		</jms:listener>
+		<ee:transform doc:name="Transform JSON to Object" doc:id="c08f2690-97fd-4f85-bb02-93c38cd35d9c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<batch:job jobName="sfdcMigrateAccountsBatch" doc:id="2309acf7-21ab-429e-aa5b-8de681c1690e" >
+			<batch:process-records >
+				<batch:step name="foreachAccountInAGetAccountInBStep" doc:id="b9e8d049-89b6-49ce-ad0f-7c8bf404c5b5" >
+					<salesforce:query-single doc:name="Query Account in Salesforce Instance B" doc:id="c88dc28c-6892-4f10-95af-c73095af994a" config-ref="Salesforce_Config_B" target="sfdcBAccount">
+						<salesforce:salesforce-query >SELECT Id FROM Account WHERE Name = ':name'</salesforce:salesforce-query>
+						<salesforce:parameters ><![CDATA[#[output applicaton/java
+---
+{
+	"name" : payload.Name
+}]]]></salesforce:parameters>
+					</salesforce:query-single>
+					<ee:transform doc:name="Set Id to payload" doc:id="969e9472-264e-46d6-b5b7-81e626d9a368" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload ++ {
+	Id : if (vars.sfdcBAccount != null) vars.sfdcBAccount.Id else null
+}]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+				</batch:step>
+				<batch:step name="foreachAccountInAUpsertAccountInBStep" doc:id="7824ae80-88bb-47d9-9621-a51d99d6ad50" >
+					<batch:aggregator doc:name="Batch Aggregator" doc:id="7b08af74-3db4-4a7a-9ec0-68e29294c1b7" size="${page.size}">
+						<ee:transform doc:name="Remove unnecessary fields and map field types" doc:id="33bee491-c21c-4e58-bad9-42126bd2b0dd" >
+							<ee:message >
+								<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload map $ - "LastModifiedDate"
+			  - "LastModifiedById"]]></ee:set-payload>
+							</ee:message>
+						</ee:transform>
+						<salesforce:upsert-bulk doc:name="Upsert Accounts in Salesforce Instance B" doc:id="f5fbddd2-d44b-4fcd-b474-4ea523226361" config-ref="Salesforce_Config_B" type="Account" externalIdFieldName="Id"/>
+					</batch:aggregator>
+				</batch:step>
+			</batch:process-records>
+			<batch:on-complete >
+				<ee:transform doc:name="Prepare migration result" doc:id="0833bdea-b0de-4912-b33b-72a8b4b3c556" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output text/plain
+---
+"The Salesforce B Batch job report: \n"
+
+++ "\n Time [milliseconds]: "       ++ payload.elapsedTimeInMillis
+++ "\n Total Records: "             ++ payload.totalRecords
+++ "\n Successful Records: "        ++ payload.successfulRecords
+++ "\n Failed Records: "            ++ payload.failedRecords
+++ "\n Loaded Records: "            ++ payload.loadedRecords
+++ "\n Processed Records: "         ++ payload.processedRecords]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<logger level="INFO" doc:name="The Salesforce B Batch job has finished!" doc:id="29466232-fee5-4267-863a-bffefe2a9130" message="The Salesforce B Batch job has finished: #[payload]" />
+			</batch:on-complete>
+		</batch:job>
+	</flow>
+	<flow name="processBQueueObjectsToBatchFlow" doc:id="c3044a86-5961-42da-8946-f54cd6ff4720" >
+		<jms:listener doc:name="JMS Topic A" doc:id="1215595a-c577-45ee-873a-cd3d6bcd1f23" config-ref="ActiveMQ" destination="A" numberOfConsumers="1">
+			<jms:consumer-type >
+				<jms:topic-consumer />
+			</jms:consumer-type>
+		</jms:listener>
+		<ee:transform doc:name="Transform JSON to Object" doc:id="c7bf6867-5559-473f-9093-b15904d50c9d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<batch:job jobName="dbMigrateAccountsBatch" doc:id="e749fd49-c8e3-419a-b3fd-ccbd85f79e0f" >
+			<batch:process-records >
+				<batch:step name="foreachAccountInSalesforceGetAccountInDatabaseStep" doc:id="55d0473a-643d-48ff-a34f-04d44bd160d4" >
+					<db:select doc:name="Query Account by matching name from Database" doc:id="0c89290c-fb04-4402-afb6-40ddeb3b4449" config-ref="Database_Config" target="dbAccount">
+						<db:sql >SELECT AccountNumber, Name, Description, NumberOfEmployees, Phone, Type, SalesforceId from Account WHERE Name = :paramName</db:sql>
+						<db:input-parameters ><![CDATA[#[{"paramName" : payload.Name}]]]></db:input-parameters>
+					</db:select>
+				</batch:step>
+				<batch:step name="foreachAccountInSalesforceUpdateAccountInDatabase" doc:id="1138d5b8-b0bb-47a3-92f0-6813a9913bf5" acceptExpression="#[sizeOf(vars.dbAccount) &gt; 0]">
+					<batch:aggregator doc:name="Batch Aggregator" doc:id="ab8818e4-9f04-48e8-aa88-ada02293cd16" size="${page.size}">
+						<ee:transform doc:name="Prepare data for update" doc:id="b71c68a7-e068-4e8d-8482-ccacd3631916" >
+							<ee:message >
+								<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload map {
+	Name : $.Name,
+	Industry : $.Industry,
+	AccountNumber : $.AccountNumber,
+	Description : $.Description,
+	NumberOfEmployees : $.NumberOfEmployees
+}]]></ee:set-payload>
+							</ee:message>
+						</ee:transform>
+						<db:bulk-update doc:name="Update accounts in database" doc:id="aa58eec4-8788-4694-b153-9ebc6d97e8e3" config-ref="Database_Config">
+							<db:sql >UPDATE Account SET
+Industry = :Industry, 
+AccountNumber = :AccountNumber, 
+Description = :Description,  
+NumberOfEmployees = :NumberOfEmployees, 
+LastModifiedDate = CURRENT_TIMESTAMP()
+WHERE Name = :Name</db:sql>
+						</db:bulk-update>
+					</batch:aggregator>
+				</batch:step>
+				<batch:step name="foreachAccountInSalesforceInsertAccountInDatabase" doc:id="eea3eec4-3574-4d24-a90d-30b3d66775fb" acceptExpression="#[sizeOf(vars.dbAccount) == 0]">
+					<batch:aggregator doc:name="Batch Aggregator" doc:id="956d4a55-3891-4110-8e20-e78f7301efa0" size="${page.size}">
+						<ee:transform doc:name="Prepare data for insert" doc:id="ac9e603b-afe7-4020-b8fa-8369b3936887">
+							<ee:message>
+								<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+payload map {
+    Id : $.Id,
+	Name : $.Name,
+	Industry : $.Industry,
+	AccountNumber : $.AccountNumber,
+	Description : $.Description,
+	NumberOfEmployees : $.NumberOfEmployees
+}]]></ee:set-payload>
+							</ee:message>
+						</ee:transform>
+						<db:bulk-insert doc:name="Insert account in database" doc:id="84f667db-8ab4-43be-b20e-52a5018f4a3d" config-ref="Database_Config">
+							<db:sql>INSERT INTO Account (
+	AccountNumber,
+	Description,
+	Industry,
+	Name,
+	NumberOfEmployees,
+	SalesforceId,
+	LastModifiedById,
+	LastModifiedDate
+) VALUES (
+	:AccountNumber,
+	:Description,
+	:Industry,	
+	:Name,
+	:NumberOfEmployees,
+	:Id,
+	CURRENT_USER(),
+	CURRENT_TIMESTAMP()
+)</db:sql>
+						</db:bulk-insert>
+						
+					</batch:aggregator>
+				</batch:step>
+			</batch:process-records>
+            <batch:on-complete>
+            <ee:transform doc:name="Prepare migration result" doc:id="c84b4bc4-5a65-41c1-9d0c-f1ebd3d8db7a">
+                <ee:message>
+                    <ee:set-payload><![CDATA[%dw 2.0
+output text/plain
+---
+"The DB Batch job report: \n"
+
+++ "\n Time [milliseconds]: "       ++ payload.elapsedTimeInMillis
+++ "\n Total Records: "             ++ payload.totalRecords
+++ "\n Successful Records: "        ++ payload.successfulRecords
+++ "\n Failed Records: "            ++ payload.failedRecords
+++ "\n Loaded Records: "            ++ payload.loadedRecords
+++ "\n Processed Records: "         ++ payload.processedRecords]]></ee:set-payload>
+                </ee:message>
+            </ee:transform>
+            <logger level="INFO" doc:name="The DB Batch job has finished!" doc:id="b7575d38-7dbd-4602-9186-1bbb25234896" message="The DB Batch job has finished: #[payload]" />
+
+        </batch:on-complete>
+            
+		</batch:job>
+	</flow>
+	<flow name="processCQueueObjectsToBatchFlow" doc:id="df8e74cd-c861-4cdd-858d-a5e7f3cbb968" >
+		<jms:listener doc:name="JMS Topic A" doc:id="892623e9-f095-49d8-8beb-b2d247ddf286" config-ref="ActiveMQ" destination="A" numberOfConsumers="1">
+			<jms:consumer-type >
+				<jms:topic-consumer />
+			</jms:consumer-type>
+		</jms:listener>
+		<ee:transform doc:name="Transform JSON to Object" doc:id="a290ee35-4bd7-42d1-9954-3f9d1ebafdfd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+			</ee:variables>
+		</ee:transform>
+		<batch:job jobName="sapMigrateAccountsBatch" doc:id="db310b4a-81b0-436c-83ee-a002abc1875e" >
+			<batch:process-records >
+				<batch:step name="foreachAccountInSalesforceGetAccountInSap" doc:id="98bc809a-671f-4fad-861d-bac253863f30" >
+					<set-variable value="#[payload]" doc:name="Set payload to sfdcAccount" doc:id="e8d69bbb-4153-46bd-962b-e21ccfb1bfb4" variableName="sfdcAccount" />
+					<flow-ref doc:name="Get CustomNumber" doc:id="59fd83ea-c2df-49e9-ac67-8de4efabbf5c" name="getCustomNumberSubFlow"/>
+				</batch:step>
+				<batch:step name="foreachAccountInSapGetAccountGroup" doc:id="a7b538cc-fd9d-40d6-95d8-b4842fc266e3" acceptExpression="vars.sfdcAccount.CustomerNumber != null">
+					<flow-ref doc:name="Get AccountGroup" doc:id="074e03ae-6f42-47b0-a1a6-a2ce309cb65e" name="getAccountGroupSubFlow"/>
+				</batch:step>
+				<batch:step name="foreachNewAccountGetCustomerNumber" doc:id="10f25d52-0d49-4446-acc3-e91fac929894" acceptExpression="vars.sfdcAccount.CustomerNumber == null">
+					<flow-ref doc:name="Get New Account CustomerNumber" doc:id="f96a9038-d364-4755-af70-e06d3c41689a" name="getNewAccountCustomerNumberSubFlow"/>
+				</batch:step>
+				<batch:step name="Batch_Step" doc:id="2016add8-5e05-4090-8e8f-ecaee67480d1" >
+					<flow-ref doc:name="Upsert Account" doc:id="7fab19bf-5134-4427-8836-faec6c9d06da" name="upsertAccountSubFlow"/>
+				</batch:step>
+			</batch:process-records>
+			<batch:on-complete >
+				<ee:transform doc:name="Prepare migration result" doc:id="c448f24b-4e3d-468a-8013-015f5781d9a4" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output text/plain
+---
+"The SAP Batch job report: \n"
+
+++ "\n Time [milliseconds]: "       ++ payload.elapsedTimeInMillis
+++ "\n Total Records: "             ++ payload.totalRecords
+++ "\n Successful Records: "        ++ payload.successfulRecords
+++ "\n Failed Records: "            ++ payload.failedRecords
+++ "\n Loaded Records: "            ++ payload.loadedRecords
+++ "\n Processed Records: "         ++ payload.processedRecords]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<logger level="INFO" doc:name="The SAP Batch job has finished!" doc:id="6ee3026b-c1ea-4de3-8cf9-f70bc1ed5d46" message="The SAP Batch job has finished: #[payload]" />
+			</batch:on-complete>
+		</batch:job>
+	</flow>
+	<sub-flow name="getCustomNumberSubFlow" doc:id="2d3875b1-9a1b-48a0-a580-9f24aa594f16" >
+		<ee:transform doc:name="Set XML input" doc:id="1f3519d5-7ae8-4228-9531-5ecf1a2e13f4">
+						<ee:message>
+							<ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	"BAPI_CUSTOMER_FIND": {
+		"import": {
+			"MAX_CNT": "0",
+			"PL_HOLD": "X"
+		},
+		"tables": {
+			"SELOPT_TAB": {
+				"row": {
+					"TABNAME": "KNA1",
+					"FIELDNAME": "NAME1",
+					"FIELDVALUE": if(sizeOf(payload.Name) > 20) (payload.Name[0 to 19]) else payload.Name
+				}
+			}
+		}
+	}
+}]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+		<sap:execute-synchronous-remote-function-call key="BAPI_CUSTOMER_FIND" doc:name="Get Customer by Name" doc:id="c85d2385-2538-420c-a128-1ae86513d756" config-ref="SAP_Outbound" />
+		<ee:transform doc:name="Transform BAPI_CUSTOMER_FIND to Customer" doc:id="d335781b-f2b6-45f3-b609-71208b1207e1">
+						<ee:message>
+							<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+payload."BAPI_CUSTOMER_FIND".tables."RESULT_TAB".*row map {
+	CustomerNumber : if ($.CUSTOMER != "") $.CUSTOMER else null
+}]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+		<ee:transform doc:name="Add CustomerNumber to sfdcAccount" doc:id="26c38947-b13d-4fb3-bb9c-13e426e518b2">
+						<ee:message>
+						</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="sfdcAccount" ><![CDATA[%dw 2.0
+output application/java
+---
+vars.sfdcAccount ++ {
+	"CustomerNumber" : if (isEmpty(payload) == null) null else payload[0].CustomerNumber
+}]]></ee:set-variable>
+			</ee:variables>
+					</ee:transform>
+	</sub-flow>
+	<sub-flow name="getAccountGroupSubFlow" doc:id="1c2a67de-9cb4-4d42-aee5-40d7c24d3f6a" >
+		<ee:transform doc:name="Set XML input" doc:id="cb1352eb-78ce-4c5e-b784-de0a4fa65fb2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+  "CUSTOMER_GET_KTOKD": {
+    "import": {
+      "IV_KUNNR": vars.sfdcAccount.CustomerNumber
+    }
+  }
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<sap:execute-synchronous-remote-function-call key="CUSTOMER_GET_KTOKD" doc:name="Get Account Group from SAP" doc:id="1e6e2067-78aa-4dd9-9793-b0aa97063c81" config-ref="SAP_Outbound"/>
+		<ee:transform doc:name="Add AccountGroup to sfdcAccount" doc:id="c0e0ae27-55ed-4d57-b445-7e277893257a" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="sfdcAccount" ><![CDATA[%dw 2.0
+output application/java
+---
+vars.sfdcAccount ++ {
+	"AccountGroup" : payload.CUSTOMER_GET_KTOKD.export.EV_KTOKD
+}]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="getNewAccountCustomerNumberSubFlow" doc:id="056f5180-e0b4-4a1a-8bff-dd679bc108fd" >
+		<ee:transform doc:name="Set XML input" doc:id="2b11e1a5-a661-4e1b-99ef-baa0a94f9fea" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+  "BAPI_CUSTOMER_GETINTNUMBER": {
+    "import": {
+      "ACCOUNTGROUP": p('sap.default.accountGroup')
+    }
+  }
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<sap:execute-synchronous-remote-function-call key="BAPI_CUSTOMER_GETINTNUMBER" doc:name="Get Next Customer Number from SAP" doc:id="7763f549-366d-419f-ae8d-500745f8ed4e" config-ref="SAP_Outbound"/>
+		<ee:transform doc:name="Add CustomerNumber to sfdcAccount" doc:id="c85ea7db-a397-4ee0-909c-f4819ffcd98a" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="sfdcAccount" ><![CDATA[%dw 2.0
+output application/java
+---
+vars.sfdcAccount ++ {
+	CustomerNumber : payload.BAPI_CUSTOMER_GETINTNUMBER.export.CUSTOMERID
+}]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="upsertAccountSubFlow" doc:id="4d93d704-6769-47a7-9c49-ae763f7526dd" >
+		<ee:transform doc:name="Transform Salesforce Account to DEBMAS01" doc:id="f8654c9c-6f59-49e6-a2e3-afc50ee568a7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+DEBMAS01: {
+		IDOC @(BEGIN: "1"): {
+			"EDI_DC40" @(SEGMENT: "1"): {
+				TABNAM: "EDI_DC40",
+				DIRECT: "2",
+				IDOCTYP: "DEBMAS01",
+				MESTYP: "DEBMAS",
+				SNDPOR: "MULE01_LS",
+				SNDPRT: "LS",
+				SNDPRN: "MULE01_LS",
+				RCVPOR: "T90CLNT090",
+				RCVPRT: "LS",
+				RCVPRN: "T90CLNT090"
+			},
+			E1KNA1M @(SEGMENT: "1"): {
+				//setup properties for update or create (005 for update and 009 for create)
+				MSGFN: if (vars.sfdcAccount.AccountGroup == null) "009" else "005",
+				KUNNR: vars.sfdcAccount.CustomerNumber,
+				KTOKD: if (vars.sfdcAccount.AccountGroup != null) vars.sfdcAccount.AccountGroup else p('sap.default.accountGroup'),
+				LAND1: "SK",
+				NAME1: if (sizeOf(vars.sfdcAccount.Name) <= 20) vars.sfdcAccount.Name else vars.sfdcAccount.Name[0 to 19],
+				(ORT01: vars.sfdcAccount.BillingCity) if (vars.sfdcAccount.BillingCity != null),
+				(PSTLZ: vars.sfdcAccount.BillingPostalCode) if (vars.sfdcAccount.BillingPostalCode != null),
+				SPRAS: "E",
+				(STRAS: vars.sfdcAccount.BillingStreet) if (vars.sfdcAccount.BillingStreet != null),
+				(TELF1: vars.sfdcAccount.Phone) if (vars.sfdcAccount.Phone != null),
+				(TELFX: vars.sfdcAccount.Fax) if (vars.sfdcAccount.Fax != null),
+				"SPRAS_ISO": "EN"				
+			}
+		}
+	}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Log Accounts to upsert" doc:id="da0f6b69-b081-4b9e-a70e-f409f60fc9cb" message="Accounts to upsert: #[payload]"/>
+		<sap:send key="DEBMAS01" doc:name="Upsert Customer in SAP" doc:id="f54b6a65-ae76-42a6-8430-690a2173abfd" config-ref="SAP_Outbound"/>
+		<logger level="INFO" doc:name="Log Result" doc:id="0f327fd0-f1cc-44fd-a0b9-677c44c74006" message="Upsert result: #[payload]"/>
+	</sub-flow>
+	<flow name="processDQueueObjectsToBatchFlow" doc:id="ebd1852b-e149-421c-9ee7-84561efa369a" >
+		<jms:listener doc:name="JMS Topic A" doc:id="1aeb94ff-4831-42ed-8ef0-228aab97e665" config-ref="ActiveMQ" destination="A" numberOfConsumers="1">
+			<jms:consumer-type >
+				<jms:topic-consumer />
+			</jms:consumer-type>
+		</jms:listener>
+        <ee:transform doc:name="Transform JSON to Object" doc:id="a290ee35-4bd7-42d1-9954-3f9d1ebafdfd" >
+            <ee:message >
+                <ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload]]></ee:set-payload>
+            </ee:message>
+            <ee:variables >
+            </ee:variables>
+        </ee:transform>
+		<batch:job jobName="wdayMigrateAccountsBatch" doc:id="48175bd3-c128-49b8-811b-d39e1456acaa" >
+			<batch:process-records >
+				<batch:step name="foreachAccountInSalesforceUpsertCustomerInWorkday" doc:id="d71cbd56-0f2f-4b97-af6e-33902c82895d" >
+                
+                
+                
+                
+					<ee:transform doc:name="Transform Account To SubmitCustomerRequest Type" doc:id="cd1adc09-129a-4760-b454-fb6f35271a9b">
+						<ee:message>
+							<ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+ns ns0 urn:com.workday/bsvc
+fun findCategory(industry) =  
+			 if (industry == "Biotechnology") p('category.biotechnology') else
+	 		 (if (industry == "Finances") p('category.financialServices') else
+	 		 (if (industry == "Hospitality") p('category.hospitality') else
+	 		 (if (industry == "Manufacturing") p('category.manufacturing') else	
+	 		 (if (industry == "Technology") p('category.technology') else	
+	 		  p('category.default')))))
+---
+{
+	ns0#Submit_Customer_Request: {
+		ns0#Customer_Data: {
+			ns0#Business_Entity_Data: {
+				ns0#Business_Entity_Name: payload.Name
+			},
+			ns0#Customer_Category_Reference: {
+				ns0#ID @(ns0#"type": "Customer_Category_ID"): findCategory(payload.Industry)
+			},
+			ns0#Customer_Name: payload.Name,
+			ns0#Customer_Reference_ID: payload.Name
+		}
+	}
+}]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+					<logger level="INFO" doc:name="Log Customer to upsert" doc:id="b453438c-8af9-4dbe-bf71-6e838cede818" message="Customer to upsert: #[payload]" />
+					<workday:invoke doc:name="Upsert Customer" doc:id="4b0cd7b4-8dd7-4547-9515-56af5e4ef052" config-ref="Workday_Config" service="Revenue_Management" operation="Put_Customer"/>
+					<logger level="INFO" doc:name="Log Result" doc:id="9c1a2ec3-a503-4ec9-b435-bcc7b97f9db9" message="Upsert result: #[payload]" />
+				</batch:step>
+			</batch:process-records>
+            <batch:on-complete >
+                <ee:transform doc:name="Prepare migration result" doc:id="c448f24b-4e3d-468a-8013-015f5781d9a4" >
+                    <ee:message >
+                        <ee:set-payload ><![CDATA[%dw 2.0
+output text/plain
+---
+"The Workday Batch job report: \n"
+
+++ "\n Time [milliseconds]: "       ++ payload.elapsedTimeInMillis
+++ "\n Total Records: "             ++ payload.totalRecords
+++ "\n Successful Records: "        ++ payload.successfulRecords
+++ "\n Failed Records: "            ++ payload.failedRecords
+++ "\n Loaded Records: "            ++ payload.loadedRecords
+++ "\n Processed Records: "         ++ payload.processedRecords]]></ee:set-payload>
+                    </ee:message>
+                </ee:transform>
+                <logger level="INFO" doc:name="The Workday Batch job has finished!" doc:id="6ee3026b-c1ea-4de3-8cf9-f70bc1ed5d46" message="The Workday Batch job has finished: #[payload]" />
+            </batch:on-complete>
+		</batch:job>
+	</flow>
+
+</mule>
+
+
+        

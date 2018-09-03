@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <soapenv:Body>
+  <notifications xmlns="http://soap.sforce.com/2005/09/outbound">
+   <OrganizationId>00Dd0000000dtDqEAI</OrganizationId>
+   <ActionId>04kd0000000PCgvAAG</ActionId>
+   <SessionId xsi:nil="true"/>
+   <EnterpriseUrl>https://na14.salesforce.com/services/Soap/c/30.0/00Dd0000000dtDq</EnterpriseUrl>
+   <PartnerUrl>https://na14.salesforce.com/services/Soap/u/30.0/00Dd0000000dtDq</PartnerUrl>
+   <Notification>
+    <Id>04ld000000TzMKpAAN</Id>
+    <sObject xsi:type="sf:Account" xmlns:sf="urn:sobject.enterprise.soap.sforce.com">
+     <sf:Id>001d000001XD5XKAA1</sf:Id>
+     <sf:AccountNumber>4564564</sf:AccountNumber>
+     <sf:AnnualRevenue>10000.0</sf:AnnualRevenue>
+     <sf:BillingCity>City</sf:BillingCity>
+     <sf:BillingCountry>Country</sf:BillingCountry>
+     <sf:BillingPostalCode>04001</sf:BillingPostalCode>
+     <sf:BillingState>State</sf:BillingState>
+     <sf:BillingStreet>Street</sf:BillingStreet>
+     <sf:CreatedById>005d0000000yYC7AAM</sf:CreatedById>
+     <sf:CreatedDate>2014-05-05T11:47:49.000Z</sf:CreatedDate>
+     <sf:CustomerPriority__c>High</sf:CustomerPriority__c>
+     <sf:Description>description ddddd</sf:Description>
+     <sf:Fax>+421995555</sf:Fax>
+     <sf:Industry>Biotechnology</sf:Industry>
+     <sf:IsDeleted>false</sf:IsDeleted>
+     <sf:LastModifiedById>005d0000000yYC7AAM</sf:LastModifiedById>
+     <sf:LastModifiedDate>2014-05-19T11:02:14.000Z</sf:LastModifiedDate>
+     <sf:LastReferencedDate>2014-05-19T11:02:14.000Z</sf:LastReferencedDate>
+     <sf:LastViewedDate>2014-05-19T11:02:14.000Z</sf:LastViewedDate>
+     <sf:Name>accountName</sf:Name>
+     <sf:NumberOfEmployees>5000</sf:NumberOfEmployees>
+     <sf:OwnerId>005d0000000yYC7AAM</sf:OwnerId>
+     <sf:Ownership>Public</sf:Ownership>
+     <sf:Phone>+421995555</sf:Phone>
+     <sf:PhotoUrl>/services/images/photo/001d000001XD5XKAA1</sf:PhotoUrl>
+     <sf:Rating>Hot</sf:Rating>
+     <sf:SLA__c>Gold</sf:SLA__c>
+     <sf:ShippingCity>Shipping City</sf:ShippingCity>
+     <sf:ShippingCountry>Country</sf:ShippingCountry>
+     <sf:ShippingPostalCode>04001</sf:ShippingPostalCode>
+     <sf:ShippingState>Shipping State</sf:ShippingState>
+     <sf:ShippingStreet>Shipping street</sf:ShippingStreet>
+     <sf:Site>http://www.test.com</sf:Site>
+     <sf:SystemModstamp>2014-05-19T11:02:14.000Z</sf:SystemModstamp>
+     <sf:Type>Prospect</sf:Type>
+     <sf:Website>http://www.test.com</sf:Website>
+    </sObject>
+   </Notification>
+  </notifications>
+ </soapenv:Body>
+</soapenv:Envelope>
