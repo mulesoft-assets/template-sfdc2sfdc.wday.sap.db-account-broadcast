@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Mule Anypoint Template
+    Copyright (c) MuleSoft, Inc.
+    All rights reserved.  http://www.mulesoft.com
+
+-->
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://soap.sforce.com/2005/09/outbound" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="notifications" type="out:notificationsType" xmlns:out="http://soap.sforce.com/2005/09/outbound"/>
+  <xs:complexType name="sObjectType">
+    <xs:sequence>
+      <xs:element ref="urn:Id" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:AccountNumber" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:AnnualRevenue" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:BillingCity" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:BillingCountry" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:BillingPostalCode" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:BillingState" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:BillingStreet" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:CreatedById" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:CreatedDate" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:CustomerPriority__c" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:Description" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:Fax" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:Industry" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:IsDeleted" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:LastModifiedById" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:LastModifiedDate" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:LastReferencedDate" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:LastViewedDate" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:Name" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:NumberOfEmployees" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:OwnerId" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:Ownership" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:Phone" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:PhotoUrl" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:Rating" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:SLA__c" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:ShippingCity" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:ShippingCountry" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:ShippingPostalCode" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:ShippingState" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:ShippingStreet" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:Site" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:SystemModstamp" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:Type" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+      <xs:element ref="urn:Website" xmlns:urn="urn:sobject.enterprise.soap.sforce.com"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NotificationType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Id"/>
+      <xs:element type="out:sObjectType" name="sObject" xmlns:out="http://soap.sforce.com/2005/09/outbound"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="notificationsType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="OrganizationId"/>
+      <xs:element type="xs:string" name="ActionId"/>
+      <xs:element type="xs:string" name="SessionId" nillable="true"/>
+      <xs:element type="xs:string" name="EnterpriseUrl"/>
+      <xs:element type="xs:string" name="PartnerUrl"/>
+      <xs:element type="out:NotificationType" name="Notification" xmlns:out="http://soap.sforce.com/2005/09/outbound"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
