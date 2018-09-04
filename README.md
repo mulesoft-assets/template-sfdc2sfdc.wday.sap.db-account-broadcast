@@ -183,7 +183,7 @@ In order to use this Mule Anypoint Template you need to configure properties (Cr
 + page.size `200`
 + scheduler.frequency `60000`
 + scheduler.start.delay `0`
-+ watermark.defaultExpression `2016-12-13T03:00:59Z`
++ watermark.default.expression `2016-12-13T03:00:59Z`
 + trigger.policy `push`
 
     **Note**: the property `trigger.policy` can assume only one of the values above either *push* or *poll*
