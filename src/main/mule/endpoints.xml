@@ -61,7 +61,7 @@ payload.Envelope.Body.notifications.Notification.*sObject map {
             </scheduling-strategy>
         </scheduler>
         <choice doc:name="Check trigger policy" doc:id="1b769229-18ed-4ba8-899a-d36ed773b7a4">
-            <when expression="'push' == '${trigger.policy}'">
+            <when expression="'poll' == '${trigger.policy}'">
                 <os:retrieve key="watermark" objectStore="watermarkStore" target="lastQueryTimestamp" doc:name="Retrieve lastQueryTimestamp">
                     <os:default-value><![CDATA[${watermark.default.expression}]]></os:default-value>
                 </os:retrieve>
