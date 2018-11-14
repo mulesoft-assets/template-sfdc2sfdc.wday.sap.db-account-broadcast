@@ -1,77 +1,56 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ns5="http://www.mulesoft.org/schema/mule/jms" xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:workday="http://www.mulesoft.org/schema/mule/workday" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd http://www.mulesoft.org/schema/mule/workday http://www.mulesoft.org/schema/mule/workday/current/mule-workday.xsd">
 
-<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns:os="http://www.mulesoft.org/schema/mule/os"
-    xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:sap="http://www.mulesoft.org/schema/mule/sap"
-    xmlns:workday="http://www.mulesoft.org/schema/mule/workday"
-    xsi:schemaLocation="
-http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
-http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
-http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
-http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
-http://www.mulesoft.org/schema/mule/workday http://www.mulesoft.org/schema/mule/workday/current/mule-workday.xsd">
+    <os:object-store name="watermarkStore" persistent="false" doc:name="Object store" />
 
-    <os:object-store name="watermarkStore" doc:name="Object store" persistent="false" />
-
-    <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="4af34f10-992b-4bd7-b64e-b9fc226b9ccb">
+    <http:listener-config name="HTTP_Listener_config" doc:id="4af34f10-992b-4bd7-b64e-b9fc226b9ccb" doc:name="HTTP Listener config">
         <http:listener-connection host="0.0.0.0" port="${http.port}" />
     </http:listener-config>
 
-    <configuration-properties doc:name="Configuration properties" doc:id="7584fb1d-2fa2-445a-b949-eed01f5785bd"
-        file="common.properties" />
-    <configuration-properties doc:name="Configuration properties" doc:id="86e0eb9d-cf2e-451a-9e09-b4afdf13e0e9"
-        file="mule.${mule.env}.properties" />
-    <configuration-properties doc:name="Configuration properties" doc:id="0abdf143-d5d1-4168-bdbd-7e3722442725"
-        file="mule-artifact.properties" />
-    <global-property doc:name="Global Property" name="mule.env" value="dev" />
+    <configuration-properties file="common.properties" doc:id="7584fb1d-2fa2-445a-b949-eed01f5785bd" doc:name="Configuration properties" />
+    <configuration-properties file="mule.${mule.env}.properties" doc:id="86e0eb9d-cf2e-451a-9e09-b4afdf13e0e9" doc:name="Configuration properties" />
+    <configuration-properties file="mule-artifact.properties" doc:id="0abdf143-d5d1-4168-bdbd-7e3722442725" doc:name="Configuration properties" />
+    <global-property name="mule.env" value="dev" doc:name="Global Property" />
 
-    <jms:config name="ActiveMQ" doc:name="JMS Config" doc:id="5411c616-8b37-48d4-b875-2025440eef69">
-        <jms:active-mq-connection username="admin" password="admin">
-            <jms:caching-strategy>
-                <jms:default-caching />
-            </jms:caching-strategy>
-            <jms:factory-configuration brokerUrl="tcp://localhost:61616" maxRedelivery="2" />
-        </jms:active-mq-connection>
-        <jms:consumer-config>
-            <jms:consumer-type>
-                <jms:topic-consumer />
-            </jms:consumer-type>
-        </jms:consumer-config>
-    </jms:config>
+    <ns5:config name="ActiveMQ" doc:id="5411c616-8b37-48d4-b875-2025440eef69" doc:name="JMS Config">
+        <ns5:active-mq-connection password="admin" username="admin">
+            <ns5:caching-strategy>
+                <ns5:default-caching />
+            </ns5:caching-strategy>
+            <ns5:factory-configuration brokerUrl="tcp://localhost:61616" maxRedelivery="2" />
+        </ns5:active-mq-connection>
+        <ns5:consumer-config>
+            <ns5:consumer-type>
+                <ns5:topic-consumer />
+            </ns5:consumer-type>
+        </ns5:consumer-config>
+    </ns5:config>
 
-    <salesforce:sfdc-config name="Salesforce_Config_A" doc:name="Salesforce Config" doc:id="83702f7c-b0f5-4bce-b0a1-c63721640bfd">
-        <salesforce:basic-connection password="${sfdc.a.password}" securityToken="${sfdc.a.securityToken}"
-            username="${sfdc.a.username}">
+    <salesforce:sfdc-config name="Salesforce_Config_A" doc:id="83702f7c-b0f5-4bce-b0a1-c63721640bfd" doc:name="Salesforce Config">
+        <salesforce:basic-connection password="${sfdc.a.password}" securityToken="${sfdc.a.securityToken}" username="${sfdc.a.username}">
             <pooling-profile />
         </salesforce:basic-connection>
     </salesforce:sfdc-config>
 
-    <salesforce:sfdc-config name="Salesforce_Config_B" doc:name="Salesforce Config" doc:id="83702f7c-b0f5-4bce-b0a1-c63721640bfd">
-        <salesforce:basic-connection password="${sfdc.b.password}" securityToken="${sfdc.b.securityToken}"
-            username="${sfdc.b.username}">
+    <salesforce:sfdc-config name="Salesforce_Config_B" doc:id="83702f7c-b0f5-4bce-b0a1-c63721640bfd" doc:name="Salesforce Config">
+        <salesforce:basic-connection password="${sfdc.b.password}" securityToken="${sfdc.b.securityToken}" username="${sfdc.b.username}">
             <pooling-profile />
         </salesforce:basic-connection>
     </salesforce:sfdc-config>
 
-    <db:config name="Database_Config" doc:name="Database Config" doc:id="59194256-5c2f-49ea-8146-c46fbbf41c61">
-        <db:my-sql-connection host="${db.host}" port="${db.port}" user="${db.user}" password="${db.password}" database="${db.databasename}" />
+    <db:config name="Database_Config" doc:id="59194256-5c2f-49ea-8146-c46fbbf41c61" doc:name="Database Config">
+        <db:my-sql-connection database="${db.databasename}" host="${db.host}" password="${db.password}" port="${db.port}" user="${db.user}" />
     </db:config>
 
-    <sap:outbound-config name="SAP_Outbound" doc:name="SAP Outbound" doc:id="05a0a973-2c03-4cea-8247-fda5959f14e9">
-        <sap:simple-connection-provider-connection applicationServerHost="${sap.jco.ashost}"
-            username="${sap.jco.user}" password="${sap.jco.passwd}" systemNumber="${sap.jco.sysnr}" client="${sap.jco.client}" language="${sap.jco.lang}" />
+    <sap:outbound-config name="SAP_Outbound" doc:id="05a0a973-2c03-4cea-8247-fda5959f14e9" doc:name="SAP Outbound">
+        <sap:simple-connection-provider-connection applicationServerHost="${sap.jco.ashost}" client="${sap.jco.client}" language="${sap.jco.lang}" password="${sap.jco.passwd}" systemNumber="${sap.jco.sysnr}" username="${sap.jco.user}" />
     </sap:outbound-config>
 
-    <workday:config name="Workday_Config" doc:name="Workday Config" doc:id="61b5beaf-0455-455f-9906-53cf079c004c">
-        <workday:basic-connection username="${wday.username}" password="${wday.password}" tenantName="${wday.tenant}"
-            hostName="${wday.host}">
+    <workday:config name="Workday_Config" doc:id="61b5beaf-0455-455f-9906-53cf079c004c" doc:name="Workday Config">
+        <workday:basic-connection hostName="${wday.host}" password="${wday.password}" tenantName="${wday.tenant}" username="${wday.username}">
             <workday:transport>
                 <workday:default-http-dispatcher-provider />
             </workday:transport>
         </workday:basic-connection>
     </workday:config>
 </mule>
-
-        
