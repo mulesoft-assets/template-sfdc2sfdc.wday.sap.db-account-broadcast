@@ -74,12 +74,12 @@ output text/plain
 ---
 "The Salesforce B Batch job report: \n"
 
-++ "\n Time [milliseconds]: "       ++ payload.elapsedTimeInMillis
-++ "\n Total Records: "             ++ payload.totalRecords
-++ "\n Successful Records: "        ++ payload.successfulRecords
-++ "\n Failed Records: "            ++ payload.failedRecords
-++ "\n Loaded Records: "            ++ payload.loadedRecords
-++ "\n Processed Records: "         ++ payload.processedRecords]]></ee:set-payload>
+++ "\n Time [milliseconds]: "       ++ payload.elapsedTimeInMillis!
+++ "\n Total Records: "             ++ payload.totalRecords!
+++ "\n Successful Records: "        ++ payload.successfulRecords!
+++ "\n Failed Records: "            ++ payload.failedRecords!
+++ "\n Loaded Records: "            ++ payload.loadedRecords!
+++ "\n Processed Records: "         ++ payload.processedRecords!]]></ee:set-payload>
 					</ee:message>
 				</ee:transform>
 				<logger level="INFO" doc:name="The Salesforce B Batch job has finished!" doc:id="29466232-fee5-4267-863a-bffefe2a9130" message="The Salesforce B Batch job has finished: #[payload]" />
@@ -185,12 +185,12 @@ output text/plain
 ---
 "The DB Batch job report: \n"
 
-++ "\n Time [milliseconds]: "       ++ payload.elapsedTimeInMillis
-++ "\n Total Records: "             ++ payload.totalRecords
-++ "\n Successful Records: "        ++ payload.successfulRecords
-++ "\n Failed Records: "            ++ payload.failedRecords
-++ "\n Loaded Records: "            ++ payload.loadedRecords
-++ "\n Processed Records: "         ++ payload.processedRecords]]></ee:set-payload>
+++ "\n Time [milliseconds]: "       ++ payload.elapsedTimeInMillis!
+++ "\n Total Records: "             ++ payload.totalRecords!
+++ "\n Successful Records: "        ++ payload.successfulRecords!
+++ "\n Failed Records: "            ++ payload.failedRecords!
+++ "\n Loaded Records: "            ++ payload.loadedRecords!
+++ "\n Processed Records: "         ++ payload.processedRecords!]]></ee:set-payload>
                 </ee:message>
             </ee:transform>
             <logger level="INFO" doc:name="The DB Batch job has finished!" doc:id="b7575d38-7dbd-4602-9186-1bbb25234896" message="The DB Batch job has finished: #[payload]" />
@@ -239,12 +239,12 @@ output text/plain
 ---
 "The SAP Batch job report: \n"
 
-++ "\n Time [milliseconds]: "       ++ payload.elapsedTimeInMillis
-++ "\n Total Records: "             ++ payload.totalRecords
-++ "\n Successful Records: "        ++ payload.successfulRecords
-++ "\n Failed Records: "            ++ payload.failedRecords
-++ "\n Loaded Records: "            ++ payload.loadedRecords
-++ "\n Processed Records: "         ++ payload.processedRecords]]></ee:set-payload>
+++ "\n Time [milliseconds]: "       ++ payload.elapsedTimeInMillis!
+++ "\n Total Records: "             ++ payload.totalRecords!
+++ "\n Successful Records: "        ++ payload.successfulRecords!
+++ "\n Failed Records: "            ++ payload.failedRecords!
+++ "\n Loaded Records: "            ++ payload.loadedRecords!
+++ "\n Processed Records: "         ++ payload.processedRecords!]]></ee:set-payload>
 					</ee:message>
 				</ee:transform>
 				<logger level="INFO" doc:name="The SAP Batch job has finished!" doc:id="6ee3026b-c1ea-4de3-8cf9-f70bc1ed5d46" message="The SAP Batch job has finished: #[payload]" />
@@ -467,12 +467,12 @@ output text/plain
 ---
 "The Workday Batch job report: \n"
 
-++ "\n Time [milliseconds]: "       ++ payload.elapsedTimeInMillis
-++ "\n Total Records: "             ++ payload.totalRecords
-++ "\n Successful Records: "        ++ payload.successfulRecords
-++ "\n Failed Records: "            ++ payload.failedRecords
-++ "\n Loaded Records: "            ++ payload.loadedRecords
-++ "\n Processed Records: "         ++ payload.processedRecords]]></ee:set-payload>
+++ "\n Time [milliseconds]: "       ++ payload.elapsedTimeInMillis!
+++ "\n Total Records: "             ++ payload.totalRecords!
+++ "\n Successful Records: "        ++ payload.successfulRecords!
+++ "\n Failed Records: "            ++ payload.failedRecords!
+++ "\n Loaded Records: "            ++ payload.loadedRecords!
+++ "\n Processed Records: "         ++ payload.processedRecords!]]></ee:set-payload>
                     </ee:message>
                 </ee:transform>
                 <logger level="INFO" doc:name="The Workday Batch job has finished!" doc:id="6ee3026b-c1ea-4de3-8cf9-f70bc1ed5d46" message="The Workday Batch job has finished: #[payload]" />
