@@ -34,7 +34,7 @@ payload]]></ee:set-payload>
 				<batch:step name="foreachAccountInAGetAccountInBStep" doc:id="b9e8d049-89b6-49ce-ad0f-7c8bf404c5b5" >
 					<salesforce:query-single doc:name="Query Account in Salesforce Instance B" doc:id="c88dc28c-6892-4f10-95af-c73095af994a" config-ref="Salesforce_Config_B" target="sfdcBAccount">
 						<salesforce:salesforce-query >SELECT Id FROM Account WHERE Name = ':name'</salesforce:salesforce-query>
-						<salesforce:parameters ><![CDATA[#[output applicaton/java
+						<salesforce:parameters ><![CDATA[#[output application/java
 ---
 {
 	"name" : payload.Name
@@ -441,22 +441,22 @@ fun findCategory(industry) =
 {
 	ns0#Submit_Customer_Request: {
 		ns0#Customer_Data: {
-			ns0#Business_Entity_Data: {
-				ns0#Business_Entity_Name: payload.Name
-			},
+			ns0#Customer_Reference_ID: payload.Name,
+			ns0#Customer_Name: payload.Name,
 			ns0#Customer_Category_Reference: {
 				ns0#ID @(ns0#"type": "Customer_Category_ID"): findCategory(payload.Industry)
 			},
-			ns0#Customer_Name: payload.Name,
-			ns0#Customer_Reference_ID: payload.Name
-		}
+			ns0#Business_Entity_Data: {
+				ns0#Business_Entity_Name: payload.Name
+			}
+		}	
 	}
 }]]></ee:set-payload>
 						</ee:message>
 					</ee:transform>
 					<logger level="INFO" doc:name="Log Customer to upsert" doc:id="b453438c-8af9-4dbe-bf71-6e838cede818" message="Customer to upsert: #[payload]" />
-					<workday:invoke doc:name="Upsert Customer" doc:id="4b0cd7b4-8dd7-4547-9515-56af5e4ef052" config-ref="Workday_Config" service="Revenue_Management" operation="Put_Customer"/>
-					<logger level="INFO" doc:name="Log Result" doc:id="9c1a2ec3-a503-4ec9-b435-bcc7b97f9db9" message="Upsert result: #[payload]" />
+					<workday:revenue-management doc:name="Upsert Customer" doc:id="9852c7a9-0cca-42b5-afe0-ff8320148205" config-ref="Workday_Config_version_30" operation="Submit_Customer"/>
+				<logger level="INFO" doc:name="Log Result" doc:id="9c1a2ec3-a503-4ec9-b435-bcc7b97f9db9" message="Upsert result: #[payload]" />
 				</batch:step>
 			</batch:process-records>
             <batch:on-complete >

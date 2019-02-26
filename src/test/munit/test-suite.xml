@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:workday="http://www.mulesoft.org/schema/mule/workday"
+	xmlns:sap="http://www.mulesoft.org/schema/mule/sap"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
+http://www.mulesoft.org/schema/mule/workday http://www.mulesoft.org/schema/mule/workday/current/mule-workday.xsd">
+	<munit:config name="test-suite.xml" doc:name="MUnit configuration"/>
+	<configuration-properties doc:name="Configuration properties"
+		doc:id="58de23cd-791b-4437-9283-2e3a84ac8a55" file="mule.test.properties" />
+
+	<munit:before-test name="test-suiteBefore_Test"
+		description="Before tests actions" doc:id="6c455e29-47c6-4368-a18b-c7c1f8263285">
+		<ee:transform doc:name="Prepare testing data for SFDC"
+			doc:id="f9771f5a-e857-4e18-a7b6-829f115a94c0">
+			<ee:message>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="accounts" ><![CDATA[%dw 2.0
+output application/java
+var category = randomInt(6)
+fun setCategory(industry) =  
+			 if (industry == 5) "Biotechnology" else
+	 		 (if (industry == 4) "Finances" else
+	 		 (if (industry == 3) "Hospitality" else
+	 		 (if (industry == 2) "Manufacturing" else	
+	 		 (if (industry == 1) "Technology" else	
+	 		  "Energy"))))
+---
+[{
+	Description: "test description1",
+	Name: "MUnit" ++ randomInt(1000000),
+	Industry: "Education",
+	NumberOfEmployees: 150,
+	Phone: randomInt(1000000) as String
+},
+{
+	Description: "test description2",
+	Name: p('test.account.name'),
+	Industry: setCategory(category),
+	NumberOfEmployees: 13200,
+	Phone: randomInt(1000000) as String
+},
+{
+	Description: "test description3",
+	Name: "MUnit" ++ randomInt(1000000),
+	Industry: "Education",
+	NumberOfEmployees: 10000,
+	Phone: randomInt(1000000) as String
+}
+]
+]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		  <salesforce:create doc:name="Create Account in SFDC A" doc:id="75f3de5f-39dd-45ac-a19f-539ea511a01a" config-ref="Salesforce_Config_A" type="Account">
+			<salesforce:records ><![CDATA[#[vars.accounts]]]></salesforce:records>
+		</salesforce:create>
+		<ee:transform doc:name="Set Ids to variable sfdcAIds and Prepare testing account for DB and SFDC" doc:id="39275f1f-87b8-40e5-bc2b-32f861531ec3">
+			<ee:message>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="sfdcAIds" ><![CDATA[%dw 2.0
+output application/java
+---
+payload map ($.Id)]]></ee:set-variable>
+				<ee:set-variable variableName="testDataDbSfdc" ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	Description: vars.accounts[1].Description,
+	Name: vars.accounts[1].Name,
+	Industry: "IT",
+	NumberOfEmployees: 15000,
+	Phone: randomInt(1000000) as String
+}]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<db:insert doc:name="Insert Account to DB" doc:id="483add37-810f-4fc8-80d9-ac05e9d90bd0" config-ref="Database_Config">
+			<db:sql >INSERT INTO Account (
+								Description,
+								Industry,
+								Name,
+								NumberOfEmployees,
+								Phone
+								) VALUES (
+								:Description,
+								:Industry,
+								:Name,
+								:NumberOfEmployees,
+								:Phone
+								)</db:sql>
+			<db:input-parameters ><![CDATA[#[vars.testDataDbSfdc]]]></db:input-parameters>
+		</db:insert>
+		<salesforce:create doc:name='Create Account in SFDC B' doc:id="15ea428d-fc2a-4b40-959c-19a89c432175" type="Account" config-ref="Salesforce_Config_B">
+			<salesforce:records ><![CDATA[#[[vars.testDataDbSfdc]]]]></salesforce:records>
+		</salesforce:create>
+		<ee:transform doc:name="Set Ids to variable sfdcBIds" doc:id="7dd9c4f5-8026-4374-bd30-4085c828cbe9" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="sfdcBIds" ><![CDATA[%dw 2.0
+output application/java
+---
+payload map ($.Id)]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<scripting:execute engine="Groovy" doc:name="Sleep for 10s until the processing is completed" doc:id="47e167d0-c02c-43c4-a660-ed524707a024">
+				<scripting:code>sleep(10000)</scripting:code>
+			</scripting:execute>
+	</munit:before-test>
+	<munit:test name="test-suite-FlowTest" description="Test" doc:id="65882ca3-9c3c-4b7d-b2ca-ec5bc99e5e35" >
+		<munit:execution >
+			<flow-ref doc:name="sfdcQueryFlow" doc:id="aab5c643-3abd-471f-a8a4-53c601f90768" name="querySubFlow" />
+			<scatter-gather doc:name="Scatter-Gather" doc:id="5d9955d1-1347-42e3-98eb-27282fb34056" >
+				<route >
+					<ee:transform doc:name="filter Query SFDC" doc:id="dced8466-6eeb-4524-bfc1-6ef2ed1bf006">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload filter($.Name == vars.accounts[0].Name or 
+	$.Name == vars.accounts[1].Name or
+	$.Name == vars.accounts[2].Name)]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+					<flow-ref doc:name="processAQueueObjectsToBatchFlow" doc:id="8fd9e190-273b-4358-bbe4-de02ba860aa8" name="processAQueueObjectsToBatchFlow" />
+				</route>
+				<route >
+					<ee:transform doc:name="filter Query DB" doc:id="b2332421-54a3-4d5c-b446-5502778327c2" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload filter($.Name == vars.accounts[0].Name or 
+	$.Name == vars.accounts[1].Name or
+	$.Name == vars.accounts[2].Name)]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+					<flow-ref doc:name="processBQueueObjectsToBatchFlow" doc:id="0bd788a6-43fc-4cd3-9db4-85c985f6ffac" name="processBQueueObjectsToBatchFlow"/>
+				</route>
+				<route >
+					<ee:transform doc:name="filter Query SAP" doc:id="2b1f2917-d514-4c1d-aa4e-a3d79bdba7fe" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload filter($.Name == vars.accounts[1].Name)]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+					<flow-ref doc:name="processCQueueObjectsToBatchFlow" doc:id="1296a910-1bd4-48a5-aa3c-99483310aa8f" name="processCQueueObjectsToBatchFlow"/>
+				</route>
+				<route >
+					<ee:transform doc:name="filter Query Wday" doc:id="4e36d0ab-2035-4df6-bde4-7a03f7d6f3ab">
+						<ee:message>
+							<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload filter($.Name == vars.accounts[1].Name)]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+					<flow-ref doc:name="processDQueueObjectsToBatchFlow" doc:id="32e02239-0a18-4d16-be27-f6a379981789" name="processDQueueObjectsToBatchFlow"/>
+				</route>
+			</scatter-gather>
+			<scripting:execute doc:name="Sleep for 60s until the processing is completed" doc:id="4c49af3b-2269-4061-b988-a148f6c6e7bc" engine="groovy">
+				<scripting:code >sleep(60000)</scripting:code>
+			</scripting:execute> 
+		</munit:execution>
+		<munit:validation>
+			<flow-ref doc:name="SFDC Test" doc:id="b3e87f68-afdb-4c1f-a028-1e02241ede85" name="SFDCTest"/>
+			<flow-ref doc:name="DB Test" doc:id="bd6697ad-46c4-4499-a05c-1016271ad685" name="DBTest"/>
+			<flow-ref doc:name="SAP Test" doc:id="d67910d5-58f0-481f-9448-32a97d583980" name="SAPTest"/>
+			<flow-ref doc:name="WDAY Test" doc:id="e2f144bc-393d-4cb1-9f38-a7e7a65deac5" name="WDAYTest"/> 
+		</munit:validation>
+	</munit:test>
+	<sub-flow name="DBTest" doc:id="8dd43789-fc52-4efa-a2ae-1980ad6eeb86" >
+		<db:select doc:name="Select accounts in DB" doc:id="bc60ec48-5116-4a2a-8d5c-1278a789c2a4" config-ref="Database_Config">
+			<db:sql >SELECT Name, Industry, NumberOfEmployees FROM Account WHERE Name IN ( :name1, :name2, :name3)</db:sql>
+			<db:input-parameters ><![CDATA[#[{'name1' : vars.accounts[0].Name,
+	'name2' : vars.accounts[1].Name,
+	'name3' : vars.accounts[2].Name}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="Filter records" doc:id="43f16550-fe50-4ea9-b658-9a2e88b75ed6">
+			<ee:message>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="noRecord" ><![CDATA[%dw 2.0
+output application/java
+---
+payload filter ($.Name == vars.accounts[0].Name)]]></ee:set-variable>
+				<ee:set-variable variableName="createdRecord" ><![CDATA[%dw 2.0
+output application/java
+---
+payload filter ($.Name == vars.accounts[2].Name)]]></ee:set-variable>
+				<ee:set-variable variableName="updatedRecord" ><![CDATA[%dw 2.0
+output application/java
+---
+payload filter ($.Name == vars.accounts[1].Name 
+	and $.NumberOfEmployees == vars.accounts[1].NumberOfEmployees
+	and $.Industry == vars.accounts[1].Industry
+)]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<munit-tools:assert-that doc:name="Assert that we found created Account" doc:id="8fa64cd2-a5f4-41f9-b5c7-378db0371943" expression="#[vars.createdRecord[0].Name]" is="#[MunitTools::notNullValue()]" message="Record should be created in DB "/>
+		<munit-tools:assert-that doc:name="Assert that we found updated Account" doc:id="0fd9446f-f5c0-4b0e-af63-4632d28577ba" expression="#[vars.updatedRecord[0].Name]" is="#[MunitTools::notNullValue()]" message="Record should be updated in DB"/>
+		<munit-tools:assert-that doc:name="Assert that Account was not migrated" doc:id="c644da2d-04f3-413e-a104-10608ab761de" expression="#[vars.noRecord[0]]" is="#[MunitTools::nullValue()]" message="Record shouldn't be migrated to DB"/>
+		<munit-tools:verify-call doc:name="Verify DB Bulk Insert Call" doc:id="a9b3acad-7e96-40ad-bd9b-5de2a57d70b7" processor="db:bulk-insert" times="1"/>
+		<munit-tools:verify-call doc:name="Verify DB Bulk Update Call" doc:id="8275f6ed-cb9b-4fc8-929d-d8af4acd4fa7" processor="db:bulk-update" times="1"/>
+	</sub-flow>
+	<sub-flow name="SFDCTest" doc:id="a224e4b5-caf4-438c-b253-7ac4e44f83fe" >
+		<salesforce:query doc:name="Query accounts in SFDC" doc:id="80846ffc-a289-48b9-b9cd-a0fa4889afc6" config-ref="Salesforce_Config_B">
+			<salesforce:salesforce-query >SELECT Id, Industry, Name, NumberOfEmployees FROM Account  WHERE Name IN (':name1', ':name2', ':name3')</salesforce:salesforce-query>
+			<salesforce:parameters ><![CDATA[#[output application/java
+---
+{
+	"name1" : vars.accounts[2].Name,
+	"name2" : vars.accounts[1].Name,
+	"name3" : vars.accounts[0].Name
+}]]]></salesforce:parameters>
+		</salesforce:query>
+		<ee:transform doc:name="Filter records" doc:id="063c0c66-f4ea-4119-979d-13af16b712bc" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="sfdcUpdatedRecord" ><![CDATA[%dw 2.0
+output application/java
+---
+payload filter ($.Name == vars.accounts[1].Name 
+	and $.NumberOfEmployees as Number == vars.accounts[1].NumberOfEmployees
+	and $.Industry == vars.accounts[1].Industry
+)]]></ee:set-variable>
+				<ee:set-variable variableName="sfdcCreatedRecord" ><![CDATA[%dw 2.0
+output application/java
+---
+payload filter ($.Name == vars.accounts[2].Name)]]></ee:set-variable>
+				<ee:set-variable variableName="sfdcNoRecord" ><![CDATA[%dw 2.0
+output application/java
+---
+payload filter ($.Name == vars.accounts[0].Name)]]></ee:set-variable>
+				<ee:set-variable variableName="sfdcBIds" ><![CDATA[%dw 2.0
+output application/java
+---
+payload map ($.Id)]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<munit-tools:assert-that doc:name="Assert that we found created Account" doc:id="da9e43d5-490d-4c3c-bce8-7a54b6ae15c6" is="#[MunitTools::notNullValue()]" expression="#[vars.sfdcCreatedRecord[0].Name]" message="Record should be created in SFDC "/>
+		<munit-tools:assert-that doc:name="Assert that we found updated Account" doc:id="8cac1feb-b603-4d90-8220-8a3cec301ba3" is="#[MunitTools::notNullValue()]" expression="#[vars.sfdcUpdatedRecord[0].Name]" message="Record should be updated in SFDC "/>
+		<munit-tools:assert-that doc:name="Assert that Account was not migrated" doc:id="87ac9a9a-6667-4a7a-b594-964c8477cf68" expression="#[vars.sfdcNoRecord[0]]" is="#[MunitTools::nullValue()]" message="Record shouldn't be migrated to SFDC"/>
+		<munit-tools:verify-call doc:name="Verify SFDC Bulk Upsert Call" doc:id="69180d3c-491e-4632-8456-9b0fd89e7aa1" processor="salesforce:upsert-bulk" times="1" />
+	</sub-flow>
+	<sub-flow name="SAPTest" doc:id="46015a8b-ea7e-409c-b45d-f648f074e01b" >
+		<ee:transform doc:name="Prepare SAP request" doc:id="d3188080-f716-4ab3-aa1d-a265b95f0c48">
+						<ee:message>
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+  "BAPI_CUSTOMER_FIND": {
+    "import": {
+      "MAX_CNT": "0",
+      "PL_HOLD": "X"
+    },
+    "tables": {
+      "SELOPT_TAB": {
+        "row": {
+          "TABNAME": "KNA1",
+          "FIELDNAME": "NAME1",
+          "FIELDVALUE": vars.accounts[1].Name
+        }
+      }
+    }
+  }
+}]]></ee:set-payload>
+						</ee:message>
+						<ee:variables>
+						</ee:variables>
+					</ee:transform>
+		<sap:execute-synchronous-remote-function-call doc:name="Execute BAPI / Function over sRFC" doc:id="0490237d-666e-4e27-b7c5-db59c4e3d191" config-ref="SAP_Outbound" key="BAPI_CUSTOMER_FIND" targetValue="#[output application/java --- payload]">
+					</sap:execute-synchronous-remote-function-call>
+		<ee:transform doc:name="Save Customer Number" doc:id="af83e70b-23b9-47b6-aa44-557b63235b05">
+						<ee:message>
+							<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+{
+	CustomerNumber: payload.BAPI_CUSTOMER_FIND.tables.RESULT_TAB.row.CUSTOMER
+}]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+		<choice doc:name="Customer exists?" doc:id="06051873-d97e-49bb-81a9-761bc7546dd5" >
+			<when expression="#[payload.CustomerNumber != null]">
+				<ee:transform doc:name="Prepare query request" doc:id="36c1071c-376a-4723-aa86-d840f7732f6d">
+						<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+---
+{
+  "ZSDFM_CUSTOMER_GETLIST": {
+    "import": {
+      "IV_CUST_ID": payload.CustomerNumber
+    }
+  }
+}
+]]></ee:set-payload>
+						</ee:message>
+						<ee:variables>
+						</ee:variables>
+					</ee:transform>
+				<sap:execute-synchronous-remote-function-call doc:name="Execute BAPI / Function over sRFC" doc:id="e7d30f26-eeb2-417d-9e75-a23fb7139fff" config-ref="SAP_Outbound" key="ZSDFM_CUSTOMER_GETLIST" targetValue="#[output application/java --- payload]">
+					</sap:execute-synchronous-remote-function-call>
+				<ee:transform doc:name="Prepare response" doc:id="25a76335-e7ef-40da-9ec5-57b46c3c6322">
+						<ee:message>
+							<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+var data = payload.ZSDFM_CUSTOMER_GETLIST.tables.T_KNA1.row
+---
+{
+    Name: data.NAME1,
+    Phone : data.TELF1
+}]]></ee:set-payload>
+						</ee:message>
+						<ee:variables>
+						</ee:variables>
+					</ee:transform>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="Empty response" doc:id="3f0758b3-176b-4c61-bc7a-25b02350a25a" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</otherwise>
+		</choice>
+		<munit-tools:assert-that doc:name="Assert that Phone was updated" doc:id="1b0f606a-a183-4e81-96e2-76fc0cebbc32" expression="#[payload.Phone]" is="#[MunitTools::equalTo(vars.accounts[1].Phone)]" message="Phone should be updated"/>
+		<munit-tools:verify-call doc:name="Verify SAP Send call" doc:id="4abf7cfb-39b5-4bbb-a08b-641762071152" processor="sap:send" times="1"/>
+	</sub-flow>
+	<sub-flow name="WDAYTest" doc:id="eabbd6c7-bfec-46b1-a785-b874fd9690c3" >
+	<ee:transform doc:name="Prepare Wday Request" doc:id="8c5fd388-0b65-4cd5-82c7-16e13a16557c">
+						<ee:message>
+							<ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+ns ns0 urn:com.workday/bsvc
+---
+{
+    ns0#Get_Customers_Request: {
+        ns0#Request_References: {
+            ns0#Customer_Reference: {
+                ns0#ID @(ns0#"type": "Customer_Reference_ID" ): payload.Name
+            }
+        },
+        ns0#Response_Group: {
+            ns0#Include_Customer_Data: true
+        }
+    }
+}]]></ee:set-payload>
+						</ee:message>
+						<ee:variables>
+						</ee:variables>
+					</ee:transform>
+		<workday:revenue-management operation="Get_Customers" doc:name="Get Customers" doc:id="21c4ecb5-f1fb-45d0-9b11-ccd93e92387f" config-ref="Workday_Config_version_30"/>
+		<ee:transform doc:name="Prepare Response" doc:id="af9c2249-c6c2-4586-9aae-1a7ea8667150" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+fun findCategory(industry) =	  
+			 if (industry == "Biotechnology") p('category.biotechnology') else
+	 		 (if (industry == "Finances") p('category.financialServices') else
+	 		 (if (industry == "Hospitality") p('category.hospitality') else
+	 		 (if (industry == "Manufacturing") p('category.manufacturing') else	
+	 		 (if (industry == "Technology") p('category.technology') else	
+	 		  p('category.default')))))
+---
+{
+	Name: payload.Get_Customers_Response.Response_Data.Customer.Customer_Data.Customer_Name,
+	wdayIndustry: payload.Get_Customers_Response.Response_Data.Customer.Customer_Data.Customer_Category_Reference.*ID[-1],
+	convertSfdcIndustry: findCategory(vars.accounts[1].Industry)
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<munit-tools:assert-that doc:name="Assert that Industry was updated" doc:id="dd8bbc0f-8875-488e-b94f-179fe99df1fd" expression="#[payload.wdayIndustry]" is="#[MunitTools::equalTo(payload.convertSfdcIndustry)]" message="Industry should be updated"/>
+		<munit-tools:verify-call doc:name="Verify Workday Revenue Management call" doc:id="7e687c8a-bd4d-4db0-bc09-a12914c1f81c" processor="workday:revenue-management" times="1">
+			<munit-tools:with-attributes >
+				<munit-tools:with-attribute attributeName="doc:id" whereValue="9852c7a9-0cca-42b5-afe0-ff8320148205" />
+			</munit-tools:with-attributes>
+		</munit-tools:verify-call>
+	</sub-flow>
+	<munit:after-test name="test-suiteAfter_Test" description="After tests actions" doc:id="52397fa3-1d26-4457-ae99-6a6ec0140fca" >
+		<salesforce:delete doc:name="Delete source Accounts in SFDC A" doc:id="35e691f6-331a-4c15-a357-e928528d69c8" config-ref="Salesforce_Config_A">
+			<salesforce:delete-ids><![CDATA[#[vars.sfdcAIds]]]></salesforce:delete-ids>
+		</salesforce:delete>
+		<db:delete doc:name="Delete Accounts in DB" doc:id="219a7cf8-1814-445c-82f5-7ccfa8475837" config-ref="Database_Config">
+			<db:sql >DELETE FROM Account WHERE Name IN ( :name1, :name2, :name3)</db:sql>
+			<db:input-parameters ><![CDATA[#[{'name1' : vars.accounts[0].Name,
+	'name2' : vars.accounts[1].Name,
+	'name3' : vars.accounts[2].Name}]]]></db:input-parameters>
+		</db:delete>
+		<salesforce:delete doc:name="Delete Accounts in SFDC B" doc:id="eda82344-55d7-46ae-8968-fa40063d67aa" config-ref="Salesforce_Config_B">
+			<salesforce:delete-ids ><![CDATA[#[vars.sfdcBIds]]]></salesforce:delete-ids>
+		</salesforce:delete>
+	</munit:after-test>
+</mule>

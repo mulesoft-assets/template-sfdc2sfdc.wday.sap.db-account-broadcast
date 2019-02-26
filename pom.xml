@@ -1,18 +1,22 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+   
     <parent>
         <groupId>org.mule.templates</groupId>
         <artifactId>templates-tooling-parent-pom</artifactId>
-        <version>2.1.10</version>
+        <version>2.1.16</version>
     </parent>
+    
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>template-sfdc2sfdc.wday.sap.db-account-broadcast</artifactId>
     <packaging>mule-application</packaging>
     <version>2.1.2-SNAPSHOT</version>
     <name>template-sfdc2sfdc.wday.sap.db-account-broadcast</name>
-    <properties>
-        <activemq.version>5.10.0</activemq.version>
+    
+     <properties>
+        <activemq.version>5.12.1</activemq.version>
     </properties>
+    
     <build>
         <plugins>
             <plugin>
@@ -21,45 +25,49 @@
                 <version>${mule.maven.plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
+                    <classifier>mule-application-template</classifier>
                     <sharedLibraries>
-                        <sharedLibrary>
-                            <groupId>org.apache.activemq</groupId>
-                            <artifactId>activemq-all</artifactId>
-                        </sharedLibrary>
                         <sharedLibrary>
                             <groupId>mysql</groupId>
                             <artifactId>mysql-connector-java</artifactId>
                         </sharedLibrary>
+						<sharedLibrary>
+							<groupId>org.apache.activemq</groupId>
+							<artifactId>activemq-all</artifactId>
+						</sharedLibrary>
+						<!-- Please Add shared SAP libraries -->
                     </sharedLibraries>
-                    <classifier>mule-application-template</classifier>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.mulesoft.munit.tools</groupId>
+                <artifactId>munit-maven-plugin</artifactId>
+                <version>${munit.version}</version>
+                <executions>
+                    <execution>
+                        <id>test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                            <goal>coverage-report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <coverage>
+                        <runCoverage>true</runCoverage>
+                        <formats>
+                            <format>html</format>
+                        </formats>
+                    </coverage>
                 </configuration>
             </plugin>
         </plugins>
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.mule.connectors</groupId>
-            <artifactId>mule-http-connector</artifactId>
-            <classifier>mule-plugin</classifier>
-        </dependency>
-        <dependency>
             <groupId>com.mulesoft.connectors</groupId>
             <artifactId>mule-salesforce-connector</artifactId>
-            <classifier>mule-plugin</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.mule.connectors</groupId>
-            <artifactId>mule-jms-connector</artifactId>
-            <classifier>mule-plugin</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-all</artifactId>
-            <version>${activemq.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mule.connectors</groupId>
-            <artifactId>mule-objectstore-connector</artifactId>
             <classifier>mule-plugin</classifier>
         </dependency>
         <dependency>
@@ -69,6 +77,48 @@
         <dependency>
             <groupId>org.mule.connectors</groupId>
             <artifactId>mule-db-connector</artifactId>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-objectstore-connector</artifactId>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-http-connector</artifactId>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-sockets-connector</artifactId>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-all</artifactId>
+            <version>${activemq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mule.modules</groupId>
+            <artifactId>mule-scripting-module</artifactId>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.mulesoft.munit</groupId>
+            <artifactId>munit-runner</artifactId>
+            <classifier>mule-plugin</classifier>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mulesoft.munit</groupId>
+            <artifactId>munit-tools</artifactId>
+            <classifier>mule-plugin</classifier>
+            <scope>test</scope>
+        </dependency>
+    	<dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-jms-connector</artifactId>
             <classifier>mule-plugin</classifier>
         </dependency>
         <dependency>
@@ -82,6 +132,7 @@
             <artifactId>mule-workday-connector</artifactId>
             <classifier>mule-plugin</classifier>
         </dependency>
+        <!-- Please Add dependencies for SAP libraries -->
     </dependencies>
     <repositories>
         <repository>
