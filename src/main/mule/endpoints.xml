@@ -62,26 +62,8 @@ payload.Envelope.Body.notifications.Notification.*sObject map {
         </scheduler>
         <choice doc:name="Check trigger policy" doc:id="1b769229-18ed-4ba8-899a-d36ed773b7a4">
             <when expression="'poll' == '${trigger.policy}'">
-                <os:retrieve key="watermark" objectStore="watermarkStore" target="lastQueryTimestamp" doc:name="Retrieve lastQueryTimestamp">
-                    <os:default-value><![CDATA[${watermark.default.expression}]]></os:default-value>
-                </os:retrieve>
-                <salesforce:query doc:name="Query Accounts with filtering criteria from Salesforce Instance A" doc:id="9b5f230c-fb38-4b54-9251-94e4c5d1fe45"
-                    config-ref="Salesforce_Config_A">
-                    <salesforce:salesforce-query>SELECT
-                        AccountNumber,BillingCity,BillingCountry,BillingPostalCode,BillingStreet,Description,Fax,Id,Industry,LastModifiedById,LastModifiedDate,Name,NumberOfEmployees,ParentId,Phone
-                        FROM Account WHERE (LastModifiedDate &gt; :lastQueryTimestamp AND NumberOfEmployees &gt; 5000)
-                    </salesforce:salesforce-query>
-                    <salesforce:parameters><![CDATA[#[output applicaton/java
----
-{
-	"lastQueryTimestamp" : vars.lastQueryTimestamp
-}]]]></salesforce:parameters>
-                </salesforce:query>
-                <logger level="INFO" doc:name="Log accounts from  Salesforce" doc:id="08f68fa6-4350-4e49-86c3-0736bb52ecc1" message="#[output application/json --- payload]" />
-                <os:store key="watermark" failIfPresent="false" failOnNullValue="false" objectStore="watermarkStore" doc:name="Store lastQueryTimestamp">
-                    <os:value>#[max(payload map $.LastModifiedDate)]</os:value>
-                </os:store>
-                <ee:transform doc:name="Transform Object to JSON" doc:id="6fcbbe62-f544-45ce-acdf-82a0265a86d4">
+                <flow-ref doc:name="Call Query SubFlow" doc:id="ade94c6f-c817-4584-a9cc-baab0e6fc415" name="querySubFlow"/>
+				<ee:transform doc:name="Transform Object to JSON" doc:id="6fcbbe62-f544-45ce-acdf-82a0265a86d4">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -89,7 +71,7 @@ output application/json
 payload]]></ee:set-payload>
                     </ee:message>
                 </ee:transform>
-                <jms:publish doc:name="JMS Topic A" doc:id="02cb8471-2f2f-47df-9051-2c53933fca56" config-ref="ActiveMQ"
+				<jms:publish doc:name="JMS Topic A" doc:id="02cb8471-2f2f-47df-9051-2c53933fca56" config-ref="ActiveMQ"
                     destination="A" destinationType="TOPIC" />
             </when>
             <otherwise>
@@ -104,6 +86,24 @@ payload]]></ee:set-payload>
             </on-error-propagate>
         </error-handler>
     </flow>
+	<sub-flow name="querySubFlow" doc:id="36c6d917-5bd5-4b05-a48a-09984e360687" >
+		<os:retrieve key="watermark" objectStore="watermarkStore" target="lastQueryTimestamp" doc:name="Retrieve lastQueryTimestamp">
+                    <os:default-value><![CDATA[${watermark.default.expression}]]></os:default-value>
+                </os:retrieve>
+		<salesforce:query doc:name="Query Accounts with filtering criteria from Salesforce Instance A" doc:id="e034ab44-2d15-4220-beb7-f7c24c758366" config-ref="Salesforce_Config_A">
+			<salesforce:salesforce-query >SELECT AccountNumber,BillingCity,BillingCountry,BillingPostalCode,BillingStreet,Description,Fax,Id,Industry,LastModifiedById,LastModifiedDate,Name,NumberOfEmployees,ParentId,Phone
+                        FROM Account WHERE (LastModifiedDate &gt; :lastQueryTimestamp AND NumberOfEmployees &gt; 5000)</salesforce:salesforce-query>
+			<salesforce:parameters ><![CDATA[#[output application/java
+---
+{
+	"lastQueryTimestamp" : vars.lastQueryTimestamp
+}]]]></salesforce:parameters>
+		</salesforce:query>
+		<logger level="INFO" doc:name="Log accounts from  Salesforce" doc:id="08f68fa6-4350-4e49-86c3-0736bb52ecc1" message="#[output application/json --- payload]" />
+		<os:store key="watermark" failIfPresent="false" failOnNullValue="false" objectStore="watermarkStore" doc:name="Store lastQueryTimestamp">
+                    <os:value>#[max(payload map $.LastModifiedDate)]</os:value>
+                </os:store>
+	</sub-flow>
 </mule>
 
 
