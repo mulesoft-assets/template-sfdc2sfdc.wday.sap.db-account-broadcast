@@ -88,7 +88,7 @@ payload]]></ee:set-payload>
     </flow>
 	<sub-flow name="querySubFlow" doc:id="36c6d917-5bd5-4b05-a48a-09984e360687" >
 		<os:retrieve key="watermark" objectStore="watermarkStore" target="lastQueryTimestamp" doc:name="Retrieve lastQueryTimestamp">
-                    <os:default-value><![CDATA[${watermark.default.expression}]]></os:default-value>
+                    <os:default-value ><![CDATA[#[read(p('watermark.default.expression'))]]]></os:default-value>
                 </os:retrieve>
 		<salesforce:query doc:name="Query Accounts with filtering criteria from Salesforce Instance A" doc:id="e034ab44-2d15-4220-beb7-f7c24c758366" config-ref="Salesforce_Config_A">
 			<salesforce:salesforce-query >SELECT AccountNumber,BillingCity,BillingCountry,BillingPostalCode,BillingStreet,Description,Fax,Id,Industry,LastModifiedById,LastModifiedDate,Name,NumberOfEmployees,ParentId,Phone
