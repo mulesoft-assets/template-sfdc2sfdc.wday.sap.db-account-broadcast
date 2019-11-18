@@ -122,6 +122,21 @@ payload map ($.Id)]]></ee:set-variable>
 	<munit:test name="test-suite-FlowTest" description="Test" doc:id="65882ca3-9c3c-4b7d-b2ca-ec5bc99e5e35" >
 		<munit:execution >
 			<flow-ref doc:name="sfdcQueryFlow" doc:id="aab5c643-3abd-471f-a8a4-53c601f90768" name="querySubFlow" />
+                    <ee:transform doc:name="Set payload" doc:id="7d3a120c-5008-41b5-bdf3-e8ad54b4dc11">
+                        <ee:message>
+                <ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+                        </ee:message>
+                        <ee:variables>
+                <ee:set-variable variableName="sfdcData" ><![CDATA[%dw 2.0
+output application/java
+---
+payload]]></ee:set-variable>
+                        </ee:variables>
+            </ee:transform>
 			<scatter-gather doc:name="Scatter-Gather" doc:id="5d9955d1-1347-42e3-98eb-27282fb34056" >
 				<route >
 					<ee:transform doc:name="filter Query SFDC" doc:id="dced8466-6eeb-4524-bfc1-6ef2ed1bf006">
@@ -129,7 +144,7 @@ payload map ($.Id)]]></ee:set-variable>
 					<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
-payload filter($.Name == vars.accounts[0].Name or 
+vars.sfdcData filter($.Name == vars.accounts[0].Name or 
 	$.Name == vars.accounts[1].Name or
 	$.Name == vars.accounts[2].Name)]]></ee:set-payload>
 				</ee:message>
@@ -142,7 +157,7 @@ payload filter($.Name == vars.accounts[0].Name or
 							<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
 ---
-payload filter($.Name == vars.accounts[0].Name or 
+vars.sfdcData filter($.Name == vars.accounts[0].Name or 
 	$.Name == vars.accounts[1].Name or
 	$.Name == vars.accounts[2].Name)]]></ee:set-payload>
 						</ee:message>
@@ -155,7 +170,7 @@ payload filter($.Name == vars.accounts[0].Name or
 							<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
 ---
-payload filter($.Name == vars.accounts[1].Name)]]></ee:set-payload>
+vars.sfdcData filter($.Name == vars.accounts[1].Name)]]></ee:set-payload>
 						</ee:message>
 					</ee:transform>
 					<flow-ref doc:name="processCQueueObjectsToBatchFlow" doc:id="1296a910-1bd4-48a5-aa3c-99483310aa8f" name="processCQueueObjectsToBatchFlow"/>
@@ -166,7 +181,7 @@ payload filter($.Name == vars.accounts[1].Name)]]></ee:set-payload>
 							<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
-payload filter($.Name == vars.accounts[1].Name)]]></ee:set-payload>
+vars.sfdcData filter($.Name == vars.accounts[1].Name)]]></ee:set-payload>
 						</ee:message>
 					</ee:transform>
 					<flow-ref doc:name="processDQueueObjectsToBatchFlow" doc:id="32e02239-0a18-4d16-be27-f6a379981789" name="processDQueueObjectsToBatchFlow"/>
@@ -371,7 +386,7 @@ ns ns0 urn:com.workday/bsvc
 						<ee:variables>
 						</ee:variables>
 					</ee:transform>
-		<workday:revenue-management operation="Get_Customers" doc:name="Get Customers" doc:id="21c4ecb5-f1fb-45d0-9b11-ccd93e92387f" config-ref="Workday_Config_version_30"/>
+		<workday:revenue-management operation="Get_Customers" doc:name="Get Customers" doc:id="21c4ecb5-f1fb-45d0-9b11-ccd93e92387f" config-ref="Workday_Config"/>
 		<ee:transform doc:name="Prepare Response" doc:id="af9c2249-c6c2-4586-9aae-1a7ea8667150" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
