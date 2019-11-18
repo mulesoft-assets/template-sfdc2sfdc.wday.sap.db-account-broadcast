@@ -1,22 +1,22 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-   
+
     <parent>
         <groupId>org.mule.templates</groupId>
         <artifactId>templates-tooling-parent-pom</artifactId>
         <version>2.1.24</version>
     </parent>
-    
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>template-sfdc2sfdc.wday.sap.db-account-broadcast</artifactId>
     <packaging>mule-application</packaging>
     <version>2.1.3-SNAPSHOT</version>
     <name>template-sfdc2sfdc.wday.sap.db-account-broadcast</name>
-    
-     <properties>
+
+    <properties>
         <activemq.version>5.12.1</activemq.version>
     </properties>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -31,11 +31,11 @@
                             <groupId>mysql</groupId>
                             <artifactId>mysql-connector-java</artifactId>
                         </sharedLibrary>
-						<sharedLibrary>
-							<groupId>org.apache.activemq</groupId>
-							<artifactId>activemq-all</artifactId>
-						</sharedLibrary>
-						
+                        <sharedLibrary>
+                            <groupId>org.apache.activemq</groupId>
+                            <artifactId>activemq-all</artifactId>
+                        </sharedLibrary>
+                        <!-- Please Add shared SAP libraries -->
                     </sharedLibraries>
                 </configuration>
             </plugin>
@@ -116,7 +116,7 @@
             <classifier>mule-plugin</classifier>
             <scope>test</scope>
         </dependency>
-    	<dependency>
+        <dependency>
             <groupId>org.mule.connectors</groupId>
             <artifactId>mule-jms-connector</artifactId>
             <classifier>mule-plugin</classifier>
@@ -132,7 +132,7 @@
             <artifactId>mule-workday-connector</artifactId>
             <classifier>mule-plugin</classifier>
         </dependency>
-        
+        <!-- Please Add dependencies for SAP libraries -->
     </dependencies>
     <repositories>
         <repository>
@@ -148,4 +148,10 @@
             <layout>default</layout>
         </repository>
     </repositories>
-<scm><connection>scm:git:git@github.com:mulesoft/template-sfdc2sfdc.wday.sap.db-account-broadcast.git</connection><developerConnection>scm:git:git@github.com:mulesoft/template-sfdc2sfdc.wday.sap.db-account-broadcast.git</developerConnection><url>https://github.com/mulesoft/template-sfdc2sfdc.wday.sap.db-account-broadcast</url><tag>HEAD</tag></scm></project>
+    <scm>
+        <connection>scm:git:git@github.com:mulesoft/template-sfdc2sfdc.wday.sap.db-account-broadcast.git</connection>
+        <developerConnection>scm:git:git@github.com:mulesoft/template-sfdc2sfdc.wday.sap.db-account-broadcast.git</developerConnection>
+        <url>https://github.com/mulesoft/template-sfdc2sfdc.wday.sap.db-account-broadcast</url>
+        <tag>HEAD</tag>
+    </scm>
+</project>

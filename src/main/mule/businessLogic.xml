@@ -421,10 +421,6 @@ payload]]></ee:set-payload>
 		<batch:job jobName="wdayMigrateAccountsBatch" doc:id="48175bd3-c128-49b8-811b-d39e1456acaa" >
 			<batch:process-records >
 				<batch:step name="foreachAccountInSalesforceUpsertCustomerInWorkday" doc:id="d71cbd56-0f2f-4b97-af6e-33902c82895d" >
-                
-                
-                
-                
 					<ee:transform doc:name="Transform Account To SubmitCustomerRequest Type" doc:id="cd1adc09-129a-4760-b454-fb6f35271a9b">
 						<ee:message>
 							<ee:set-payload><![CDATA[%dw 2.0
@@ -455,7 +451,7 @@ fun findCategory(industry) =
 						</ee:message>
 					</ee:transform>
 					<logger level="INFO" doc:name="Log Customer to upsert" doc:id="b453438c-8af9-4dbe-bf71-6e838cede818" message="Customer to upsert: #[payload]" />
-					<workday:revenue-management doc:name="Upsert Customer" doc:id="9852c7a9-0cca-42b5-afe0-ff8320148205" config-ref="Workday_Config_version_30" operation="Submit_Customer"/>
+					<workday:revenue-management doc:name="Upsert Customer" doc:id="9852c7a9-0cca-42b5-afe0-ff8320148205" config-ref="Workday_Config" operation="Submit_Customer"/>
 				<logger level="INFO" doc:name="Log Result" doc:id="9c1a2ec3-a503-4ec9-b435-bcc7b97f9db9" message="Upsert result: #[payload]" />
 				</batch:step>
 			</batch:process-records>

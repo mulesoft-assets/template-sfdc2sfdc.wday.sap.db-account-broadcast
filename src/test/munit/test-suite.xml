@@ -371,7 +371,7 @@ ns ns0 urn:com.workday/bsvc
 						<ee:variables>
 						</ee:variables>
 					</ee:transform>
-		<workday:revenue-management operation="Get_Customers" doc:name="Get Customers" doc:id="21c4ecb5-f1fb-45d0-9b11-ccd93e92387f" config-ref="Workday_Config_version_30"/>
+		<workday:revenue-management operation="Get_Customers" doc:name="Get Customers" doc:id="21c4ecb5-f1fb-45d0-9b11-ccd93e92387f" config-ref="Workday_Config"/>
 		<ee:transform doc:name="Prepare Response" doc:id="af9c2249-c6c2-4586-9aae-1a7ea8667150" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0

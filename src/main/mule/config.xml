@@ -40,11 +40,13 @@
     <sap:outbound-config name="SAP_Outbound" doc:id="05a0a973-2c03-4cea-8247-fda5959f14e9" doc:name="SAP Outbound">
         <sap:simple-connection-provider-connection applicationServerHost="${sap.jco.ashost}" client="${sap.jco.client}" language="${sap.jco.lang}" password="${sap.jco.passwd}" systemNumber="${sap.jco.sysnr}" username="${sap.jco.user}" />
     </sap:outbound-config>
-
-	<workday:config-version-30-config name="Workday_Config_version_30" doc:name="Workday Config version 30" doc:id="d7a230ed-c8d2-4e35-a5da-00e2aa41936f" >
-		<workday:basic-authentication-api-v30-connection username="${wday.username}" password="${wday.password}" tenantName="${wday.tenant}" hostName="${wday.host}" responseTimeout="25000" />
-	</workday:config-version-30-config>
+    
+    <workday:config-version-32-config name="Workday_Config" doc:name="Workday Config version 32" doc:id="069b79f6-89ac-4514-a9dc-07630e04570c" >
+        <workday:basic-authentication-api-v32-connection userName="${wday.username}" password="${wday.password}" tenantName="${wday.tenant}" hostName="${wday.host}" />
+    </workday:config-version-32-config>
+    
 	<db:config name="Database_Config" doc:id="0092282f-1f69-4e13-ab2f-66e0e835861b" doc:name="Database Config">
 		<db:my-sql-connection database="${db.databasename}" host="${db.host}" password="${db.password}" port="${db.port}" user="${db.user}" />
 	</db:config>
+
 </mule>
